@@ -1,0 +1,7 @@
+(library
+ (name lunar)
+ (public_name lunar))
+
+(mdx
+ (files *.mli)
+ (libraries lunar))
