@@ -1,0 +1,8 @@
+(library
+ (name lunar_test)
+ (inline_tests)
+ (flags (:standard) -open Lunar)
+ (libraries lunar)
+ (private_modules duration_test)
+ (preprocess
+  (pps ppx_expect)))
