@@ -85,3 +85,17 @@ let to_datetime duration =
 let to_int64 x = x
 let compare = Int64.compare
 let equal = Int64.equal
+
+module Infix = struct
+  let ( + ) = Int64.abs
+  let ( - ) = Int64.sub
+  let ( * ) ts x = Int64.(mul ts (of_int x))
+  let ( = ) = equal
+  let ( <> ) x y = not (equal x y)
+  let ( > ) x y = compare x y > 0
+  let ( >= ) x y = compare x y >= 0
+  let ( < ) x y = compare x y < 0
+  let ( <= ) x y = compare x y <= 0
+end
+
+include Infix

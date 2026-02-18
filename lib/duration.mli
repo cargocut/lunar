@@ -25,3 +25,17 @@ val to_datetime : t -> int * int * int * int * int * int
 val to_int64 : t -> int64
 val compare : t -> t -> int
 val equal : t -> t -> bool
+
+module Infix : sig
+  val ( + ) : t -> t
+  val ( - ) : t -> t -> t
+  val ( * ) : t -> int -> t
+  val ( = ) : t -> t -> bool
+  val ( <> ) : t -> t -> bool
+  val ( > ) : t -> t -> bool
+  val ( >= ) : t -> t -> bool
+  val ( < ) : t -> t -> bool
+  val ( <= ) : t -> t -> bool
+end
+
+include module type of Infix
