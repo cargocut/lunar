@@ -21,4 +21,7 @@ val from_datetime
   -> sec:int
   -> t
 
+val to_datetime : t -> int * int * int * int * int * int
 val to_int64 : t -> int64
+val compare : t -> t -> int
+val equal : t -> t -> bool
