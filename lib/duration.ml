@@ -5,8 +5,9 @@
 
 type t = int64
 
+let zero = Int64.zero
+let one = Int64.one
 let from_int64 x = x
-let of_int64 = from_int64
 let from_seconds = Int64.of_int
 let from_minutes x = x |> from_seconds |> Int64.mul 60L
 let from_hours x = x |> from_seconds |> Int64.mul 3600L
@@ -85,11 +86,14 @@ let to_datetime duration =
 let to_int64 x = x
 let compare = Int64.compare
 let equal = Int64.equal
+let add = Int64.add
+let sub = Int64.sub
+let mul ts x = Int64.(mul ts (of_int x))
 
 module Infix = struct
   let ( + ) = Int64.abs
   let ( - ) = Int64.sub
-  let ( * ) ts x = Int64.(mul ts (of_int x))
+  let ( * ) = mul
   let ( = ) = equal
   let ( <> ) x y = not (equal x y)
   let ( > ) x y = compare x y > 0
