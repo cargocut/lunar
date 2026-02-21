@@ -1,6 +1,7 @@
 (library
  (name lunar)
- (public_name lunar))
+ (public_name lunar)
+ (private_modules util))
 
 (mdx
  (files *.mli)

@@ -3,5 +3,7 @@
 
    SPDX-License-Identifier: BSD-3-Clause *)
 
-val dump_duration : Duration.t -> unit
-val dump_bool : bool -> unit
+let is_leap_year y =
+  Int.equal 0 (y mod 4)
+  && ((not (Int.equal 0 (y mod 100))) || Int.equal 0 (y mod 400))
+;;

@@ -3,5 +3,7 @@
 
    SPDX-License-Identifier: BSD-3-Clause *)
 
-val dump_duration : Duration.t -> unit
-val dump_bool : bool -> unit
+(** Common utilities. *)
+
+(** [is_leap_year y] returns [true] if the given year [y] is leap.*)
+val is_leap_year : int -> bool

@@ -2,6 +2,3 @@
    All rights reserved.
 
    SPDX-License-Identifier: BSD-3-Clause *)
-
-val dump_duration : Duration.t -> unit
-val dump_bool : bool -> unit
