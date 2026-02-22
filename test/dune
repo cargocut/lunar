@@ -4,6 +4,6 @@
  (inline_tests)
  (flags (:standard) -open Lunar)
  (libraries lunar)
- (private_modules duration_test common_util_test)
+ (private_modules duration_test month_test)
  (preprocess
   (pps ppx_expect)))

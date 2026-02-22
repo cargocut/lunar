@@ -17,7 +17,11 @@ type t =
   | Nov
   | Dec
 
-type error = Invalid_month_number of int
+type error =
+  | Invalid_month_number of int
+  | Invalid_month_string of string
+
+let all = [ Jan; Feb; Mar; Apr; May; Jun; Jul; Aug; Sep; Oct; Nov; Dec ]
 
 let to_int = function
   | Jan -> 1
@@ -32,6 +36,53 @@ let to_int = function
   | Oct -> 10
   | Nov -> 11
   | Dec -> 12
+;;
+
+let to_string = function
+  | Jan -> "january"
+  | Feb -> "february"
+  | Mar -> "march"
+  | Apr -> "april"
+  | May -> "may"
+  | Jun -> "june"
+  | Jul -> "july"
+  | Aug -> "august"
+  | Sep -> "september"
+  | Oct -> "october"
+  | Nov -> "november"
+  | Dec -> "december"
+;;
+
+let to_short_string = function
+  | Jan -> "jan"
+  | Feb -> "feb"
+  | Mar -> "mar"
+  | Apr -> "apr"
+  | May -> "may"
+  | Jun -> "jun"
+  | Jul -> "jul"
+  | Aug -> "aug"
+  | Sep -> "sep"
+  | Oct -> "oct"
+  | Nov -> "nov"
+  | Dec -> "dec"
+;;
+
+let from_string str =
+  match String.(trim @@ lowercase_ascii str) with
+  | "jan" | "january" -> Ok Jan
+  | "feb" | "february" -> Ok Feb
+  | "mar" | "march" -> Ok Mar
+  | "apr" | "april" -> Ok Apr
+  | "may" -> Ok May
+  | "jun" | "june" -> Ok Jun
+  | "jul" | "july" -> Ok Jul
+  | "aug" | "august" -> Ok Aug
+  | "sep" | "september" -> Ok Sep
+  | "oct" | "october" -> Ok Oct
+  | "nov" | "november" -> Ok Nov
+  | "dec" | "december" -> Ok Dec
+  | s -> Error (Invalid_month_string s)
 ;;
 
 let from_int = function
@@ -60,12 +111,16 @@ let succ = function
   | Dec -> Jan
   | mon ->
     from_int (succ @@ to_int mon)
-    |> Result.get_ok (* NOTE: [Dec] case is guarded so [get_ok] is safe. *)
+    |>
+    (* NOTE: [Dec] case is guarded so [get_ok] is safe. *)
+    Result.get_ok
 ;;
 
 let pred = function
   | Jan -> Dec
   | mon ->
     from_int (pred @@ to_int mon)
-    |> Result.get_ok (* NOTE: [Jan] case is guarded so [get_ok] is safe. *)
+    |>
+    (* NOTE: [Jan] case is guarded so [get_ok] is safe. *)
+    Result.get_ok
 ;;

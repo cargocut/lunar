@@ -23,7 +23,12 @@ type t =
   | Dec
 
 (** Type listing errors that may occur when working with months.*)
-type error = Invalid_month_number of int
+type error =
+  | Invalid_month_number of int
+  | Invalid_month_string of string
+
+(** [all] is a list of all month from January to December. *)
+val all : t list
 
 (** {1 Operation and facts} *)
 
@@ -32,6 +37,18 @@ val from_int : int -> (t, error) result
 
 (** [to_int m] returns the numeric representation of a month (1-based).*)
 val to_int : t -> int
+
+(** [to_string m] returns the string representation of a month (not
+    capitalized).*)
+val to_string : t -> string
+
+(** [to_short_string m] returns the short string representation of a month
+    (not capitalized), ie: ["jan"] for ["january"]. *)
+val to_short_string : t -> string
+
+(** [from_string str] try to convert a string to a month. (Using string
+    representation or short representation).*)
+val from_string : string -> (t, error) result
 
 (** [days_in ~year m] Returns the number of days in month [m]
     for a given year [year]. *)
