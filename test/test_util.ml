@@ -20,3 +20,10 @@ let dump_month_validation =
 ;;
 
 let dump_weekday x = x |> Weekday.to_string |> print_endline
+
+let dump_weekday_validation =
+  dump_result Weekday.to_string (function
+    | Weekday.Invalid_weekday_number i ->
+      "invalid weekday number: " ^ string_of_int i
+    | Weekday.Invalid_weekday_string s -> "invalid weekday string: " ^ s)
+;;
