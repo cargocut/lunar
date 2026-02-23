@@ -13,17 +13,36 @@ let dump_result f_r f_e = function
 
 let dump_month m = m |> Month.to_string |> print_endline
 
-let dump_month_validation =
-  dump_result Month.to_string (function
-    | Month.Invalid_month_number i -> "invalid month number: " ^ string_of_int i
-    | Month.Invalid_month_string s -> "invalid month string: " ^ s)
+let month_err_to_string = function
+  | Month.Invalid_month_number i -> "invalid month number: " ^ string_of_int i
+  | Month.Invalid_month_string s -> "invalid month string: " ^ s
 ;;
 
+let weekday_err_to_string = function
+  | Weekday.Invalid_weekday_number i ->
+    "invalid weekday number: " ^ string_of_int i
+  | Weekday.Invalid_weekday_string s -> "invalid weekday string: " ^ s
+;;
+
+let datetime_err_to_string = function
+  | Datetime.Invalid_year x -> "invalid year: " ^ string_of_int x
+  | Datetime.Invalid_month err -> month_err_to_string err
+  | Datetime.Invalid_hour x -> "invalid hour: " ^ string_of_int x
+  | Datetime.Invalid_min x -> "invalid min: " ^ string_of_int x
+  | Datetime.Invalid_sec x -> "invalid sec: " ^ string_of_int x
+  | Datetime.Invalid_day { day_max; day } ->
+    "invalid day: " ^ string_of_int day ^ "/" ^ string_of_int day_max
+;;
+
+let dump_month_validation = dump_result Month.to_string month_err_to_string
 let dump_weekday x = x |> Weekday.to_string |> print_endline
 
 let dump_weekday_validation =
-  dump_result Weekday.to_string (function
-    | Weekday.Invalid_weekday_number i ->
-      "invalid weekday number: " ^ string_of_int i
-    | Weekday.Invalid_weekday_string s -> "invalid weekday string: " ^ s)
+  dump_result Weekday.to_string weekday_err_to_string
+;;
+
+let dump_datetime x = x |> Datetime.to_string |> print_endline
+
+let dump_datetime_validation =
+  dump_result Datetime.to_string datetime_err_to_string
 ;;

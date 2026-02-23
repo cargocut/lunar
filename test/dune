@@ -9,6 +9,8 @@
   month_test
   duration_dhms_test
   duration_weekday_test
-  weekday_test)
+  weekday_test
+  datetime_make_test
+  datetime_weekday_test)
  (preprocess
   (pps ppx_expect)))

@@ -142,3 +142,17 @@ let week_of_year ({ year; month; day_of_month; _ } as dt) =
     prev_year, iso_week_in_year prev_year)
   else year, w
 ;;
+
+let to_string { year; month; day_of_month; hour; min; sec } =
+  (* NOTE: The function does not rely on Format for Js_of_ocaml, but it
+     does allocate a lot. For now, we accept that this is okay.*)
+  [ [ Util.lpad ~size:4 year
+    ; Util.lpad ~size:2 (Month.to_int month)
+    ; Util.lpad ~size:2 day_of_month
+    ]
+    |> String.concat "-"
+  ; [ Util.lpad ~size:2 hour; Util.lpad ~size:2 min; Util.lpad ~size:2 sec ]
+    |> String.concat ":"
+  ]
+  |> String.concat "T"
+;;

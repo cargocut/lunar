@@ -7,3 +7,6 @@
 
 (** [is_leap_year y] returns [true] if the given year [y] is leap.*)
 val is_leap_year : int -> bool
+
+(** [lpad ?char ~size number] pad a given [number] with the given [char].*)
+val lpad : ?char:char -> size:int -> int -> string
