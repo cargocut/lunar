@@ -112,3 +112,28 @@ let%expect_test "weekday" =
   date |> Datetime.day_of_week |> dump_weekday;
   [%expect {| wednesday |}]
 ;;
+
+let%expect_test "iso_week" =
+  Datetime.epoch |> dump_iso_week_of_year;
+  [%expect {| 1970 W1, thu/4 |}]
+;;
+
+let%expect_test "iso_week" =
+  Datetime.make_exn ~year:2000 ~month:Jan ~day:1 () |> dump_iso_week_of_year;
+  [%expect {| 1999 W52, sat/6 |}]
+;;
+
+let%expect_test "iso_week" =
+  Datetime.make_exn ~year:2015 ~month:Dec ~day:31 () |> dump_iso_week_of_year;
+  [%expect {| 2015 W53, thu/4 |}]
+;;
+
+let%expect_test "iso_week" =
+  Datetime.make_exn ~year:2021 ~month:Jan ~day:1 () |> dump_iso_week_of_year;
+  [%expect {| 2020 W53, fri/5 |}]
+;;
+
+let%expect_test "iso_week" =
+  Datetime.make_exn ~year:2026 ~month:Feb ~day:23 () |> dump_iso_week_of_year;
+  [%expect {| 2026 W9, mon/1 |}]
+;;

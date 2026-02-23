@@ -131,3 +131,27 @@ val to_duration : t -> Duration.t
 
 (** [to_string dt] returns a string representation of the given [dt]. *)
 val to_string : t -> string
+
+(** {1 Operation on dates} *)
+
+(** [add datetime duration] compute a new date adding [duration] to the
+    given [datetime]. *)
+val add : t -> Duration.t -> t
+
+(** [sub datetime duration] compute a new date substracting [duration] to the
+    given [datetime]. *)
+val sub : t -> Duration.t -> t
+
+(** {1 Infix Operators} *)
+
+module Infix : sig
+  (** Common and useful infix operators. *)
+
+  (** [dt + dur] is {!val:add} *)
+  val ( + ) : t -> Duration.t -> t
+
+  (** [dt - dur] is {!val:sub} *)
+  val ( - ) : t -> Duration.t -> t
+end
+
+include module type of Infix

@@ -101,13 +101,13 @@ val mul : t -> int -> t
 module Infix : sig
   (** Common and useful infix operators. *)
 
-  (** [d1 + d2] is [add d1 d2]. *)
+  (** [d1 + d2] is [add d1 d2], see {!val:add}. *)
   val ( + ) : t -> t -> t
 
-  (** [d1 - d2] is [sub d1 d2]. *)
+  (** [d1 - d2] is [sub d1 d2], see {!val:sub}. *)
   val ( - ) : t -> t -> t
 
-  (** [d * i] is [mul d i]. *)
+  (** [d * i] is [mul d i], see {!val:mul}. *)
   val ( * ) : t -> int -> t
 
   (** [d1 = d2] is [equal d1 d2]. *)

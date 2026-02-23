@@ -46,3 +46,16 @@ let dump_datetime x = x |> Datetime.to_string |> print_endline
 let dump_datetime_validation =
   dump_result Datetime.to_string datetime_err_to_string
 ;;
+
+let dump_iso_week_of_year dt =
+  let wk = Datetime.day_of_week dt
+  and y, n = Datetime.week_of_year dt in
+  string_of_int y
+  ^ " W"
+  ^ string_of_int n
+  ^ ", "
+  ^ Weekday.to_short_string wk
+  ^ "/"
+  ^ string_of_int (succ (Weekday.to_int wk))
+  |> print_endline
+;;
