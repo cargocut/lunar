@@ -18,3 +18,5 @@ let dump_month_validation =
     | Month.Invalid_month_number i -> "invalid month number: " ^ string_of_int i
     | Month.Invalid_month_string s -> "invalid month string: " ^ s)
 ;;
+
+let dump_weekday x = x |> Weekday.to_string |> print_endline

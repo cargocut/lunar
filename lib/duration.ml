@@ -90,8 +90,31 @@ let add = Int64.add
 let sub = Int64.sub
 let mul ts x = Int64.(mul ts (of_int x))
 
+let dhms x =
+  let day_len = from_days 1 in
+  let hour_len = from_hours 1 in
+  let min_len = from_minutes 1 in
+  let days = Int64.div x day_len in
+  let rem = Int64.rem x day_len in
+  let days, rem =
+    if rem < 0L then Int64.pred days, Int64.add rem day_len else days, rem
+  in
+  let hour = Int64.div rem hour_len in
+  let rem = Int64.rem rem hour_len in
+  let min = Int64.div rem min_len in
+  let sec = Int64.rem rem min_len in
+  Int64.to_int days, Int64.to_int hour, Int64.to_int min, Int64.to_int sec
+;;
+
+let weekday x =
+  let weekdays = Weekday.[| Sun; Mon; Tue; Wed; Thu; Fri; Sat |] in
+  let d, _, _, _ = dhms x in
+  let id = (d + 4) mod 7 in
+  weekdays.((id + 7) mod 7)
+;;
+
 module Infix = struct
-  let ( + ) = Int64.abs
+  let ( + ) = Int64.add
   let ( - ) = Int64.sub
   let ( * ) = mul
   let ( = ) = equal

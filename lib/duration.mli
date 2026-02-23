@@ -69,6 +69,14 @@ val to_datetime : t -> int * int * int * int * int * int
 (** [to_int64 d] returns the int64 representation of a duration.*)
 val to_int64 : t -> int64
 
+(** [dhms duration] returns the number of days, hours, minutes, and
+    seconds that describe the duration.*)
+val dhms : t -> int * int * int * int
+
+(** [weekday d] returns the {!type:Weekday.t} for the given duration since
+    epoch.*)
+val weekday : t -> Weekday.t
+
 (** {1 Comparison} *)
 
 (** [compare a b] comparison between duration, following OCaml convention. *)
@@ -94,7 +102,7 @@ module Infix : sig
   (** Common and useful infix operators. *)
 
   (** [d1 + d2] is [add d1 d2]. *)
-  val ( + ) : t -> t
+  val ( + ) : t -> t -> t
 
   (** [d1 - d2] is [sub d1 d2]. *)
   val ( - ) : t -> t -> t

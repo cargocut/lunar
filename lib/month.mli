@@ -47,7 +47,7 @@ val to_string : t -> string
 val to_short_string : t -> string
 
 (** [from_string str] try to convert a string to a month. (Using string
-    representation or short representation).*)
+    representation or short representation). *)
 val from_string : string -> (t, error) result
 
 (** [days_in ~year m] Returns the number of days in month [m]
@@ -59,3 +59,19 @@ val succ : t -> t
 
 (** [pred m] returns the previous month. *)
 val pred : t -> t
+
+(** [equal a b] is equality between [a] and [b]. *)
+val equal : t -> t -> bool
+
+(** [compare a b] comparison between month, following OCaml convention. *)
+val compare : t -> t -> int
+
+(** {1 Specifics}
+
+    Internal implementation mainly used to resolve implementation details. *)
+
+(** [shift ~year month] considers January and February to be the 13th and
+    14th months of the previous year in order to simplify arithmetic
+    in leap years. The returned pair uses the first element for the
+    year and the second for the month (its integer representation).*)
+val shift : year:int -> t -> int * int

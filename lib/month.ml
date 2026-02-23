@@ -38,6 +38,22 @@ let to_int = function
   | Dec -> 12
 ;;
 
+let from_int = function
+  | 1 -> Ok Jan
+  | 2 -> Ok Feb
+  | 3 -> Ok Mar
+  | 4 -> Ok Apr
+  | 5 -> Ok May
+  | 6 -> Ok Jun
+  | 7 -> Ok Jul
+  | 8 -> Ok Aug
+  | 9 -> Ok Sep
+  | 10 -> Ok Oct
+  | 11 -> Ok Nov
+  | 12 -> Ok Dec
+  | n -> Error (Invalid_month_number n)
+;;
+
 let to_string = function
   | Jan -> "january"
   | Feb -> "february"
@@ -85,22 +101,6 @@ let from_string str =
   | s -> Error (Invalid_month_string s)
 ;;
 
-let from_int = function
-  | 1 -> Ok Jan
-  | 2 -> Ok Feb
-  | 3 -> Ok Mar
-  | 4 -> Ok Apr
-  | 5 -> Ok May
-  | 6 -> Ok Jun
-  | 7 -> Ok Jul
-  | 8 -> Ok Aug
-  | 9 -> Ok Sep
-  | 10 -> Ok Oct
-  | 11 -> Ok Nov
-  | 12 -> Ok Dec
-  | n -> Error (Invalid_month_number n)
-;;
-
 let days_in ~year = function
   | Jan | Mar | May | Jul | Aug | Oct | Dec -> 31
   | Feb -> if Util.is_leap_year year then 29 else 28
@@ -123,4 +123,22 @@ let pred = function
     |>
     (* NOTE: [Jan] case is guarded so [get_ok] is safe. *)
     Result.get_ok
+;;
+
+let equal a b =
+  let a = to_int a
+  and b = to_int b in
+  Int.equal a b
+;;
+
+let compare a b =
+  let a = to_int a
+  and b = to_int b in
+  Int.compare a b
+;;
+
+let shift ~year = function
+  | Jan -> year - 1, 13
+  | Feb -> year - 1, 14
+  | m -> year, to_int m
 ;;

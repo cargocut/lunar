@@ -8,3 +8,4 @@ val dump_bool : bool -> unit
 val dump_result : ('a -> string) -> ('b -> string) -> ('a, 'b) result -> unit
 val dump_month : Month.t -> unit
 val dump_month_validation : (Month.t, Month.error) result -> unit
+val dump_weekday : Weekday.t -> unit
