@@ -16,7 +16,63 @@
 (** The type describing a datetime. *)
 type t
 
+(** Type listing errors that may occur when working with datetime. *)
+type error =
+  | Invalid_year of int
+  | Invalid_month of Month.error
+  | Invalid_day of
+      { day_max : int
+      ; day : int
+      }
+  | Invalid_hour of int
+  | Invalid_min of int
+  | Invalid_sec of int
+
+(** And exception used for unsafe function. *)
+exception Invalid_date of error
+
 (** {1 Building datetime} *)
+
+(** [make ?at ~year ~month ~day ()] create and validate a datetime. *)
+val make
+  :  ?at:int * int * int
+  -> year:int
+  -> month:Month.t
+  -> day:int
+  -> unit
+  -> (t, error) result
+
+(** [make' ?at ~year ~month ~day ()] create and validate a datetime, see
+    {!val:make}. Take an integer rather than a {!val:Month.t}. *)
+val make'
+  :  ?at:int * int * int
+  -> year:int
+  -> month:int
+  -> day:int
+  -> unit
+  -> (t, error) result
+
+(** [make_exn ?at ~year ~month ~day ()] create and validate a datetime
+    like {!val:make} but raise [Invalid_date] if the validation
+    doesn't succeed. *)
+val make_exn
+  :  ?at:int * int * int
+  -> year:int
+  -> month:Month.t
+  -> day:int
+  -> unit
+  -> t
+
+(** [make_exn' ?at ~year ~month ~day ()] create and validate a datetime,
+    like {!val:make'} but raise [Invalid_date] if the validation doesn't
+    succeed. *)
+val make_exn'
+  :  ?at:int * int * int
+  -> year:int
+  -> month:int
+  -> day:int
+  -> unit
+  -> t
 
 (** [from_duration d] converts a duration to a datetime.
     [0] is the 1970-01-01 00:00:00. *)

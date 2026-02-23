@@ -22,7 +22,7 @@ type t =
   | Nov
   | Dec
 
-(** Type listing errors that may occur when working with months.*)
+(** Type listing errors that may occur when working with months. *)
 type error =
   | Invalid_month_number of int
   | Invalid_month_string of string

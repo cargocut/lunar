@@ -12,6 +12,68 @@ type t =
   ; sec : int
   }
 
+type error =
+  | Invalid_year of int
+  | Invalid_month of Month.error
+  | Invalid_day of
+      { day_max : int
+      ; day : int
+      }
+  | Invalid_hour of int
+  | Invalid_min of int
+  | Invalid_sec of int
+
+exception Invalid_date of error
+
+let validate_year y =
+  if y < 0 || y > 9999
+  then
+    (* NOTE: Perhaps this constraint is a little too strict, but the
+       acceptable range of years seems reasonable for software development.*)
+    Error (Invalid_year y)
+  else Ok y
+;;
+
+let validate_day year month day =
+  let day_max = Month.days_in ~year month in
+  if day < 1 || day > day_max
+  then Error (Invalid_day { day_max; day })
+  else Ok day
+;;
+
+let validate_bound max err x = if x < 0 || x >= max then Error (err x) else Ok x
+
+let make ?(at = 0, 0, 0) ~year ~month ~day () =
+  let hour, min, sec = at in
+  let ( let* ) = Result.bind in
+  let* year = validate_year year in
+  let* day_of_month = validate_day year month day in
+  let* hour = validate_bound 24 (fun x -> Invalid_hour x) hour in
+  let* min = validate_bound 60 (fun x -> Invalid_min x) min in
+  let* sec = validate_bound 60 (fun x -> Invalid_sec x) sec in
+  Ok { year; month; day_of_month; hour; min; sec }
+;;
+
+let make_exn ?at ~year ~month ~day () =
+  match make ?at ~year ~month ~day () with
+  | Ok dt -> dt
+  | Error err -> raise (Invalid_date err)
+;;
+
+let make' ?at ~year ~month ~day () =
+  let ( let* ) = Result.bind in
+  let* month =
+    Month.from_int month |> Result.map_error (fun e -> Invalid_month e)
+  in
+  make ?at ~year ~month ~day ()
+;;
+
+let make_exn' ?at ~year ~month ~day () =
+  match make' ?at ~year ~month ~day () with
+  | Ok dt -> dt
+  | Error err -> raise (Invalid_date err)
+;;
+
 let from_duration d =
   let year, month, day_of_month, hour, min, sec = Duration.to_datetime d in
   let month =
