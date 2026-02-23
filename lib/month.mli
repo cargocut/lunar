@@ -66,12 +66,26 @@ val equal : t -> t -> bool
 (** [compare a b] comparison between month, following OCaml convention. *)
 val compare : t -> t -> int
 
-(** {1 Specifics}
+(** {1 Infix operators} *)
 
-    Internal implementation mainly used to resolve implementation details. *)
+module Infix : sig
+  (** Common and useful infix operators. *)
 
-(** [shift ~year month] considers January and February to be the 13th and
-    14th months of the previous year in order to simplify arithmetic
-    in leap years. The returned pair uses the first element for the
-    year and the second for the month (its integer representation).*)
-val shift : year:int -> t -> int * int
+  (** [m1 = m2] is [equal m1 m2]. *)
+  val ( = ) : t -> t -> bool
+
+  (** [m1 <> m2] is [not (equal m1 m2)]. *)
+  val ( <> ) : t -> t -> bool
+
+  (** [m1 > m2] returns [true] if [m1] is greater than [m2]. *)
+  val ( > ) : t -> t -> bool
+
+  (** [m1 >= m2] returns [true] if [m1] is greater or equal to [m2]. *)
+  val ( >= ) : t -> t -> bool
+
+  (** [m1 < m2] returns [true] if [m2] is greater than [m1]. *)
+  val ( < ) : t -> t -> bool
+
+  (** [m1 <= m2] returns [true] if [m2] is greater or equal to [m1]. *)
+  val ( <= ) : t -> t -> bool
+end

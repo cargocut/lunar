@@ -100,3 +100,12 @@ let compare a b =
   and b = to_int b in
   Int.compare a b
 ;;
+
+module Infix = struct
+  let ( = ) = equal
+  let ( <> ) x y = not (equal x y)
+  let ( > ) x y = compare x y > 0
+  let ( >= ) x y = compare x y >= 0
+  let ( < ) x y = compare x y < 0
+  let ( <= ) x y = compare x y <= 0
+end

@@ -137,8 +137,11 @@ let compare a b =
   Int.compare a b
 ;;
 
-let shift ~year = function
-  | Jan -> year - 1, 13
-  | Feb -> year - 1, 14
-  | m -> year, to_int m
-;;
+module Infix = struct
+  let ( = ) = equal
+  let ( <> ) x y = not (equal x y)
+  let ( > ) x y = compare x y > 0
+  let ( >= ) x y = compare x y >= 0
+  let ( < ) x y = compare x y < 0
+  let ( <= ) x y = compare x y <= 0
+end
