@@ -142,6 +142,25 @@ val add : t -> Duration.t -> t
     given [datetime]. *)
 val sub : t -> Duration.t -> t
 
+(** {2 On duration}
+
+    Arithmetic operations, such as {!val:add} and {!val:sub}, rely on
+    conversions to {!type:Duration.t}, which means, for example, that in the
+    expression: [Infix.(datetime + d1 + d2 + d3)], [datetime] is
+    converted to duration, added, converted back to datetime, added
+    again, and so on.
+
+    For simply adding a single value, this is fine, but when you want
+    to build more complex operations, this back-and-forth is a bit
+    tedious. {!val:as_duration} allows you to avoid these trips back
+    and forth. *)
+
+(** [as_duration f dt] Converts the given datetime [dt] to a duration,
+    applies the function [f] to this duration, and returns the result as a
+    datetime. Useful for performing multiple operations on a single
+    datetime.*)
+val as_duration : (Duration.t -> Duration.t) -> t -> t
+
 (** {1 Infix Operators} *)
 
 module Infix : sig

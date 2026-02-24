@@ -157,9 +157,9 @@ let to_string { year; month; day_of_month; hour; min; sec } =
   |> String.concat "T"
 ;;
 
-let on_duration f dt = f (to_duration dt) |> from_duration
-let add dt d = on_duration (fun dt -> Duration.add dt d) dt
-let sub dt d = on_duration (fun dt -> Duration.sub dt d) dt
+let as_duration f dt = f (to_duration dt) |> from_duration
+let add dt d = as_duration (fun dt -> Duration.add dt d) dt
+let sub dt d = as_duration (fun dt -> Duration.sub dt d) dt
 
 module Infix = struct
   let ( + ) = add
