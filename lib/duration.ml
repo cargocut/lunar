@@ -13,6 +13,9 @@ let from_minutes x = x |> from_seconds |> Int64.mul 60L
 let from_hours x = x |> from_seconds |> Int64.mul 3600L
 let from_days x = x |> from_seconds |> Int64.mul 86400L
 let one_day = from_days 1
+let abs = Int64.abs
+let min = Int64.min
+let max = Int64.max
 
 let div_floor a b =
   let q = a / b
@@ -89,6 +92,8 @@ let equal = Int64.equal
 let add = Int64.add
 let sub = Int64.sub
 let mul ts x = Int64.(mul ts (of_int x))
+let succ = Int64.succ
+let pred = Int64.pred
 
 let dhms x =
   let day_len = from_days 1 in

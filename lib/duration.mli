@@ -85,7 +85,16 @@ val compare : t -> t -> int
 (** [equal a b] equality between duration. *)
 val equal : t -> t -> bool
 
+(** [min d1 d2] returns the smaller between [d1] and [d2]. *)
+val min : t -> t -> t
+
+(** [max d1 d2] returns the greater between [d1] and [d2]. *)
+val max : t -> t -> t
+
 (** {1 Arithmetic operation} *)
+
+(**  [abs d] returns the absolute value of [d]. *)
+val abs : t -> t
 
 (** [add a b] is the addition of [a] and [b]. *)
 val add : t -> t -> t
@@ -95,6 +104,12 @@ val sub : t -> t -> t
 
 (** [mul d i] multiplies a duration by an integer. *)
 val mul : t -> int -> t
+
+(** [succ d] adds 1 second to [d]. *)
+val succ : t -> t
+
+(** [pred d] remove 1 second to [d]. *)
+val pred : t -> t
 
 (** {1 Infix Operators} *)
 
