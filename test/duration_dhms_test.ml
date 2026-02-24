@@ -3,17 +3,7 @@
 
    SPDX-License-Identifier: BSD-3-Clause *)
 
-let dump_dhms d =
-  let d, h, m, s = d |> Duration.dhms in
-  string_of_int d
-  ^ "d, "
-  ^ string_of_int h
-  ^ ":"
-  ^ string_of_int m
-  ^ ":"
-  ^ string_of_int s
-  |> print_endline
-;;
+open Test_util
 
 let%expect_test "dhms" =
   Duration.from_datetime ~year:1970 ~month:1 ~day:1 ~hour:0 ~min:0 ~sec:0

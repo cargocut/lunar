@@ -142,6 +142,10 @@ val add : t -> Duration.t -> t
     given [datetime]. *)
 val sub : t -> Duration.t -> t
 
+(** [diff dt1 dt2] returns the difference (in {!type:Duration.t}) between
+    [d1] and [d2]. *)
+val diff : t -> t -> Duration.t
+
 (** {2 On duration}
 
     Arithmetic operations, such as {!val:add} and {!val:sub}, rely on

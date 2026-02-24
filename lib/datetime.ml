@@ -161,6 +161,12 @@ let as_duration f dt = f (to_duration dt) |> from_duration
 let add dt d = as_duration (fun dt -> Duration.add dt d) dt
 let sub dt d = as_duration (fun dt -> Duration.sub dt d) dt
 
+let diff a b =
+  let a = to_duration a
+  and b = to_duration b in
+  Duration.sub a b
+;;
+
 module Infix = struct
   let ( + ) = add
   let ( - ) = sub

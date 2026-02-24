@@ -59,3 +59,15 @@ let dump_iso_week_of_year dt =
   ^ string_of_int (succ (Weekday.to_int wk))
   |> print_endline
 ;;
+
+let dump_dhms d =
+  let d, h, m, s = d |> Duration.dhms in
+  string_of_int d
+  ^ "d, "
+  ^ string_of_int h
+  ^ ":"
+  ^ string_of_int m
+  ^ ":"
+  ^ string_of_int s
+  |> print_endline
+;;

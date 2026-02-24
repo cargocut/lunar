@@ -12,6 +12,7 @@
   weekday_test
   datetime_make_test
   datetime_weekday_test
-  datetime_arith_test)
+  datetime_arith_test
+  datetime_diff_test)
  (preprocess
   (pps ppx_expect)))
