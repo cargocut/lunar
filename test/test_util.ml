@@ -34,6 +34,13 @@ let datetime_err_to_string = function
     "invalid day: " ^ string_of_int day ^ "/" ^ string_of_int day_max
 ;;
 
+let date_err_to_string = function
+  | Date.Invalid_year x -> "invalid year: " ^ string_of_int x
+  | Date.Invalid_month err -> month_err_to_string err
+  | Date.Invalid_day { day_max; day } ->
+    "invalid day: " ^ string_of_int day ^ "/" ^ string_of_int day_max
+;;
+
 let dump_month_validation = dump_result Month.to_string month_err_to_string
 let dump_weekday x = x |> Weekday.to_string |> print_endline
 
@@ -42,10 +49,13 @@ let dump_weekday_validation =
 ;;
 
 let dump_datetime x = x |> Datetime.to_string |> print_endline
+let dump_date x = x |> Date.to_string |> print_endline
 
 let dump_datetime_validation =
   dump_result Datetime.to_string datetime_err_to_string
 ;;
+
+let dump_date_validation = dump_result Date.to_string date_err_to_string
 
 let dump_iso_week_of_year dt =
   let wk = Datetime.day_of_week dt

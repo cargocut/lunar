@@ -80,3 +80,12 @@ val day_of_year : t -> int
 
     {b see:} {{:https://en.wikipedia.org/wiki/ISO_8601} ISO 8601}. *)
 val week_of_year : t -> int * int
+
+(** {1 Conversion} *)
+
+(** [to_duration dt] returns a duration since {!val:epoch} for the given
+    datetime [dt].*)
+val to_duration : t -> Duration.t
+
+(** [to_string dt] returns a string representation of the given [dt]. *)
+val to_string : t -> string
