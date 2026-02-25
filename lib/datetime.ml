@@ -12,6 +12,15 @@ type t =
   ; sec : int
   }
 
+let equal { year; month; day_of_month; hour; min; sec } b =
+  Int.equal year b.year
+  && Month.equal month b.month
+  && Int.equal day_of_month b.day_of_month
+  && Int.equal hour b.hour
+  && Int.equal min b.min
+  && Int.equal sec b.sec
+;;
+
 type error =
   | Invalid_year of int
   | Invalid_month of Month.error

@@ -160,10 +160,15 @@ val diff : t -> t -> Duration.t
     and forth. *)
 
 (** [as_duration f dt] Converts the given datetime [dt] to a duration,
-    applies the function [f] to this duration, and returns the result as a
-    datetime. Useful for performing multiple operations on a single
-    datetime.*)
+    applies the function [f] to this duration, and returns the result
+    as a datetime. Useful for performing multiple operations on a
+    single datetime. *)
 val as_duration : (Duration.t -> Duration.t) -> t -> t
+
+(** {1 Comparison} *)
+
+(* Equality between datetimes. *)
+val equal : t -> t -> bool
 
 (** {1 Infix Operators} *)
 
