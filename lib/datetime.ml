@@ -12,15 +12,6 @@ type t =
   ; sec : int
   }
 
-let equal { year; month; day_of_month; hour; min; sec } b =
-  Int.equal year b.year
-  && Month.equal month b.month
-  && Int.equal day_of_month b.day_of_month
-  && Int.equal hour b.hour
-  && Int.equal min b.min
-  && Int.equal sec b.sec
-;;
-
 type error =
   | Invalid_year of int
   | Invalid_month of Month.error
@@ -176,9 +167,45 @@ let diff a b =
   Duration.sub a b
 ;;
 
+let equal { year; month; day_of_month; hour; min; sec } b =
+  Int.equal year b.year
+  && Month.equal month b.month
+  && Int.equal day_of_month b.day_of_month
+  && Int.equal hour b.hour
+  && Int.equal min b.min
+  && Int.equal sec b.sec
+;;
+
+let compare { year; month; day_of_month; hour; min; sec } b =
+  let c = Int.compare year b.year in
+  if Int.equal c 0
+  then (
+    let c = Month.compare month b.month in
+    if Int.equal c 0
+    then (
+      let c = Int.compare day_of_month b.day_of_month in
+      if Int.equal c 0
+      then (
+        let c = Int.compare hour b.hour in
+        if Int.equal c 0
+        then (
+          let c = Int.compare min b.min in
+          if Int.equal c 0 then Int.compare sec b.sec else c)
+        else c)
+      else c)
+    else c)
+  else c
+;;
+
 module Infix = struct
   let ( + ) = add
   let ( - ) = sub
+  let ( = ) = equal
+  let ( <> ) x y = not (equal x y)
+  let ( > ) x y = compare x y > 0
+  let ( >= ) x y = compare x y >= 0
+  let ( < ) x y = compare x y < 0
+  let ( <= ) x y = compare x y <= 0
 end
 
 include Infix

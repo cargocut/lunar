@@ -170,6 +170,9 @@ val as_duration : (Duration.t -> Duration.t) -> t -> t
 (* Equality between datetimes. *)
 val equal : t -> t -> bool
 
+(** [compare a b] comparison between duration, following OCaml convention. *)
+val compare : t -> t -> int
+
 (** {1 Infix Operators} *)
 
 module Infix : sig
@@ -180,6 +183,24 @@ module Infix : sig
 
   (** [dt - dur] is {!val:sub} *)
   val ( - ) : t -> Duration.t -> t
+
+  (** [d1 = d2] is [equal d1 d2]. *)
+  val ( = ) : t -> t -> bool
+
+  (** [d1 <> d2] is [not (equal d1 d2)]. *)
+  val ( <> ) : t -> t -> bool
+
+  (** [d1 > d2] returns [true] if [d1] is greater than [d2]. *)
+  val ( > ) : t -> t -> bool
+
+  (** [d1 >= d2] returns [true] if [d1] is greater or equal to [d2]. *)
+  val ( >= ) : t -> t -> bool
+
+  (** [d1 < d2] returns [true] if [d2] is greater than [d1]. *)
+  val ( < ) : t -> t -> bool
+
+  (** [d1 <= d2] returns [true] if [d2] is greater or equal to [d1]. *)
+  val ( <= ) : t -> t -> bool
 end
 
 include module type of Infix
