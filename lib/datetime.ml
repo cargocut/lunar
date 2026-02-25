@@ -176,25 +176,27 @@ let equal { year; month; day_of_month; hour; min; sec } b =
   && Int.equal sec b.sec
 ;;
 
-let compare { year; month; day_of_month; hour; min; sec } b =
+let compare_date { year; month; day_of_month; _ } b =
   let c = Int.compare year b.year in
   if Int.equal c 0
   then (
     let c = Month.compare month b.month in
-    if Int.equal c 0
-    then (
-      let c = Int.compare day_of_month b.day_of_month in
-      if Int.equal c 0
-      then (
-        let c = Int.compare hour b.hour in
-        if Int.equal c 0
-        then (
-          let c = Int.compare min b.min in
-          if Int.equal c 0 then Int.compare sec b.sec else c)
-        else c)
-      else c)
-    else c)
+    if Int.equal c 0 then Int.compare day_of_month b.day_of_month else c)
   else c
+;;
+
+let compare_time { hour; min; sec; _ } b =
+  let c = Int.compare hour b.hour in
+  if Int.equal c 0
+  then (
+    let c = Int.compare min b.min in
+    if Int.equal c 0 then Int.compare sec b.sec else c)
+  else c
+;;
+
+let compare a b =
+  let c = compare_date a b in
+  if Int.equal c 0 then compare_time a b else c
 ;;
 
 module Infix = struct
