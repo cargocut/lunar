@@ -318,3 +318,29 @@ let%expect_test "month drift stress test" =
   |> dump_date;
   [%expect {| 2030-01-31 |}]
 ;;
+
+let%expect_test "jan31 + multiple months" =
+  Date.make_exn' ~year:2020 ~month:1 ~day:31 ()
+  |> Date.add_months 13
+  |> dump_date;
+  [%expect {| 2021-02-28 |}]
+;;
+
+let%expect_test "1900 non-leap year" =
+  Date.make_exn' ~year:1899 ~month:2 ~day:28 ()
+  |> Date.add_days 366
+  |> dump_date;
+  [%expect {| 1900-03-01 |}]
+;;
+
+let%expect_test "2000 leap year" =
+  Date.make_exn' ~year:1999 ~month:2 ~day:28 ()
+  |> Date.add_days 366
+  |> dump_date;
+  [%expect {| 2000-02-29 |}]
+;;
+
+let%expect_test "week of year jan1 edge" =
+  Date.make_exn' ~year:2021 ~month:1 ~day:1 () |> dump_date_iso_week_of_year;
+  [%expect {| 2020 W53, fri/5 |}]
+;;

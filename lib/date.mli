@@ -70,9 +70,9 @@ val year_of_century : t -> int
 (** [year dt] returns the year from a date. *)
 val year : t -> int
 
-(** [on_leap_year dt] returns [true] if [year dt] is a leap year, [false]
+(** [is_leap_year dt] returns [true] if [year dt] is a leap year, [false]
     otherwise.*)
-val on_leap_year : t -> bool
+val is_leap_year : t -> bool
 
 (** [month dt] returns the month from a date. *)
 val month : t -> Month.t
