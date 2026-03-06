@@ -10,3 +10,6 @@ val is_leap_year : int -> bool
 
 (** [lpad ?char ~size number] pad a given [number] with the given [char].*)
 val lpad : ?char:char -> size:int -> int -> string
+
+(** [mod_floor a b] modulo works using negative numbers. *)
+val mod_floor : int -> int -> int

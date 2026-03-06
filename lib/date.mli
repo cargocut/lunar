@@ -141,6 +141,14 @@ val add_weeks : int -> t -> t
     [d] (a week is [7] days). *)
 val sub_weeks : int -> t -> t
 
+(** [add_months number_of_months d] add [number_of_months] to the given
+    date [d]. *)
+val add_months : int -> t -> t
+
+(** [add_months number_of_months d] remove [number_of_months] to the given
+    date [d]. *)
+val sub_months : int -> t -> t
+
 (** [add_years d number_of_years] add [number_of_years] to the given date
     [d]. *)
 val add_years : int -> t -> t

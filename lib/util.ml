@@ -14,3 +14,8 @@ let lpad ?(char = '0') ~size n =
   let len = String.length str in
   pre ^ if len >= size then str else String.make (size - len) char ^ str
 ;;
+
+let mod_floor a b =
+  let r = a mod b in
+  if r < 0 then r + b else r
+;;

@@ -162,27 +162,40 @@ let sub d dt = as_duration (fun dt -> Duration.sub dt d) dt
 let add_days ds dt = as_duration (fun d -> Duration.(add d (from_days ds))) dt
 let sub_days ds dt = as_duration (fun d -> Duration.(sub d (from_days ds))) dt
 let add_weeks w = add_days (w * 7)
-let sub_weeks w = sub_days (w * 7)
+let sub_weeks w = add_weeks (-w)
 let succ = add_days 1
 let pred = sub_days 1
+
+let trim_day_of_month ~year ~month d =
+  Int.min (day_of_month d) (Month.days_in ~year month)
+;;
 
 let add_years n d =
   let y = year d + n
   and m = month d in
-  let d = day_of_month d in
-  let day = Int.min d (Month.days_in ~year:y m) in
+  let day = trim_day_of_month ~year:y ~month:m d in
   (* NOTE: Should never performs any exception here. *)
   make_exn ~year:y ~month:m ~day ()
 ;;
 
-let sub_years n d =
-  let y = year d - n
-  and m = month d in
-  let d = day_of_month d in
-  let day = Int.min d (Month.days_in ~year:y m) in
+let sub_years n = add_years (-n)
+
+let add_months n d =
+  let y = year d
+  and m = d |> month |> Month.to_int in
+  let t = (y * 12) + (m - 1) + n in
+  let ny = t / 12 in
+  let nm = Util.mod_floor t 12 + 1 in
+  let m =
+    (* NOTE: [nm] is guarded by [mod] so it should be unreachable. *)
+    nm |> Month.from_int |> Result.get_ok
+  in
+  let day = trim_day_of_month ~year:ny ~month:m d in
   (* NOTE: Should never performs any exception here. *)
-  make_exn ~year:y ~month:m ~day ()
+  make_exn ~year:ny ~month:m ~day ()
 ;;
+
+let sub_months n = add_months (-n)
 
 let diff a b =
   let a = to_duration a
