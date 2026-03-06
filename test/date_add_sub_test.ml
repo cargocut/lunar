@@ -272,3 +272,49 @@ let%expect_test "12 months equals 1 year" =
   d |> Date.add_months 12 |> dump_date;
   [%expect {| 2024-05-12 |}]
 ;;
+
+let%expect_test "jan31 month chain leap year" =
+  Date.make_exn' ~year:2020 ~month:1 ~day:31 ()
+  |> Date.add_months 1
+  |> Date.add_months 1
+  |> dump_date;
+  [%expect {| 2020-03-29 |}]
+;;
+
+let%expect_test "century non leap year" =
+  Date.make_exn' ~year:2099 ~month:2 ~day:28 ()
+  |> Date.add_days 366
+  |> dump_date;
+  [%expect {| 2100-03-01 |}]
+;;
+
+let%expect_test "gregorian 400y cycle days" =
+  Date.make_exn' ~year:2000 ~month:3 ~day:1 ()
+  |> Date.add_days 146097
+  |> dump_date;
+  [%expect {| 2400-03-01 |}]
+;;
+
+let%expect_test "gregorian 400y cycle months" =
+  Date.make_exn' ~year:2000 ~month:3 ~day:1 ()
+  |> Date.add_months 4800
+  |> dump_date;
+  [%expect {| 2400-03-01 |}]
+;;
+
+let%expect_test "negative year leap rule" =
+  Date.make_exn' ~year:0 ~month:2 ~day:29 () |> Date.add_years 4 |> dump_date;
+  [%expect {| 0004-02-29 |}]
+;;
+
+let%expect_test "epoch roundtrip months" =
+  Date.epoch |> Date.add_months 1200 |> Date.sub_months 1200 |> dump_date;
+  [%expect {| 1970-01-01 |}]
+;;
+
+let%expect_test "month drift stress test" =
+  Date.make_exn' ~year:2020 ~month:1 ~day:31 ()
+  |> Date.add_months 120
+  |> dump_date;
+  [%expect {| 2030-01-31 |}]
+;;
