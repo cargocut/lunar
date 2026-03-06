@@ -170,7 +170,7 @@ val as_duration : (Duration.t -> Duration.t) -> t -> t
 (* Equality between datetimes. *)
 val equal : t -> t -> bool
 
-(** [compare a b] comparison between duration, following OCaml convention. *)
+(** [compare a b] comparison between datetimes, following OCaml convention. *)
 val compare : t -> t -> int
 
 (** {1 Infix Operators} *)

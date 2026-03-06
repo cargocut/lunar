@@ -128,3 +128,41 @@ let to_string { year; month; day_of_month } =
   ]
   |> String.concat "-"
 ;;
+
+let equal { year; month; day_of_month } b =
+  Int.equal year b.year
+  && Month.equal month b.month
+  && Int.equal day_of_month b.day_of_month
+;;
+
+let compare { year; month; day_of_month } b =
+  let c = Int.compare year b.year in
+  if Int.equal c 0
+  then (
+    let c = Month.compare month b.month in
+    if Int.equal c 0 then Int.compare day_of_month b.day_of_month else c)
+  else c
+;;
+
+let as_duration f dt = f (to_duration dt) |> from_duration
+let add dt d = as_duration (fun dt -> Duration.add dt d) dt
+let sub dt d = as_duration (fun dt -> Duration.sub dt d) dt
+
+let diff a b =
+  let a = to_duration a
+  and b = to_duration b in
+  Duration.sub a b
+;;
+
+module Infix = struct
+  let ( + ) = add
+  let ( - ) = sub
+  let ( = ) = equal
+  let ( <> ) x y = not (equal x y)
+  let ( > ) x y = compare x y > 0
+  let ( >= ) x y = compare x y >= 0
+  let ( < ) x y = compare x y < 0
+  let ( <= ) x y = compare x y <= 0
+end
+
+include Infix

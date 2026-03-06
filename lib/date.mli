@@ -89,3 +89,78 @@ val to_duration : t -> Duration.t
 
 (** [to_string dt] returns a string representation of the given [dt]. *)
 val to_string : t -> string
+
+(** {1 Operation on dates} *)
+
+(** [add date duration] compute a new date adding [duration] to the given
+    [date]. {b warning}: Since the duration does not always correspond
+    to a full day, the results are truncated. *)
+val add : t -> Duration.t -> t
+
+(** [sub datetime duration] compute a new date substracting [duration] to
+    the given [datetime]. {b warning}: Since the duration does not
+    always correspond to a full day, the results are truncated. *)
+val sub : t -> Duration.t -> t
+
+(** [diff dt1 dt2] returns the difference (in {!type:Duration.t}) between
+    [d1] and [d2]. *)
+val diff : t -> t -> Duration.t
+
+(** {2 On duration}
+
+    Arithmetic operations, such as {!val:add} and {!val:sub}, rely on
+    conversions to {!type:Duration.t}, which means, for example, that in the
+    expression: [Infix.(date + d1 + d2 + d3)], [date] is
+    converted to duration, added, converted back to date, added
+    again, and so on.
+
+    For simply adding a single value, this is fine, but when you want
+    to build more complex operations, this back-and-forth is a bit
+    tedious. {!val:as_duration} allows you to avoid these trips back
+    and forth. *)
+
+(** [as_duration f d] Converts the given date [d] to a duration,
+    applies the function [f] to this duration, and returns the result
+    as a date. Useful for performing multiple operations on a
+    single date. *)
+val as_duration : (Duration.t -> Duration.t) -> t -> t
+
+(** {1 Comparison} *)
+
+(* Equality between dates. *)
+val equal : t -> t -> bool
+
+(** [compare a b] comparison between dates, following OCaml convention. *)
+val compare : t -> t -> int
+
+(** {1 Infix Operators} *)
+
+module Infix : sig
+  (** Common and useful infix operators. *)
+
+  (** [d + dur] is {!val:add} *)
+  val ( + ) : t -> Duration.t -> t
+
+  (** [d - dur] is {!val:sub} *)
+  val ( - ) : t -> Duration.t -> t
+
+  (** [d1 = d2] is [equal d1 d2]. *)
+  val ( = ) : t -> t -> bool
+
+  (** [d1 <> d2] is [not (equal d1 d2)]. *)
+  val ( <> ) : t -> t -> bool
+
+  (** [d1 > d2] returns [true] if [d1] is greater than [d2]. *)
+  val ( > ) : t -> t -> bool
+
+  (** [d1 >= d2] returns [true] if [d1] is greater or equal to [d2]. *)
+  val ( >= ) : t -> t -> bool
+
+  (** [d1 < d2] returns [true] if [d2] is greater than [d1]. *)
+  val ( < ) : t -> t -> bool
+
+  (** [d1 <= d2] returns [true] if [d2] is greater or equal to [d1]. *)
+  val ( <= ) : t -> t -> bool
+end
+
+include module type of Infix
