@@ -21,8 +21,17 @@ exception Invalid_time of error
 
 (** {1 Building time} *)
 
+(** [make ~hour ~min ~sec ()] create and validate a time. *)
 val make : hour:int -> min:int -> sec:int -> unit -> (t, error) result
+
+(** [make_exn ~hour ~min ~sec ()] create and validate a time, like
+    {!val:make} but raise [Invalid_time] if the validation doesn't
+    succeed. *)
 val make_exn : hour:int -> min:int -> sec:int -> unit -> t
+
+(** [from_duration d] returns a [time] representation for the given
+    duration [d]. *)
+val from_duration : Duration.t -> t
 
 (** {1 Conversion} *)
 
@@ -31,6 +40,16 @@ val to_duration : t -> Duration.t
 
 (** [to_string t] returns a string representation of the given time [t]. *)
 val to_string : t -> string
+
+(** {1 Operation on times} *)
+
+(** [add duration time] compute a new time adding [duration] to the given
+    [time]. *)
+val add : Duration.t -> t -> t
+
+(** [sub duration time] compute a new time removing [duration] to the
+    given [time]. *)
+val sub : Duration.t -> t -> t
 
 (** {1 Comparison} *)
 
@@ -44,6 +63,12 @@ val compare : t -> t -> int
 
 module Infix : sig
   (** Common and useful infix operators. *)
+
+  (** [t + dur] is {!val:add} *)
+  val ( + ) : t -> Duration.t -> t
+
+  (** [t - dur] is {!val:sub} *)
+  val ( - ) : t -> Duration.t -> t
 
   (** [t1 = t2] is [equal t1 t2]. *)
   val ( = ) : t -> t -> bool

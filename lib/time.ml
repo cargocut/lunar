@@ -46,7 +46,20 @@ let to_string t =
   |> String.concat ":"
 ;;
 
+let from_duration d =
+  let u = Duration.from_days 1 |> Duration.to_int64 in
+  let d = Duration.to_int64 d in
+  let r = Int64.rem d u in
+  let res = if r < 0L then Int64.add r u else r in
+  Int64.to_int res
+;;
+
+let add d t = Duration.add (to_duration t) d |> from_duration
+let sub d t = Duration.sub (to_duration t) d |> from_duration
+
 module Infix = struct
+  let ( + ) x y = add y x
+  let ( - ) x y = sub y x
   let ( = ) = equal
   let ( <> ) x y = not (equal x y)
   let ( > ) x y = compare x y > 0
