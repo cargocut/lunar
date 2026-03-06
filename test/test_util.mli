@@ -15,4 +15,5 @@ val dump_date : Date.t -> unit
 val dump_datetime_validation : (Datetime.t, Datetime.error) result -> unit
 val dump_date_validation : (Date.t, Date.error) result -> unit
 val dump_iso_week_of_year : Datetime.t -> unit
+val dump_date_iso_week_of_year : Date.t -> unit
 val dump_dhms : Duration.t -> unit

@@ -70,6 +70,19 @@ let dump_iso_week_of_year dt =
   |> print_endline
 ;;
 
+let dump_date_iso_week_of_year dt =
+  let wk = Date.day_of_week dt
+  and y, n = Date.week_of_year dt in
+  string_of_int y
+  ^ " W"
+  ^ string_of_int n
+  ^ ", "
+  ^ Weekday.to_short_string wk
+  ^ "/"
+  ^ string_of_int (succ (Weekday.to_int wk))
+  |> print_endline
+;;
+
 let dump_dhms d =
   let d, h, m, s = d |> Duration.dhms in
   string_of_int d

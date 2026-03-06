@@ -147,6 +147,10 @@ let compare { year; month; day_of_month } b =
 let as_duration f dt = f (to_duration dt) |> from_duration
 let add dt d = as_duration (fun dt -> Duration.add dt d) dt
 let sub dt d = as_duration (fun dt -> Duration.sub dt d) dt
+let add_days dt ds = as_duration (fun d -> Duration.(add d (from_days ds))) dt
+let sub_days dt ds = as_duration (fun d -> Duration.(sub d (from_days ds))) dt
+let succ d = add_days d 1
+let pred d = sub_days d 1
 
 let diff a b =
   let a = to_duration a
