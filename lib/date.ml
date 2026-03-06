@@ -82,11 +82,23 @@ let year { year; _ } = year
 let month { month; _ } = month
 let day_of_month { day_of_month; _ } = day_of_month
 let on_leap_year { year; _ } = Util.is_leap_year year
+let era { year; _ } = Era.from_year year
+let year_of_era { year; _ } = Era.year year
+let century_of_era { year; _ } = Era.century year
+let year_of_century { year; _ } = Era.year_of_century year
 
-let day_of_week dt =
-  let d = to_duration dt in
+let day_of_week d =
+  let d = to_duration d in
   Duration.weekday d
 ;;
+
+let is_weekend d =
+  match day_of_week d with
+  | Weekday.Sat | Weekday.Sun -> true
+  | Weekday.Mon | Weekday.Tue | Weekday.Wed | Weekday.Thu | Weekday.Fri -> false
+;;
+
+let is_weekday d = not (is_weekend d)
 
 let day_of_year { year; month; day_of_month } =
   let month_i = Month.to_int month
@@ -145,12 +157,32 @@ let compare { year; month; day_of_month } b =
 ;;
 
 let as_duration f dt = f (to_duration dt) |> from_duration
-let add dt d = as_duration (fun dt -> Duration.add dt d) dt
-let sub dt d = as_duration (fun dt -> Duration.sub dt d) dt
-let add_days dt ds = as_duration (fun d -> Duration.(add d (from_days ds))) dt
-let sub_days dt ds = as_duration (fun d -> Duration.(sub d (from_days ds))) dt
-let succ d = add_days d 1
-let pred d = sub_days d 1
+let add d dt = as_duration (fun dt -> Duration.add dt d) dt
+let sub d dt = as_duration (fun dt -> Duration.sub dt d) dt
+let add_days ds dt = as_duration (fun d -> Duration.(add d (from_days ds))) dt
+let sub_days ds dt = as_duration (fun d -> Duration.(sub d (from_days ds))) dt
+let add_weeks w = add_days (w * 7)
+let sub_weeks w = sub_days (w * 7)
+let succ = add_days 1
+let pred = sub_days 1
+
+let add_years n d =
+  let y = year d + n
+  and m = month d in
+  let d = day_of_month d in
+  let day = Int.min d (Month.days_in ~year:y m) in
+  (* NOTE: Should never performs any exception here. *)
+  make_exn ~year:y ~month:m ~day ()
+;;
+
+let sub_years n d =
+  let y = year d - n
+  and m = month d in
+  let d = day_of_month d in
+  let day = Int.min d (Month.days_in ~year:y m) in
+  (* NOTE: Should never performs any exception here. *)
+  make_exn ~year:y ~month:m ~day ()
+;;
 
 let diff a b =
   let a = to_duration a
@@ -159,8 +191,8 @@ let diff a b =
 ;;
 
 module Infix = struct
-  let ( + ) = add
-  let ( - ) = sub
+  let ( + ) x y = add y x
+  let ( - ) x y = sub y x
   let ( = ) = equal
   let ( <> ) x y = not (equal x y)
   let ( > ) x y = compare x y > 0

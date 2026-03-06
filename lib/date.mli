@@ -52,6 +52,21 @@ val epoch : t
 
     Information and facts about Date. *)
 
+(** [era d] returns the {i era} of the given date [d]. *)
+val era : t -> Era.t
+
+(** [year_of_era d] returns the year of the associated era for the given
+    date [d]. *)
+val year_of_era : t -> int
+
+(** [century d] returns the century of the associated era for the given
+    date [d]. *)
+val century_of_era : t -> int
+
+(** [year_of_century d] returns the year of the century of the associated
+    era for the given date [d]. *)
+val year_of_century : t -> int
+
 (** [year dt] returns the year from a date. *)
 val year : t -> int
 
@@ -81,6 +96,14 @@ val day_of_year : t -> int
     {b see:} {{:https://en.wikipedia.org/wiki/ISO_8601} ISO 8601}. *)
 val week_of_year : t -> int * int
 
+(** [is_weekend d] returns [true] if the given date [d] is on [Saturday]
+    or [Sunday]. *)
+val is_weekend : t -> bool
+
+(** [is_weekday] returns [true] if the given date [d] is not on [Saturday]
+    or [Sunday]. *)
+val is_weekday : t -> bool
+
 (** {1 Conversion} *)
 
 (** [to_duration dt] returns a duration since {!val:epoch} for the given
@@ -92,23 +115,39 @@ val to_string : t -> string
 
 (** {1 Operation on dates} *)
 
-(** [add date duration] compute a new date adding [duration] to the given
+(** [add duration date] compute a new date adding [duration] to the given
     [date]. {b warning}: Since the duration does not always correspond
     to a full day, the results are truncated. *)
-val add : t -> Duration.t -> t
+val add : Duration.t -> t -> t
 
-(** [sub datetime duration] compute a new date substracting [duration] to
+(** [sub duration date] compute a new date substracting [duration] to
     the given [datetime]. {b warning}: Since the duration does not
     always correspond to a full day, the results are truncated. *)
-val sub : t -> Duration.t -> t
+val sub : Duration.t -> t -> t
 
-(** [add_days d number_of_days] add [number_of_days] to the given date
+(** [add_days number_of_days d] add [number_of_days] to the given date
     [d]. *)
-val add_days : t -> int -> t
+val add_days : int -> t -> t
 
 (** [sub_days d number_of_days] remove [number_of_days] to the given date
     [d]. *)
-val sub_days : t -> int -> t
+val sub_days : int -> t -> t
+
+(** [add_weeks d number_of_weeks] add [number_of_weeks] to the given date
+    [d] (a week is [7] days). *)
+val add_weeks : int -> t -> t
+
+(** [sub_weeks d number_of_weeks] remove [number_of_weeks] to the given date
+    [d] (a week is [7] days). *)
+val sub_weeks : int -> t -> t
+
+(** [add_years d number_of_years] add [number_of_years] to the given date
+    [d]. *)
+val add_years : int -> t -> t
+
+(** [sub_years d number_of_years] remove [number_of_years] to the given date
+    [d]. *)
+val sub_years : int -> t -> t
 
 (** [succ d] is [add_days d 1]. *)
 val succ : t -> t
@@ -116,7 +155,7 @@ val succ : t -> t
 (** [pred d] is [sub_days d 1]. *)
 val pred : t -> t
 
-(** [diff dt1 dt2] returns the difference (in {!type:Duration.t}) between
+(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
     [d1] and [d2]. *)
 val diff : t -> t -> Duration.t
 
@@ -141,7 +180,7 @@ val as_duration : (Duration.t -> Duration.t) -> t -> t
 
 (** {1 Comparison} *)
 
-(* Equality between dates. *)
+(** Equality between dates. *)
 val equal : t -> t -> bool
 
 (** [compare a b] comparison between dates, following OCaml convention. *)

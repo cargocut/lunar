@@ -10,9 +10,11 @@
   duration_dhms_test
   duration_weekday_test
   weekday_test
+  era_test
   date_make_test
   date_weekday_test
   date_arith_op_test
+  date_add_sub_test
   datetime_make_test
   datetime_weekday_test
   datetime_arith_test

@@ -7,28 +7,28 @@ open Test_util
 
 let%expect_test "add" =
   let d = Date.make_exn ~year:2026 ~month:Month.Mar ~day:6 () in
-  let e = Date.add d (Duration.from_seconds 2000) in
+  let e = Date.add (Duration.from_seconds 2000) d in
   e |> dump_date;
   [%expect {| 2026-03-06 |}]
 ;;
 
 let%expect_test "add" =
   let d = Date.make_exn ~year:2026 ~month:Month.Mar ~day:6 () in
-  let e = Date.add d (Duration.from_days 3) in
+  let e = Date.add (Duration.from_days 3) d in
   e |> dump_date;
   [%expect {| 2026-03-09 |}]
 ;;
 
 let%expect_test "sub" =
   let d = Date.make_exn ~year:2026 ~month:Month.Mar ~day:6 () in
-  let e = Date.sub d (Duration.from_seconds 2000) in
+  let e = Date.sub (Duration.from_seconds 2000) d in
   e |> dump_date;
   [%expect {| 2026-03-05 |}]
 ;;
 
 let%expect_test "sub" =
   let d = Date.make_exn ~year:2026 ~month:Month.Mar ~day:6 () in
-  let e = Date.sub d (Duration.from_days 3) in
+  let e = Date.sub (Duration.from_days 3) d in
   e |> dump_date;
   [%expect {| 2026-03-03 |}]
 ;;

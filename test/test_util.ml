@@ -94,3 +94,5 @@ let dump_dhms d =
   ^ string_of_int s
   |> print_endline
 ;;
+
+let dump_era era = era |> Era.to_string |> print_endline
