@@ -15,6 +15,7 @@
   date_weekday_test
   date_arith_op_test
   date_add_sub_test
+  time_test
   datetime_make_test
   datetime_weekday_test
   datetime_arith_test

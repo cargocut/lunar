@@ -13,6 +13,12 @@ let dump_result f_r f_e = function
 
 let dump_month m = m |> Month.to_string |> print_endline
 
+let time_err_to_string = function
+  | Time.Invalid_hour x -> "invalid hour: " ^ string_of_int x
+  | Time.Invalid_minute x -> "invalid min: " ^ string_of_int x
+  | Time.Invalid_second x -> "invalid sec: " ^ string_of_int x
+;;
+
 let month_err_to_string = function
   | Month.Invalid_month_number i -> "invalid month number: " ^ string_of_int i
   | Month.Invalid_month_string s -> "invalid month string: " ^ s
@@ -50,11 +56,13 @@ let dump_weekday_validation =
 
 let dump_datetime x = x |> Datetime.to_string |> print_endline
 let dump_date x = x |> Date.to_string |> print_endline
+let dump_time x = x |> Time.to_string |> print_endline
 
 let dump_datetime_validation =
   dump_result Datetime.to_string datetime_err_to_string
 ;;
 
+let dump_time_validation = dump_result Time.to_string time_err_to_string
 let dump_date_validation = dump_result Date.to_string date_err_to_string
 
 let dump_iso_week_of_year dt =
