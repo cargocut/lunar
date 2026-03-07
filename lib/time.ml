@@ -72,6 +72,12 @@ let from_duration d =
   Int64.to_int res
 ;;
 
+let diff a b =
+  let a = to_duration a
+  and b = to_duration b in
+  Duration.sub a b
+;;
+
 let add d t = Duration.add (to_duration t) d |> from_duration
 let sub d t = Duration.sub (to_duration t) d |> from_duration
 let add_seconds n = add (Duration.from_seconds n)
@@ -138,5 +144,11 @@ let is_evening t =
 ;;
 
 let is_night x = not (is_morning x || is_afternoon x || is_evening x)
+let floor = truncate
+
+let ceil dur t =
+  let x = floor dur t in
+  if equal x t then t else add dur x
+;;
 
 include Infix

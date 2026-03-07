@@ -101,6 +101,10 @@ val succ : t -> t
 (** [pred t] is [sub_seconds 1]. *)
 val pred : t -> t
 
+(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
+    [d1] and [d2]. *)
+val diff : t -> t -> Duration.t
+
 (** {1 Round and truncate} *)
 
 (** [truncate resolution t] truncates [t] to the previous multiple of
@@ -112,6 +116,9 @@ val pred : t -> t
     - [truncate (Duration.from_minutes 1) 12:34:56] = [12:34:00]
     - [truncate (Duration.from_hours 1) 12:34:56] = [12:00:00]. *)
 val truncate : Duration.t -> t -> t
+
+(** [floor d t] is [truncate d t]. *)
+val floor : Duration.t -> t -> t
 
 (** [round resolution t] rounds [t] to the nearest multiple of
     [resolution].
@@ -125,6 +132,20 @@ val truncate : Duration.t -> t -> t
     - [round (Duration.from_hours 1) 12:29:59] = [12:00:00]
     - [round (Duration.from_hours 1) 12:30:00] = [13:00:00]. *)
 val round : Duration.t -> t -> t
+
+(** [ceil resolution t] rounds the given [time] [t] up to the nearest multiple of
+    [resolution]. If [t] is already aligned with [resolution], it is returned
+    unchanged.
+
+    All units smaller than [resolution] are discarded unless rounding up
+    requires incrementing a larger unit.
+
+    Examples:
+    - [ceil (Duration.from_minutes 1) 12:34:00] = [12:34:00]
+    - [ceil (Duration.from_minutes 1) 12:34:01] = [12:35:00]
+    - [ceil (Duration.from_hours 1) 12:00:00] = [12:00:00]
+    - [ceil (Duration.from_hours 1) 12:01:00] = [13:00:00]. *)
+val ceil : Duration.t -> t -> t
 
 (** {1 Comparison} *)
 
