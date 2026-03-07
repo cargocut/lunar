@@ -91,14 +91,14 @@ let pred = add_seconds 1
 
 let truncate dur t =
   let d = t |> to_duration |> Duration.to_int64
-  and s = dur |> Duration.to_int64 in
+  and s = dur |> Duration.abs |> Duration.to_int64 in
   let r = Int64.rem d s in
   let b = Int64.sub d r in
   from_duration (Duration.from_int64 b)
 ;;
 
 let round dur t =
-  let s = dur |> Duration.to_int64 in
+  let s = dur |> Duration.abs |> Duration.to_int64 in
   let d = t |> to_duration |> Duration.to_int64
   and h = Int64.div s 2L in
   let r = Int64.rem d s in
@@ -147,6 +147,7 @@ let is_night x = not (is_morning x || is_afternoon x || is_evening x)
 let floor = truncate
 
 let ceil dur t =
+  let dur = Duration.abs dur in
   let x = floor dur t in
   if equal x t then t else add dur x
 ;;

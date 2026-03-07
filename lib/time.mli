@@ -15,6 +15,7 @@ type error =
   | Invalid_hour of int
   | Invalid_minute of int
   | Invalid_second of int
+(* | Invalid_string of string *)
 
 (** And exception used for unsafe function. *)
 exception Invalid_time of error
@@ -105,7 +106,10 @@ val pred : t -> t
     [d1] and [d2]. *)
 val diff : t -> t -> Duration.t
 
-(** {1 Round and truncate} *)
+(** {1 Round and truncate}
+
+    A negative duration can produce very strange results, which is
+    why durations are converted to absolute values in rounding functions. *)
 
 (** [truncate resolution t] truncates [t] to the previous multiple of
     [resolution].
