@@ -33,6 +33,18 @@ val make_exn : hour:int -> min:int -> sec:int -> unit -> t
     duration [d]. *)
 val from_duration : Duration.t -> t
 
+(** [midnight] is [00:00:00]. *)
+val midnight : t
+
+(** [noun] is [12:00:00]. *)
+val noun : t
+
+(** [am h] is a safe builder (using [mod]) to build an hour. *)
+val am : int -> t
+
+(** [pm h] is a safe builder (using [mod]) to build an hour. *)
+val pm : int -> t
+
 (** {1 Conversion} *)
 
 (** [to_duration t] converts the given time [t] to a duration. *)
@@ -51,6 +63,41 @@ val add : Duration.t -> t -> t
     given [time]. *)
 val sub : Duration.t -> t -> t
 
+(** [add_seconds number_of_seconds time] add [number_of_seconds] to the
+    given [time]. *)
+val add_seconds : int -> t -> t
+
+(** [sub_seconds number_of_seconds time] remove [number_of_seconds] to the
+    given [time]. *)
+val sub_seconds : int -> t -> t
+
+(** [add_minutes number_of_minutes time] add [number_of_minutes] to the
+    given [time]. *)
+val add_minutes : int -> t -> t
+
+(** [sub_minutes number_of_minutes time] remove [number_of_minutes] to the
+    given [time]. *)
+val sub_minutes : int -> t -> t
+
+(** [add_hours number_of_hours time] add [number_of_hours] to the
+    given [time]. *)
+val add_hours : int -> t -> t
+
+(** [sub_hours number_of_hours time] remove [number_of_hours] to the
+    given [time]. *)
+val sub_hours : int -> t -> t
+
+(** [succ t] is [add_seconds 1]. *)
+val succ : t -> t
+
+(** [pred t] is [sub_seconds 1]. *)
+val pred : t -> t
+
+(** [truncate duration time] returns a truncated version of the given [time]. The
+    base is computed depending on the given duration. e.g.
+    [truncate (Duration.from_minutes 1)] will truncate at the minute-level. *)
+val truncate : Duration.t -> t -> t
+
 (** {1 Comparison} *)
 
 (** Equality between times. *)
@@ -58,6 +105,12 @@ val equal : t -> t -> bool
 
 (** [compare a b] comparison between times, following OCaml convention. *)
 val compare : t -> t -> int
+
+(** [min a b] returns the smaller of two arguments. *)
+val min : t -> t -> t
+
+(** [max a b] returns the greater of two arguments. *)
+val max : t -> t -> t
 
 (** {1 Infix Operators} *)
 

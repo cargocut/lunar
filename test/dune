@@ -16,6 +16,8 @@
   date_arith_op_test
   date_add_sub_test
   time_test
+  time_am_pm_test
+  time_truncate_round_test
   datetime_make_test
   datetime_weekday_test
   datetime_arith_test

@@ -157,10 +157,10 @@ val add_years : int -> t -> t
     [d]. *)
 val sub_years : int -> t -> t
 
-(** [succ d] is [add_days d 1]. *)
+(** [succ d] is [add_days 1]. *)
 val succ : t -> t
 
-(** [pred d] is [sub_days d 1]. *)
+(** [pred d] is [sub_days 1]. *)
 val pred : t -> t
 
 (** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
@@ -193,6 +193,12 @@ val equal : t -> t -> bool
 
 (** [compare a b] comparison between dates, following OCaml convention. *)
 val compare : t -> t -> int
+
+(** [min a b] returns the smaller of two arguments. *)
+val min : t -> t -> t
+
+(** [max a b] returns the greater of two arguments. *)
+val max : t -> t -> t
 
 (** {1 Infix Operators} *)
 

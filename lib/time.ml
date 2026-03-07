@@ -30,11 +30,28 @@ let make_exn ~hour ~min ~sec () =
   | Error err -> raise (Invalid_time err)
 ;;
 
+let am_h n = n mod 24 mod 12
+let pm_h n = am_h n + 12
+
+let pm h =
+  let hour = pm_h h in
+  make_exn ~hour ~min:0 ~sec:0 ()
+;;
+
+let am h =
+  let hour = am_h h in
+  make_exn ~hour ~min:0 ~sec:0 ()
+;;
+
+let midnight = make_exn ~hour:0 ~min:0 ~sec:0 ()
+let noun = make_exn ~hour:12 ~min:0 ~sec:0 ()
 let hour t = t / 3600
 let minute t = t mod 3600 / 60
 let second t = t mod 60
 let equal = Int.equal
 let compare = Int.compare
+let min = Int.min
+let max = Int.max
 
 let to_string t =
   (* NOTE: The function does not rely on Format for Js_of_ocaml, but it
@@ -56,6 +73,22 @@ let from_duration d =
 
 let add d t = Duration.add (to_duration t) d |> from_duration
 let sub d t = Duration.sub (to_duration t) d |> from_duration
+let add_seconds n = add (Duration.from_seconds n)
+let sub_seconds n = sub (Duration.from_seconds n)
+let add_minutes n = add (Duration.from_minutes n)
+let sub_minutes n = sub (Duration.from_minutes n)
+let add_hours n = add (Duration.from_hours n)
+let sub_hours n = sub (Duration.from_hours n)
+let succ = add_seconds 1
+let pred = add_seconds 1
+
+let truncate dur t =
+  let d = t |> to_duration |> Duration.to_int64
+  and s = dur |> Duration.to_int64 in
+  let r = Int64.rem d s in
+  let b = Int64.sub d r in
+  from_duration (Duration.from_int64 b)
+;;
 
 module Infix = struct
   let ( + ) x y = add y x
