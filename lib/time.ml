@@ -90,6 +90,19 @@ let truncate dur t =
   from_duration (Duration.from_int64 b)
 ;;
 
+let round dur t =
+  let s = dur |> Duration.to_int64 in
+  let d = t |> to_duration |> Duration.to_int64
+  and h = Int64.div s 2L in
+  let r = Int64.rem d s in
+  let r = if r < 0L then Int64.add r s else r in
+  let base = Int64.sub d r in
+  let res =
+    (if r >= h then Int64.add base s else base) |> Duration.from_int64
+  in
+  from_duration res
+;;
+
 module Infix = struct
   let ( + ) x y = add y x
   let ( - ) x y = sub y x

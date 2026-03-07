@@ -67,3 +67,31 @@ let%expect_test "truncate" =
   |> dump_time;
   [%expect {| 18:00:00 |}]
 ;;
+
+let%expect_test "round" =
+  Time.make_exn ~hour:12 ~min:34 ~sec:29 ()
+  |> Time.round (Duration.from_minutes 1)
+  |> dump_time;
+  [%expect {| 12:34:00 |}]
+;;
+
+let%expect_test "round" =
+  Time.make_exn ~hour:12 ~min:34 ~sec:31 ()
+  |> Time.round (Duration.from_minutes 1)
+  |> dump_time;
+  [%expect {| 12:35:00 |}]
+;;
+
+let%expect_test "round" =
+  Time.make_exn ~hour:12 ~min:29 ~sec:59 ()
+  |> Time.round (Duration.from_hours 1)
+  |> dump_time;
+  [%expect {| 12:00:00 |}]
+;;
+
+let%expect_test "round" =
+  Time.make_exn ~hour:12 ~min:30 ~sec:59 ()
+  |> Time.round (Duration.from_hours 1)
+  |> dump_time;
+  [%expect {| 13:00:00 |}]
+;;

@@ -93,10 +93,30 @@ val succ : t -> t
 (** [pred t] is [sub_seconds 1]. *)
 val pred : t -> t
 
-(** [truncate duration time] returns a truncated version of the given [time]. The
-    base is computed depending on the given duration. e.g.
-    [truncate (Duration.from_minutes 1)] will truncate at the minute-level. *)
+(** {1 Round and truncate} *)
+
+(** [truncate resolution t] truncates [t] to the previous multiple of
+    [resolution].
+
+    All units smaller than [resolution] are discarded.
+
+    Examples:
+    - [truncate (Duration.from_minutes 1) 12:34:56] = [12:34:00]
+    - [truncate (Duration.from_hours 1) 12:34:56] = [12:00:00]. *)
 val truncate : Duration.t -> t -> t
+
+(** [round resolution t] rounds [t] to the nearest multiple of
+    [resolution].
+
+    If [t] lies exactly halfway between two multiples of [resolution],
+    it is rounded up to the next multiple.
+
+    Examples:
+    - [round (Duration.from_minutes 1) 12:34:29] = [12:34:00]
+    - [round (Duration.from_minutes 1) 12:34:30] = [12:35:00]
+    - [round (Duration.from_hours 1) 12:29:59] = [12:00:00]
+    - [round (Duration.from_hours 1) 12:30:00] = [13:00:00]. *)
+val round : Duration.t -> t -> t
 
 (** {1 Comparison} *)
 
