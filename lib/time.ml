@@ -44,7 +44,8 @@ let am h =
 ;;
 
 let midnight = make_exn ~hour:0 ~min:0 ~sec:0 ()
-let noun = make_exn ~hour:12 ~min:0 ~sec:0 ()
+let noon = make_exn ~hour:12 ~min:0 ~sec:0 ()
+let end_of_day = make_exn ~hour:23 ~min:59 ~sec:59 ()
 let hour t = t / 3600
 let minute t = t mod 3600 / 60
 let second t = t mod 60
@@ -113,5 +114,29 @@ module Infix = struct
   let ( < ) x y = compare x y < 0
   let ( <= ) x y = compare x y <= 0
 end
+
+let is_earlier ~than t = Infix.(t < than)
+let is_later ~than t = Infix.(t > than)
+let is_am t = t < noon
+let is_pm t = t >= noon
+let is_noon = equal noon
+let is_midnight = equal midnight
+
+let is_morning t =
+  let h = hour t in
+  h >= 5 && h < 12
+;;
+
+let is_afternoon t =
+  let h = hour t in
+  h >= 12 && h < 17
+;;
+
+let is_evening t =
+  let h = hour t in
+  h >= 17 && h < 21
+;;
+
+let is_night x = not (is_morning x || is_afternoon x || is_evening x)
 
 include Infix

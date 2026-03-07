@@ -36,14 +36,22 @@ val from_duration : Duration.t -> t
 (** [midnight] is [00:00:00]. *)
 val midnight : t
 
-(** [noun] is [12:00:00]. *)
-val noun : t
+(** [noon] is [12:00:00]. *)
+val noon : t
+
+(** [end_of_day] is [23:59:59]. *)
+val end_of_day : t
 
 (** [am h] is a safe builder (using [mod]) to build an hour. *)
 val am : int -> t
 
 (** [pm h] is a safe builder (using [mod]) to build an hour. *)
 val pm : int -> t
+
+(** There is a confusion for the [am/pm] system
+    ({{:https://en.wikipedia.org/wiki/12-hour_clock#Confusion_at_noon_and_midnight}
+    see}). In Lunar, [am] is between [00:00:00] and [11:59:59] and
+    [pm] is between [12:00:00] and [23:59:59]. *)
 
 (** {1 Conversion} *)
 
@@ -131,6 +139,48 @@ val min : t -> t -> t
 
 (** [max a b] returns the greater of two arguments. *)
 val max : t -> t -> t
+
+(** {1 Predicates} *)
+
+(** [is_earlier ~than t] returns [true] if [t] is (strictly) earlier than
+    [than], [false] otherwise. *)
+val is_earlier : than:t -> t -> bool
+
+(** [is_later ~than t] returns [true] if [t] is (strictly) later than
+    [than], [false] otherwise. *)
+val is_later : than:t -> t -> bool
+
+(** [is_am t] returns [true] if [t] is between [00:00:00] and [11:59:59],
+    [false] otherwise. *)
+val is_am : t -> bool
+
+(** [is_pm t] returns [true] if [t] is between [12:00:00] and [23:59:59],
+    [false] otherwise. *)
+val is_pm : t -> bool
+
+(** [is_noon t] returns [true] if [t] is exactly [12:00:00], [false]
+    otherwise. *)
+val is_noon : t -> bool
+
+(** [is_midnight t] returns [true] if [t] is exactly [00:00:00], [false]
+    otherwise. *)
+val is_midnight : t -> bool
+
+(** [is_morning t] returns [true] if [t] is between [05:00:00] and
+    [11:59:59], [false] otherwise. *)
+val is_morning : t -> bool
+
+(** [is_afternoon t] returns [true] if [t] is between [12:00:00] and
+    [16:59:59], [false] otherwise. *)
+val is_afternoon : t -> bool
+
+(** [is_evening t] returns [true] if [t] is between [17:00:00] and
+    [20:59:59], [false] otherwise. *)
+val is_evening : t -> bool
+
+(** [is_night t] returns [true] if [t] is between [21:00:00] and
+    [04:59:59], [false] otherwise. *)
+val is_night : t -> bool
 
 (** {1 Infix Operators} *)
 
