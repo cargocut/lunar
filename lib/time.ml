@@ -155,8 +155,6 @@ module Infix = struct
     Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
 end
 
-let is_earlier ~than t = Infix.(t < than)
-let is_later ~than t = Infix.(t > than)
 let is_am t = t < noon
 let is_pm t = t >= noon
 let is_noon = equal noon

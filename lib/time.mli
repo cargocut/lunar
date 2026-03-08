@@ -166,14 +166,6 @@ include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
 
 (** {1 Predicates} *)
 
-(** [is_earlier ~than t] returns [true] if [t] is (strictly) earlier than
-    [than], [false] otherwise. *)
-val is_earlier : than:t -> t -> bool
-
-(** [is_later ~than t] returns [true] if [t] is (strictly) later than
-    [than], [false] otherwise. *)
-val is_later : than:t -> t -> bool
-
 (** [is_am t] returns [true] if [t] is between [00:00:00] and [11:59:59],
     [false] otherwise. *)
 val is_am : t -> bool

@@ -227,14 +227,6 @@ val age : birthday:t -> t -> int
 
 (** {1 Predicates} *)
 
-(** [is_earlier ~than d] returns [true] if [t] is (strictly) earlier than
-    [than], [false] otherwise. *)
-val is_earlier : than:t -> t -> bool
-
-(** [is_later ~than d] returns [true] if [t] is (strictly) later than
-    [than], [false] otherwise. *)
-val is_later : than:t -> t -> bool
-
 (** [is_weekend d] returns [true] if the given date [d] is on [Saturday]
     or [Sunday]. *)
 val is_weekend : t -> bool

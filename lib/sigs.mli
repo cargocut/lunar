@@ -37,6 +37,14 @@ module type COMPARABLE_HELPERS = sig
   (** [clamp ~min ~max x] restricts the [x] to the inclusive interval
       [[min, max]]. *)
   val clamp : min:t -> max:t -> t -> t
+
+  (** [is_earlier ~than x] returns [true] if [x] is (strictly) earlier than
+      [than], [false] otherwise. *)
+  val is_earlier : than:t -> t -> bool
+
+  (** [is_later ~than x] returns [true] if [x] is (strictly) later than
+      [than], [false] otherwise. *)
+  val is_later : than:t -> t -> bool
 end
 
 module type COMPARABLE_INFIX = sig

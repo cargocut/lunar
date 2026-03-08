@@ -48,6 +48,9 @@ module Make_compare_helpers (E : Sigs.COMPARABLE) = struct
     and big = max a b in
     min big (max small x)
   ;;
+
+  let is_earlier ~than x = E.compare x than < 0
+  let is_later ~than x = E.compare x than > 0
 end
 
 module Make_compare_infix (E : Sigs.COMPARABLE) = struct

@@ -274,9 +274,6 @@ module Infix = struct
     Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
 end
 
-let is_earlier ~than t = Infix.(t < than)
-let is_later ~than t = Infix.(t > than)
-
 include (
   Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
 
