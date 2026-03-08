@@ -46,15 +46,7 @@ let am h =
 
 let from_string s =
   (* TODO: improve cases, to handle [3am] for example. *)
-  match
-    Util.split_on_chars
-      (function
-        (* KLUDGE: not sure if it is right to deal with
-           more than [:] but hey, it is a proto. *)
-        | ':' | '-' | '.' -> true
-        | _ -> false)
-      s
-  with
+  match String.split_on_char ':' s with
   | [ hr; min; sec ]
     when Util.only_numbers hr && Util.only_numbers min && Util.only_numbers sec
     ->
