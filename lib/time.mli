@@ -15,7 +15,7 @@ type error =
   | Invalid_hour of int
   | Invalid_minute of int
   | Invalid_second of int
-(* | Invalid_string of string *)
+  | Invalid_string of string
 
 (** And exception used for unsafe function. *)
 exception Invalid_time of error
@@ -29,6 +29,9 @@ val make : hour:int -> min:int -> sec:int -> unit -> (t, error) result
     {!val:make} but raise [Invalid_time] if the validation doesn't
     succeed. *)
 val make_exn : hour:int -> min:int -> sec:int -> unit -> t
+
+(** [from_string] try to read a time from a string. *)
+val from_string : string -> (t, error) result
 
 (** [from_duration d] returns a [time] representation for the given
     duration [d]. *)

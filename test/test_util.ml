@@ -17,6 +17,7 @@ let time_err_to_string = function
   | Time.Invalid_hour x -> "invalid hour: " ^ string_of_int x
   | Time.Invalid_minute x -> "invalid min: " ^ string_of_int x
   | Time.Invalid_second x -> "invalid sec: " ^ string_of_int x
+  | Time.Invalid_string s -> "invalid string: " ^ s
 ;;
 
 let month_err_to_string = function

@@ -11,6 +11,7 @@ type error =
   | Invalid_hour of int
   | Invalid_minute of int
   | Invalid_second of int
+  | Invalid_string of string
 
 exception Invalid_time of error
 
@@ -41,6 +42,40 @@ let pm h =
 let am h =
   let hour = am_h h in
   make_exn ~hour ~min:0 ~sec:0 ()
+;;
+
+let from_string s =
+  (* TODO: improve cases, to handle [3am] for example. *)
+  match
+    Util.split_on_chars
+      (function
+        (* KLUDGE: not sure if it is right to deal with
+           more than [:] but hey, it is a proto. *)
+        | ':' | '-' | '.' -> true
+        | _ -> false)
+      s
+  with
+  | [ hr; min; sec ]
+    when Util.only_numbers hr && Util.only_numbers min && Util.only_numbers sec
+    ->
+    (* NOTE: Using unsafe function here is safe
+       because of the guard [Util.only_numbers]. *)
+    let hour = int_of_string hr
+    and min = int_of_string min
+    and sec = int_of_string sec in
+    make ~hour ~min ~sec ()
+  | [ hr; min ] when Util.only_numbers hr && Util.only_numbers min ->
+    (* NOTE: Using unsafe function here is safe
+       because of the guard [Util.only_numbers]. *)
+    let hour = int_of_string hr
+    and min = int_of_string min in
+    make ~hour ~min ~sec:0 ()
+  | [ hr ] when Util.only_numbers hr ->
+    (* NOTE: Using unsafe function here is safe
+       because of the guard [Util.only_numbers]. *)
+    let hour = int_of_string hr in
+    make ~hour ~min:0 ~sec:0 ()
+  | _ -> Error (Invalid_string s)
 ;;
 
 let midnight = make_exn ~hour:0 ~min:0 ~sec:0 ()
