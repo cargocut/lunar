@@ -42,6 +42,7 @@ let datetime_err_to_string = function
 ;;
 
 let date_err_to_string = function
+  | Date.Invalid_string s -> "invalid string: " ^ s
   | Date.Invalid_year x -> "invalid year: " ^ string_of_int x
   | Date.Invalid_month err -> month_err_to_string err
   | Date.Invalid_day { day_max; day } ->

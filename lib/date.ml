@@ -16,6 +16,7 @@ type error =
       { day_max : int
       ; day : int
       }
+  | Invalid_string of string
 
 exception Invalid_date of error
 
@@ -60,6 +61,20 @@ let make_exn' ~year ~month ~day () =
   match make' ~year ~month ~day () with
   | Ok dt -> dt
   | Error err -> raise (Invalid_date err)
+;;
+
+let from_string s =
+  (* TODO: improve cases. *)
+  match String.split_on_char '-' s with
+  | [ y; m; d ]
+    when Util.only_numbers y && Util.only_numbers m && Util.only_numbers d ->
+    (* NOTE: Using unsafe function here is safe
+       because of the guard [Util.only_numbers]. *)
+    let year = int_of_string y
+    and month = int_of_string m
+    and day = int_of_string d in
+    make' ~year ~month ~day ()
+  | _ -> Error (Invalid_string s)
 ;;
 
 let from_duration d =

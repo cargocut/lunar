@@ -18,6 +18,7 @@ type error =
       { day_max : int
       ; day : int
       }
+  | Invalid_string of string
 
 (** And exception used for unsafe function. *)
 exception Invalid_date of error
@@ -40,6 +41,10 @@ val make_exn : year:int -> month:Month.t -> day:int -> unit -> t
     like {!val:make'} but raise [Invalid_date] if the validation doesn't
     succeed. *)
 val make_exn' : year:int -> month:int -> day:int -> unit -> t
+
+(** [from_string] try to read a date from a string (using the format
+    [year-mon-day]). *)
+val from_string : string -> (t, error) result
 
 (** [from_duration d] converts a duration to a date.
     [0] is the 1970-01-01. *)
