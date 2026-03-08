@@ -268,6 +268,8 @@ module Infix = struct
   let ( <= ) x y = compare x y <= 0
 end
 
+let is_earlier ~than t = Infix.(t < than)
+let is_later ~than t = Infix.(t > than)
 let min a b = if a < b then a else b
 let max a b = if a > b then a else b
 
@@ -278,12 +280,20 @@ let clamp ~min:a ~max:b x =
 ;;
 
 let age ~birthday current =
-  let y = year current - year birthday
-  and mb = month birthday
-  and mc = month current
-  and db = day_of_month birthday
-  and dc = day_of_month current in
-  if Month.(mc < mb) || (Month.equal mc mb && dc < db) then Int.pred y else y
+  let sign, earlier, later =
+    if Infix.(current >= birthday)
+    then 1, birthday, current
+    else -1, current, birthday
+  in
+  let y = year later - year earlier
+  and mb = month earlier
+  and mc = month later
+  and db = day_of_month earlier
+  and dc = day_of_month later in
+  let res =
+    if Month.(mc < mb) || (Month.equal mc mb && dc < db) then Int.pred y else y
+  in
+  sign * res
 ;;
 
 include Infix
