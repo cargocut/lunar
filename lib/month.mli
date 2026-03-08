@@ -89,3 +89,5 @@ module Infix : sig
   (** [m1 <= m2] returns [true] if [m2] is greater or equal to [m1]. *)
   val ( <= ) : t -> t -> bool
 end
+
+include module type of Infix

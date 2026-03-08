@@ -145,3 +145,5 @@ module Infix = struct
   let ( < ) x y = compare x y < 0
   let ( <= ) x y = compare x y <= 0
 end
+
+include Infix

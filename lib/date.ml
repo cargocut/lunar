@@ -268,8 +268,6 @@ module Infix = struct
   let ( <= ) x y = compare x y <= 0
 end
 
-include Infix
-
 let min a b = if a < b then a else b
 let max a b = if a > b then a else b
 
@@ -278,3 +276,14 @@ let clamp ~min:a ~max:b x =
   and big = max a b in
   min big (max small x)
 ;;
+
+let age ~birthday current =
+  let y = year current - year birthday
+  and mb = month birthday
+  and mc = month current
+  and db = day_of_month birthday
+  and dc = day_of_month current in
+  if Month.(mc < mb) || (Month.equal mc mb && dc < db) then Int.pred y else y
+;;
+
+include Infix

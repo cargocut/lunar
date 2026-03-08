@@ -22,6 +22,7 @@
   time_predicate_test
   time_diff_test
   time_from_string_test
+  time_clamp_test
   datetime_make_test
   datetime_weekday_test
   datetime_arith_test

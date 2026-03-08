@@ -229,6 +229,10 @@ val start_of_year : t -> t
     date [d]. *)
 val end_of_year : t -> t
 
+(** [age ~birthday current] returns the age calculated from [birthday]
+    using the given date [current] as the current date. *)
+val age : birthday:t -> t -> int
+
 (** {1 Predicates} *)
 
 (** [is_weekend d] returns [true] if the given date [d] is on [Saturday]
