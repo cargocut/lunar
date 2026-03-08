@@ -28,7 +28,7 @@ exception Invalid_date of error
 (** [make ~year ~month ~day ()] create and validate a date. *)
 val make : year:int -> month:Month.t -> day:int -> unit -> (t, error) result
 
-(** [make' ?at ~year ~month ~day ()] create and validate a datetime, see
+(** [make' ?at ~year ~month ~day ()] create and validate a date, see
     {!val:make}. Take an integer rather than a {!val:Month.t}. *)
 val make' : year:int -> month:int -> day:int -> unit -> (t, error) result
 
@@ -75,9 +75,9 @@ val year_of_century : t -> int
 (** [year dt] returns the year from a date. *)
 val year : t -> int
 
-(** [is_leap_year dt] returns [true] if [year dt] is a leap year, [false]
-    otherwise.*)
-val is_leap_year : t -> bool
+(** [quarter d] Returns the quarter number ([1-4]) in which the given date
+    [d] falls. *)
+val quarter : t -> int
 
 (** [month dt] returns the month from a date. *)
 val month : t -> Month.t
@@ -87,6 +87,10 @@ val day_of_month : t -> int
 
 (** [day_of_week dt] returns the day of week from a date. *)
 val day_of_week : t -> Weekday.t
+
+(** [days_in_month d] returns the number of days in the month of the given
+    date [d]. *)
+val days_in_month : t -> int
 
 (** [day_of_year dt] returns the day of year from a date. *)
 val day_of_year : t -> int
@@ -100,14 +104,6 @@ val day_of_year : t -> int
 
     {b see:} {{:https://en.wikipedia.org/wiki/ISO_8601} ISO 8601}. *)
 val week_of_year : t -> int * int
-
-(** [is_weekend d] returns [true] if the given date [d] is on [Saturday]
-    or [Sunday]. *)
-val is_weekend : t -> bool
-
-(** [is_weekday] returns [true] if the given date [d] is not on [Saturday]
-    or [Sunday]. *)
-val is_weekday : t -> bool
 
 (** {1 Conversion} *)
 
@@ -134,15 +130,15 @@ val sub : Duration.t -> t -> t
     [d]. *)
 val add_days : int -> t -> t
 
-(** [sub_days d number_of_days] remove [number_of_days] to the given date
+(** [sub_days number_of_days d] remove [number_of_days] to the given date
     [d]. *)
 val sub_days : int -> t -> t
 
-(** [add_weeks d number_of_weeks] add [number_of_weeks] to the given date
+(** [add_weeks number_of_weeks d] add [number_of_weeks] to the given date
     [d] (a week is [7] days). *)
 val add_weeks : int -> t -> t
 
-(** [sub_weeks d number_of_weeks] remove [number_of_weeks] to the given date
+(** [sub_weeks number_of_weeks d] remove [number_of_weeks] to the given date
     [d] (a week is [7] days). *)
 val sub_weeks : int -> t -> t
 
@@ -154,11 +150,11 @@ val add_months : int -> t -> t
     date [d]. *)
 val sub_months : int -> t -> t
 
-(** [add_years d number_of_years] add [number_of_years] to the given date
+(** [add_years number_of_years d] add [number_of_years] to the given date
     [d]. *)
 val add_years : int -> t -> t
 
-(** [sub_years d number_of_years] remove [number_of_years] to the given date
+(** [sub_years number_of_years d] remove [number_of_years] to the given date
     [d]. *)
 val sub_years : int -> t -> t
 
@@ -204,6 +200,64 @@ val min : t -> t -> t
 
 (** [max a b] returns the greater of two arguments. *)
 val max : t -> t -> t
+
+(** [clamp ~min ~max t] restricts the time [t] to the inclusive interval
+    [[min, max]]. *)
+val clamp : min:t -> max:t -> t -> t
+
+(** {1 Common Operations} *)
+
+(** [tomorrow d] get the next day of the given [d]. See {!val:succ}. *)
+val tomorrow : t -> t
+
+(** [yesterday d] get the previous day of the given [d]. See {!val:pred}. *)
+val yesterday : t -> t
+
+(** [start_of_month d] returns the first day of the month of the given
+    date [d]. *)
+val start_of_month : t -> t
+
+(** [end_of_month d] returns the last day of the month of the given
+    date [d]. *)
+val end_of_month : t -> t
+
+(** [start_of_year d] returns the first day of the year of the given
+    date [d]. *)
+val start_of_year : t -> t
+
+(** [end_of_year d] returns the last day of the year of the given
+    date [d]. *)
+val end_of_year : t -> t
+
+(** {1 Predicates} *)
+
+(** [is_weekend d] returns [true] if the given date [d] is on [Saturday]
+    or [Sunday]. *)
+val is_weekend : t -> bool
+
+(** [is_weekday] returns [true] if the given date [d] is not on [Saturday]
+    or [Sunday]. *)
+val is_weekday : t -> bool
+
+(** [is_leap_year dt] returns [true] if [year dt] is a leap year, [false]
+    otherwise.*)
+val is_leap_year : t -> bool
+
+(** [is_first_day_of_month d] returns [true] if the given date [d] is the
+    first day of the month. *)
+val is_first_day_of_month : t -> bool
+
+(** [is_last_day_of_month d] returns [true] if the given date [d] is the
+    last day of the month. *)
+val is_last_day_of_month : t -> bool
+
+(** [is_first_day_of_year d] returns [true] if the given date [d] is the
+    first day of the year. *)
+val is_first_day_of_year : t -> bool
+
+(** [is_last_day_of_year d] returns [true] if the given date [d] is the
+    last day of the year. *)
+val is_last_day_of_year : t -> bool
 
 (** {1 Infix Operators} *)
 

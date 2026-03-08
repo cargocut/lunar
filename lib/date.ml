@@ -96,7 +96,7 @@ let epoch = from_duration Duration.zero
 let year { year; _ } = year
 let month { month; _ } = month
 let day_of_month { day_of_month; _ } = day_of_month
-let is_leap_year { year; _ } = Util.is_leap_year year
+let days_in_month { year; month; _ } = Month.days_in ~year month
 let era { year; _ } = Era.from_year year
 let year_of_era { year; _ } = Era.year year
 let century_of_era { year; _ } = Era.century year
@@ -218,6 +218,45 @@ let diff a b =
   Duration.sub a b
 ;;
 
+let tomorrow = succ
+let yesterday = pred
+let start_of_month d = { d with day_of_month = 1 }
+
+let end_of_month d =
+  let day_of_month = days_in_month d in
+  { d with day_of_month }
+;;
+
+let quarter { month; _ } =
+  match month with
+  | Month.Jan | Month.Feb | Month.Mar -> 1
+  | Month.Apr | Month.May | Month.Jun -> 2
+  | Month.Jul | Month.Aug | Month.Sep -> 3
+  | Month.Oct | Month.Nov | Month.Dec -> 4
+;;
+
+let start_of_year d = make_exn ~year:(year d) ~month:Month.Jan ~day:1 ()
+let end_of_year d = make_exn ~year:(year d) ~month:Month.Dec ~day:31 ()
+let is_leap_year { year; _ } = Util.is_leap_year year
+let is_first_day_of_month { day_of_month; _ } = Int.equal 1 day_of_month
+
+let is_last_day_of_month { day_of_month; month; year } =
+  let m = Month.days_in ~year month in
+  Int.equal day_of_month m
+;;
+
+let is_first_day_of_year { day_of_month; month; _ } =
+  match month with
+  | Month.Jan -> Int.equal day_of_month 1
+  | _ -> false
+;;
+
+let is_last_day_of_year { day_of_month; month; _ } =
+  match month with
+  | Month.Dec -> Int.equal day_of_month 31
+  | _ -> false
+;;
+
 module Infix = struct
   let ( + ) x y = add y x
   let ( - ) x y = sub y x
@@ -233,3 +272,9 @@ include Infix
 
 let min a b = if a < b then a else b
 let max a b = if a > b then a else b
+
+let clamp ~min:a ~max:b x =
+  let small = min a b
+  and big = max a b in
+  min big (max small x)
+;;

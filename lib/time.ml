@@ -81,6 +81,12 @@ let compare = Int.compare
 let min = Int.min
 let max = Int.max
 
+let clamp ~min:a ~max:b x =
+  let small = min a b
+  and big = max a b in
+  min big (max small x)
+;;
+
 let to_string t =
   (* NOTE: The function does not rely on Format for Js_of_ocaml, but it
      does allocate a lot. For now, we accept that this is okay.*)

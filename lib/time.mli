@@ -168,6 +168,10 @@ val min : t -> t -> t
 (** [max a b] returns the greater of two arguments. *)
 val max : t -> t -> t
 
+(** [clamp ~min ~max t] restricts the time [t] to the inclusive interval
+    [[min, max]]. *)
+val clamp : min:t -> max:t -> t -> t
+
 (** {1 Predicates} *)
 
 (** [is_earlier ~than t] returns [true] if [t] is (strictly) earlier than
