@@ -60,26 +60,16 @@ val equal : t -> t -> bool
     following OCaml convention. *)
 val compare : t -> t -> int
 
+include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
+
 (** {1 Infix operators} *)
 
 module Infix : sig
   (** Common and useful infix operators. *)
 
-  (** [wd1 = wd2] is [equal wd1 wd2]. *)
-  val ( = ) : t -> t -> bool
+  include Sigs.EQUATABLE_INFIX with type t := t (** @inline *)
 
-  (** [wd1 <> wd2] is [not (equal wd1 wd2)]. *)
-  val ( <> ) : t -> t -> bool
-
-  (** [wd1 > wd2] returns [true] if [wd1] is greater than [wd2]. *)
-  val ( > ) : t -> t -> bool
-
-  (** [wd1 >= wd2] returns [true] if [wd1] is greater or equal to [wd2]. *)
-  val ( >= ) : t -> t -> bool
-
-  (** [wd1 < wd2] returns [true] if [wd2] is greater than [wd1]. *)
-  val ( < ) : t -> t -> bool
-
-  (** [wd1 <= wd2] returns [true] if [wd2] is greater or equal to [wd1]. *)
-  val ( <= ) : t -> t -> bool
+  include Sigs.COMPARABLE_INFIX with type t := t (** @inline *)
 end
+
+include module type of Infix

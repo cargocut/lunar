@@ -47,3 +47,17 @@ val equal : t -> t -> bool
 
 (** [compare a b] comparison between eras, following OCaml convention. *)
 val compare : t -> t -> int
+
+include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
+
+(** {1 Infix operators} *)
+
+module Infix : sig
+  (** Common and useful infix operators. *)
+
+  include Sigs.EQUATABLE_INFIX with type t := t (** @inline *)
+
+  include Sigs.COMPARABLE_INFIX with type t := t (** @inline *)
+end
+
+include module type of Infix

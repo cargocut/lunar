@@ -29,3 +29,32 @@ let only_numbers = function
         | _ -> false)
       s
 ;;
+
+module Make_equal_infix (E : Sigs.EQUATABLE) = struct
+  type t = E.t
+
+  let ( = ) = E.equal
+  let ( <> ) x y = not (E.equal x y)
+end
+
+module Make_compare_helpers (E : Sigs.COMPARABLE) = struct
+  type t = E.t
+
+  let min a b = if E.compare a b < 0 then a else b
+  let max a b = if E.compare a b > 0 then a else b
+
+  let clamp ~min:a ~max:b x =
+    let small = min a b
+    and big = max a b in
+    min big (max small x)
+  ;;
+end
+
+module Make_compare_infix (E : Sigs.COMPARABLE) = struct
+  type t = E.t
+
+  let ( > ) x y = E.compare x y > 0
+  let ( >= ) x y = E.compare x y >= 0
+  let ( < ) x y = E.compare x y < 0
+  let ( <= ) x y = E.compare x y <= 0
+end

@@ -66,28 +66,16 @@ val equal : t -> t -> bool
 (** [compare a b] comparison between month, following OCaml convention. *)
 val compare : t -> t -> int
 
+include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
+
 (** {1 Infix operators} *)
 
 module Infix : sig
   (** Common and useful infix operators. *)
 
-  (** [m1 = m2] is [equal m1 m2]. *)
-  val ( = ) : t -> t -> bool
+  include Sigs.EQUATABLE_INFIX with type t := t (** @inline *)
 
-  (** [m1 <> m2] is [not (equal m1 m2)]. *)
-  val ( <> ) : t -> t -> bool
-
-  (** [m1 > m2] returns [true] if [m1] is greater than [m2]. *)
-  val ( > ) : t -> t -> bool
-
-  (** [m1 >= m2] returns [true] if [m1] is greater or equal to [m2]. *)
-  val ( >= ) : t -> t -> bool
-
-  (** [m1 < m2] returns [true] if [m2] is greater than [m1]. *)
-  val ( < ) : t -> t -> bool
-
-  (** [m1 <= m2] returns [true] if [m2] is greater or equal to [m1]. *)
-  val ( <= ) : t -> t -> bool
+  include Sigs.COMPARABLE_INFIX with type t := t (** @inline *)
 end
 
 include module type of Infix

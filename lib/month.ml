@@ -137,13 +137,21 @@ let compare a b =
   Int.compare a b
 ;;
 
+module CE = struct
+  type nonrec t = t
+
+  let equal = equal
+  let compare = compare
+end
+
+include (
+  Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
+
 module Infix = struct
-  let ( = ) = equal
-  let ( <> ) x y = not (equal x y)
-  let ( > ) x y = compare x y > 0
-  let ( >= ) x y = compare x y >= 0
-  let ( < ) x y = compare x y < 0
-  let ( <= ) x y = compare x y <= 0
+  include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
+
+  include (
+    Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
 end
 
 include Infix

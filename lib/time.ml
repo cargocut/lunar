@@ -78,14 +78,16 @@ let minute t = t mod 3600 / 60
 let second t = t mod 60
 let equal = Int.equal
 let compare = Int.compare
-let min = Int.min
-let max = Int.max
 
-let clamp ~min:a ~max:b x =
-  let small = min a b
-  and big = max a b in
-  min big (max small x)
-;;
+module CE = struct
+  type nonrec t = t
+
+  let equal = equal
+  let compare = compare
+end
+
+include (
+  Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
 
 let to_string t =
   (* NOTE: The function does not rely on Format for Js_of_ocaml, but it
@@ -146,12 +148,11 @@ let round dur t =
 module Infix = struct
   let ( + ) x y = add y x
   let ( - ) x y = sub y x
-  let ( = ) = equal
-  let ( <> ) x y = not (equal x y)
-  let ( > ) x y = compare x y > 0
-  let ( >= ) x y = compare x y >= 0
-  let ( < ) x y = compare x y < 0
-  let ( <= ) x y = compare x y <= 0
+
+  include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
+
+  include (
+    Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
 end
 
 let is_earlier ~than t = Infix.(t < than)

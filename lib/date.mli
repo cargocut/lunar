@@ -195,15 +195,7 @@ val equal : t -> t -> bool
 (** [compare a b] comparison between dates, following OCaml convention. *)
 val compare : t -> t -> int
 
-(** [min a b] returns the smaller of two arguments. *)
-val min : t -> t -> t
-
-(** [max a b] returns the greater of two arguments. *)
-val max : t -> t -> t
-
-(** [clamp ~min ~max t] restricts the time [t] to the inclusive interval
-    [[min, max]]. *)
-val clamp : min:t -> max:t -> t -> t
+include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
 
 (** {1 Common Operations} *)
 
@@ -282,23 +274,9 @@ module Infix : sig
   (** [d - dur] is {!val:sub} *)
   val ( - ) : t -> Duration.t -> t
 
-  (** [d1 = d2] is [equal d1 d2]. *)
-  val ( = ) : t -> t -> bool
+  include Sigs.EQUATABLE_INFIX with type t := t (** @inline *)
 
-  (** [d1 <> d2] is [not (equal d1 d2)]. *)
-  val ( <> ) : t -> t -> bool
-
-  (** [d1 > d2] returns [true] if [d1] is greater than [d2]. *)
-  val ( > ) : t -> t -> bool
-
-  (** [d1 >= d2] returns [true] if [d1] is greater or equal to [d2]. *)
-  val ( >= ) : t -> t -> bool
-
-  (** [d1 < d2] returns [true] if [d2] is greater than [d1]. *)
-  val ( < ) : t -> t -> bool
-
-  (** [d1 <= d2] returns [true] if [d2] is greater or equal to [d1]. *)
-  val ( <= ) : t -> t -> bool
+  include Sigs.COMPARABLE_INFIX with type t := t (** @inline *)
 end
 
 include module type of Infix
