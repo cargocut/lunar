@@ -264,6 +264,19 @@ let is_last_day_of_year { day_of_month; month; _ } =
   | _ -> false
 ;;
 
+let get_day f ~where ~from =
+  let rec aux d = if where d then d else aux (f 1 d) in
+  aux (f 1 from)
+;;
+
+let next_day = get_day add_days
+let pred_day = get_day sub_days
+let is_dow dow d = Weekday.equal dow (day_of_week d)
+let next_day_of_week dow = next_day ~where:(is_dow dow)
+let pred_day_of_week dow = pred_day ~where:(is_dow dow)
+let next_weekday = next_day ~where:is_weekday
+let pred_weekday = pred_day ~where:is_weekday
+
 module Infix = struct
   let ( + ) x y = add y x
   let ( - ) x y = sub y x

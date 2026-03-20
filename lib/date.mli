@@ -168,6 +168,32 @@ val pred : t -> t
     [d1] and [d2]. *)
 val diff : t -> t -> Duration.t
 
+(** [next_day ~where:pred ~from] returns the first following date that
+    satisfies the predicate [pred] starting from the date [from]
+    (exclusive). {b Note}: If the predicate always returns [false],
+    the function never terminates. *)
+val next_day : where:(t -> bool) -> from:t -> t
+
+(** [pred_day ~where:pred ~from] returns the first prevuious date that
+    satisfies the predicate [pred] starting from the date [from]
+    (exclusive). {b Note}: If the predicate always returns [false],
+    the function never terminates. *)
+val pred_day : where:(t -> bool) -> from:t -> t
+
+(** [next_day_of_week weekday ~from] returns the first following date
+    corresponding to the specified day of the week. *)
+val next_day_of_week : Weekday.t -> from:t -> t
+
+(** [pred_day_of_week weekday ~from] returns the first previous date
+    corresponding to the specified day of the week. *)
+val pred_day_of_week : Weekday.t -> from:t -> t
+
+(** [next_weekday ~from] returns the first following day of week. *)
+val next_weekday : from:t -> t
+
+(** [pred_weekday ~from] returns the first previous day of week. *)
+val pred_weekday : from:t -> t
+
 (** {2 On duration}
 
     Arithmetic operations, such as {!val:add} and {!val:sub}, rely on
