@@ -105,6 +105,16 @@ val day_of_year : t -> int
     {b see:} {{:https://en.wikipedia.org/wiki/ISO_8601} ISO 8601}. *)
 val week_of_year : t -> int * int
 
+(** {1 Aliases}
+
+    A few aliases for common terms. *)
+
+(** See {!val:day_of_month}. *)
+val day : t -> int
+
+(** See {!val:day_of_week}. *)
+val weekday : t -> Weekday.t
+
 (** {1 Conversion} *)
 
 (** [to_duration dt] returns a duration since {!val:epoch} for the given
@@ -174,7 +184,7 @@ val diff : t -> t -> Duration.t
     the function never terminates. *)
 val next_day : where:(t -> bool) -> from:t -> t
 
-(** [pred_day ~where:pred ~from] returns the first prevuious date that
+(** [pred_day ~where:pred ~from] returns the first previous date that
     satisfies the predicate [pred] starting from the date [from]
     (exclusive). {b Note}: If the predicate always returns [false],
     the function never terminates. *)

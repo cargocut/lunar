@@ -57,6 +57,19 @@ val pm : int -> t
     see}). In Lunar, [am] is between [00:00:00] and [11:59:59] and
     [pm] is between [12:00:00] and [23:59:59]. *)
 
+(** {1 Accessors}
+
+    Information and facts about Time. *)
+
+(** [hour t] returns the hour. *)
+val hour : t -> int
+
+(** [hour t] returns the minute. *)
+val minute : t -> int
+
+(** [hour t] returns the second. *)
+val second : t -> int
+
 (** {1 Conversion} *)
 
 (** [to_duration t] converts the given time [t] to a duration. *)

@@ -308,3 +308,6 @@ let age ~birthday current =
 ;;
 
 include Infix
+
+let day = day_of_month
+let weekday = day_of_week
