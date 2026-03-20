@@ -10,6 +10,14 @@
 (** The type describing a Date. *)
 type t
 
+(** Describes the resolution for, among other things, truncates. *)
+type resolution =
+  | Day
+  | Week of Weekday.t
+  (** Used to define the which day is used as a starting point. *)
+  | Month
+  | Year
+
 (** Type listing errors that may occur when working with date. *)
 type error =
   | Invalid_year of int
@@ -258,6 +266,14 @@ val start_of_year : t -> t
 (** [end_of_year d] returns the last day of the year of the given
     date [d]. *)
 val end_of_year : t -> t
+
+(** [start_of_week ?week_start d] Returns the first day of the week
+    (defined by [week_start]; default: Monday). *)
+val start_of_week : ?week_start:Weekday.t -> t -> t
+
+(** [end_of_week ?week_start d] Returns the last day of the week
+    (defined by [week_start - 1]; default: Monday). *)
+val end_of_week : ?week_start:Weekday.t -> t -> t
 
 (** [age ~birthday current] returns the age calculated from [birthday]
     using the given date [current] as the current date. *)

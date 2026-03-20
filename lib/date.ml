@@ -9,6 +9,12 @@ type t =
   ; day_of_month : int
   }
 
+type resolution =
+  | Day
+  | Week of Weekday.t
+  | Month
+  | Year
+
 type error =
   | Invalid_year of int
   | Invalid_month of Month.error
@@ -307,7 +313,18 @@ let age ~birthday current =
   sign * res
 ;;
 
-include Infix
-
 let day = day_of_month
 let weekday = day_of_week
+
+let start_of_week ?(week_start = Weekday.Mon) d =
+  let curr = day_of_week d |> Weekday.to_int
+  and start = Weekday.to_int week_start in
+  let diff = (curr - start + 7) mod 7 in
+  sub_days diff d
+;;
+
+let end_of_week ?(week_start = Weekday.Mon) d =
+  start_of_week ~week_start d |> add_days 6
+;;
+
+include Infix
