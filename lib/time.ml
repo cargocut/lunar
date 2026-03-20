@@ -122,7 +122,7 @@ let sub_minutes n = sub (Duration.from_minutes n)
 let add_hours n = add (Duration.from_hours n)
 let sub_hours n = sub (Duration.from_hours n)
 let succ = add_seconds 1
-let pred = add_seconds 1
+let pred = sub_seconds 1
 
 let truncate dur t =
   let d = t |> to_duration |> Duration.to_int64
@@ -144,6 +144,11 @@ let round dur t =
   in
   from_duration res
 ;;
+
+let succ_minute t = t |> add_minutes 1 |> truncate (Duration.from_minutes 1)
+let pred_minute t = t |> sub_minutes 1 |> truncate (Duration.from_minutes 1)
+let succ_hour t = t |> add_hours 1 |> truncate (Duration.from_hours 1)
+let pred_hour t = t |> sub_hours 1 |> truncate (Duration.from_hours 1)
 
 module Infix = struct
   let ( + ) x y = add y x

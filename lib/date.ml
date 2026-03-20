@@ -270,12 +270,12 @@ let get_day f ~where ~from =
 ;;
 
 let next_day = get_day add_days
-let pred_day = get_day sub_days
+let prev_day = get_day sub_days
 let is_dow dow d = Weekday.equal dow (day_of_week d)
 let next_day_of_week dow = next_day ~where:(is_dow dow)
-let pred_day_of_week dow = pred_day ~where:(is_dow dow)
+let prev_day_of_week dow = prev_day ~where:(is_dow dow)
 let next_weekday = next_day ~where:is_weekday
-let pred_weekday = pred_day ~where:is_weekday
+let prev_weekday = prev_day ~where:is_weekday
 
 module Infix = struct
   let ( + ) x y = add y x

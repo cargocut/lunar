@@ -118,6 +118,18 @@ val succ : t -> t
 (** [pred t] is [sub_seconds 1]. *)
 val pred : t -> t
 
+(** [succ_minute t] returns the time at the next minute. *)
+val succ_minute : t -> t
+
+(** [pred_minute t] returns the time at the previous minute. *)
+val pred_minute : t -> t
+
+(** [succ_hour t] returns the time at the next hour. *)
+val succ_hour : t -> t
+
+(** [pred_hour t] returns the time at the previous hour. *)
+val pred_hour : t -> t
+
 (** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
     [d1] and [d2]. *)
 val diff : t -> t -> Duration.t

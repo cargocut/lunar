@@ -11,7 +11,7 @@ let%expect_test "next day of week" =
   [%expect {| 2026-03-19 |}]
 ;;
 
-let%expect_test "pred day of week" =
+let%expect_test "prev day of week" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:16 () in
   Weekday.Thu |> Date.next_day_of_week ~from |> dump_date;
   [%expect {| 2026-03-19 |}]
@@ -23,9 +23,9 @@ let%expect_test "next day of week - same day skips to next week" =
   [%expect {| 2026-03-26 |}]
 ;;
 
-let%expect_test "pred day of week - same day skips to previous week" =
+let%expect_test "prev day of week - same day skips to previous week" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:19 () in
-  Weekday.Thu |> Date.pred_day_of_week ~from |> dump_date;
+  Weekday.Thu |> Date.prev_day_of_week ~from |> dump_date;
   [%expect {| 2026-03-12 |}]
 ;;
 
@@ -35,9 +35,9 @@ let%expect_test "next day of week - across month" =
   [%expect {| 2026-04-01 |}]
 ;;
 
-let%expect_test "pred day of week - across month" =
+let%expect_test "prev day of week - across month" =
   let from = Date.make_exn' ~year:2026 ~month:4 ~day:1 () in
-  Weekday.Mon |> Date.pred_day_of_week ~from |> dump_date;
+  Weekday.Mon |> Date.prev_day_of_week ~from |> dump_date;
   [%expect {| 2026-03-30 |}]
 ;;
 
@@ -47,9 +47,9 @@ let%expect_test "next day of week - across year" =
   [%expect {| 2027-01-04 |}]
 ;;
 
-let%expect_test "pred day of week - across year" =
+let%expect_test "prev day of week - across year" =
   let from = Date.make_exn' ~year:2026 ~month:1 ~day:1 () in
-  Weekday.Mon |> Date.pred_day_of_week ~from |> dump_date;
+  Weekday.Mon |> Date.prev_day_of_week ~from |> dump_date;
   [%expect {| 2025-12-29 |}]
 ;;
 
@@ -59,9 +59,9 @@ let%expect_test "next weekday - normal" =
   [%expect {| 2026-03-17 |}]
 ;;
 
-let%expect_test "pred weekday - normal" =
+let%expect_test "prev weekday - normal" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:17 () in
-  Date.pred_weekday ~from |> dump_date;
+  Date.prev_weekday ~from |> dump_date;
   [%expect {| 2026-03-16 |}]
 ;;
 
@@ -71,39 +71,39 @@ let%expect_test "next weekday - skips weekend (Fri -> Mon)" =
   [%expect {| 2026-03-23 |}]
 ;;
 
-let%expect_test "pred weekday - skips weekend (Mon -> Fri)" =
+let%expect_test "prev weekday - skips weekend (Mon -> Fri)" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:23 () in
-  Date.pred_weekday ~from |> dump_date;
+  Date.prev_weekday ~from |> dump_date;
   [%expect {| 2026-03-20 |}]
 ;;
 
-let%expect_test "next day - simple predicate (day > 20)" =
+let%expect_test "next day - simple previcate (day > 20)" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:16 () in
   Date.next_day ~where:(fun d -> Date.day_of_month d > 20) ~from |> dump_date;
   [%expect {| 2026-03-21 |}]
 ;;
 
-let%expect_test "next day - predicate matches current but excluded" =
+let%expect_test "next day - previcate matches current but excluded" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:16 () in
   Date.next_day ~where:(fun d -> Int.equal (Date.day_of_month d) 16) ~from
   |> dump_date;
   [%expect {| 2026-04-16 |}]
 ;;
 
-let%expect_test "next day - predicate across month" =
+let%expect_test "next day - previcate across month" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:30 () in
   Date.next_day ~where:(fun d -> Int.equal (Date.day_of_month d) 1) ~from
   |> dump_date;
   [%expect {| 2026-04-01 |}]
 ;;
 
-let%expect_test "pred day - simple predicate" =
+let%expect_test "prev day - simple previcate" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:16 () in
-  Date.pred_day ~where:(fun d -> Date.day_of_month d < 10) ~from |> dump_date;
+  Date.prev_day ~where:(fun d -> Date.day_of_month d < 10) ~from |> dump_date;
   [%expect {| 2026-03-09 |}]
 ;;
 
-let%expect_test "next day - complex predicate (Friday && >= 20)" =
+let%expect_test "next day - complex previcate (Friday && >= 20)" =
   let from = Date.make_exn' ~year:2026 ~month:3 ~day:1 () in
   Date.next_day
     ~where:(fun d ->
@@ -114,7 +114,7 @@ let%expect_test "next day - complex predicate (Friday && >= 20)" =
   [%expect {| 2026-03-20 |}]
 ;;
 
-let%expect_test "next day - far predicate (Dec 31)" =
+let%expect_test "next day - far previcate (Dec 31)" =
   let from = Date.make_exn' ~year:2026 ~month:1 ~day:1 () in
   Date.next_day
     ~where:(fun d ->
