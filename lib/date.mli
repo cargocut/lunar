@@ -10,14 +10,6 @@
 (** The type describing a Date. *)
 type t
 
-(** Describes the resolution for, among other things, truncates. *)
-type resolution =
-  | Day
-  | Week of Weekday.t
-  (** Used to define the which day is used as a starting point. *)
-  | Month
-  | Year
-
 (** Type listing errors that may occur when working with date. *)
 type error =
   | Invalid_year of int
@@ -53,6 +45,10 @@ val make_exn' : year:int -> month:int -> day:int -> unit -> t
 (** [from_string] try to read a date from a string (using the format
     [year-mon-day]). *)
 val from_string : string -> (t, error) result
+
+(** [from_string_exn] try to read a date from a string (using the format
+    [year-mon-day]) and raise and exception if it fails. *)
+val from_string_exn : string -> t
 
 (** [from_duration d] converts a duration to a date.
     [0] is the 1970-01-01. *)
@@ -251,6 +247,14 @@ val tomorrow : t -> t
 (** [yesterday d] get the previous day of the given [d]. See {!val:pred}. *)
 val yesterday : t -> t
 
+(** [start_of_week ?week_start d] Returns the first day of the week
+    (defined by [week_start]; default: Monday). *)
+val start_of_week : ?week_start:Weekday.t -> t -> t
+
+(** [end_of_week ?week_start d] Returns the last day of the week
+    (defined by [week_start - 1]; default: Monday). *)
+val end_of_week : ?week_start:Weekday.t -> t -> t
+
 (** [start_of_month d] returns the first day of the month of the given
     date [d]. *)
 val start_of_month : t -> t
@@ -258,6 +262,14 @@ val start_of_month : t -> t
 (** [end_of_month d] returns the last day of the month of the given
     date [d]. *)
 val end_of_month : t -> t
+
+(** [start_of_quarter d] returns the first day of the quarter of the given
+    date [d]. *)
+val start_of_quarter : t -> t
+
+(** [end_of_quarter d] returns the last day of the quarter of the given
+    date [d]. *)
+val end_of_quarter : t -> t
 
 (** [start_of_year d] returns the first day of the year of the given
     date [d]. *)
@@ -267,17 +279,18 @@ val start_of_year : t -> t
     date [d]. *)
 val end_of_year : t -> t
 
-(** [start_of_week ?week_start d] Returns the first day of the week
-    (defined by [week_start]; default: Monday). *)
-val start_of_week : ?week_start:Weekday.t -> t -> t
-
-(** [end_of_week ?week_start d] Returns the last day of the week
-    (defined by [week_start - 1]; default: Monday). *)
-val end_of_week : ?week_start:Weekday.t -> t -> t
-
 (** [age ~birthday current] returns the age calculated from [birthday]
     using the given date [current] as the current date. *)
 val age : birthday:t -> t -> int
+
+(** {1 Round and truncate}
+
+    A negative duration can produce very strange results, which is
+    why durations are converted to absolute values in rounding functions. *)
+
+(** [truncate resolution t] truncates [t] to the previous multiple of
+    [resolution]. *)
+(* val truncate : Resolution.t -> t -> t *)
 
 (** {1 Predicates} *)
 

@@ -145,12 +145,12 @@ val diff : t -> t -> Duration.t
     All units smaller than [resolution] are discarded.
 
     Examples:
-    - [truncate (Duration.from_minutes 1) 12:34:56] = [12:34:00]
-    - [truncate (Duration.from_hours 1) 12:34:56] = [12:00:00]. *)
-val truncate : Duration.t -> t -> t
+    - [truncate (Resolution.from_minutes 1) 12:34:56] = [12:34:00]
+    - [truncate (Resolution.from_hours 1) 12:34:56] = [12:00:00]. *)
+val truncate : Resolution.t -> t -> t
 
 (** [floor d t] is [truncate d t]. *)
-val floor : Duration.t -> t -> t
+val floor : Resolution.t -> t -> t
 
 (** [round resolution t] rounds [t] to the nearest multiple of
     [resolution].
@@ -159,11 +159,11 @@ val floor : Duration.t -> t -> t
     it is rounded up to the next multiple.
 
     Examples:
-    - [round (Duration.from_minutes 1) 12:34:29] = [12:34:00]
-    - [round (Duration.from_minutes 1) 12:34:30] = [12:35:00]
-    - [round (Duration.from_hours 1) 12:29:59] = [12:00:00]
-    - [round (Duration.from_hours 1) 12:30:00] = [13:00:00]. *)
-val round : Duration.t -> t -> t
+    - [round (Resolution.from_minutes 1) 12:34:29] = [12:34:00]
+    - [round (Resolution..from_minutes 1) 12:34:30] = [12:35:00]
+    - [round (Resolution.from_hours 1) 12:29:59] = [12:00:00]
+    - [round (Resolution.from_hours 1) 12:30:00] = [13:00:00]. *)
+val round : Resolution.t -> t -> t
 
 (** [ceil resolution t] rounds the given [time] [t] up to the nearest multiple of
     [resolution]. If [t] is already aligned with [resolution], it is returned
@@ -173,11 +173,11 @@ val round : Duration.t -> t -> t
     requires incrementing a larger unit.
 
     Examples:
-    - [ceil (Duration.from_minutes 1) 12:34:00] = [12:34:00]
-    - [ceil (Duration.from_minutes 1) 12:34:01] = [12:35:00]
-    - [ceil (Duration.from_hours 1) 12:00:00] = [12:00:00]
-    - [ceil (Duration.from_hours 1) 12:01:00] = [13:00:00]. *)
-val ceil : Duration.t -> t -> t
+    - [ceil (Resolution.from_minutes 1) 12:34:00] = [12:34:00]
+    - [ceil (Resolution.from_minutes 1) 12:34:01] = [12:35:00]
+    - [ceil (Resolution.from_hours 1) 12:00:00] = [12:00:00]
+    - [ceil (Resolution.from_hours 1) 12:01:00] = [13:00:00]. *)
+val ceil : Resolution.t -> t -> t
 
 (** {1 Comparison} *)
 

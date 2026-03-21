@@ -124,7 +124,7 @@ let sub_hours n = sub (Duration.from_hours n)
 let succ = add_seconds 1
 let pred = sub_seconds 1
 
-let truncate dur t =
+let truncate_duration dur t =
   let d = t |> to_duration |> Duration.to_int64
   and s = dur |> Duration.abs |> Duration.to_int64 in
   let r = Int64.rem d s in
@@ -132,8 +132,8 @@ let truncate dur t =
   from_duration (Duration.from_int64 b)
 ;;
 
-let round dur t =
-  let s = dur |> Duration.abs |> Duration.to_int64 in
+let round_duration dur t =
+  let s = dur |> Duration.to_int64 in
   let d = t |> to_duration |> Duration.to_int64
   and h = Int64.div s 2L in
   let r = Int64.rem d s in
@@ -145,10 +145,22 @@ let round dur t =
   from_duration res
 ;;
 
-let succ_minute t = t |> add_minutes 1 |> truncate (Duration.from_minutes 1)
-let pred_minute t = t |> sub_minutes 1 |> truncate (Duration.from_minutes 1)
-let succ_hour t = t |> add_hours 1 |> truncate (Duration.from_hours 1)
-let pred_hour t = t |> sub_hours 1 |> truncate (Duration.from_hours 1)
+let truncate resolution t =
+  match resolution with
+  | Resolution.Duration dur -> truncate_duration dur t
+  | _ -> midnight
+;;
+
+let round resolution t =
+  match resolution with
+  | Resolution.Duration dur -> round_duration dur t
+  | _ -> midnight
+;;
+
+let succ_minute t = t |> add_minutes 1 |> truncate Resolution.minute
+let pred_minute t = t |> sub_minutes 1 |> truncate Resolution.minute
+let succ_hour t = t |> add_hours 1 |> truncate Resolution.hour
+let pred_hour t = t |> sub_hours 1 |> truncate Resolution.hour
 
 module Infix = struct
   let ( + ) x y = add y x
@@ -183,10 +195,12 @@ let is_evening t =
 let is_night x = not (is_morning x || is_afternoon x || is_evening x)
 let floor = truncate
 
-let ceil dur t =
-  let dur = Duration.abs dur in
-  let x = floor dur t in
-  if equal x t then t else add dur x
+let ceil resolution t =
+  match resolution with
+  | Resolution.Duration dur ->
+    let x = truncate_duration dur t in
+    if equal x t then t else add dur x
+  | _ -> midnight
 ;;
 
 include Infix

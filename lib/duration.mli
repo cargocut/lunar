@@ -73,6 +73,9 @@ val to_int64 : t -> int64
     seconds that describe the duration.*)
 val dhms : t -> int * int * int * int
 
+(** [to_days duration] get a day approx for a duration. *)
+val to_days : t -> int
+
 (** [weekday d] returns the {!type:Weekday.t} for the given duration since
     epoch.*)
 val weekday : t -> Weekday.t

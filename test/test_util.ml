@@ -49,6 +49,7 @@ let date_err_to_string = function
     "invalid day: " ^ string_of_int day ^ "/" ^ string_of_int day_max
 ;;
 
+let dump_date_error err = err |> date_err_to_string |> print_endline
 let dump_month_validation = dump_result Month.to_string month_err_to_string
 let dump_weekday x = x |> Weekday.to_string |> print_endline
 

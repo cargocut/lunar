@@ -17,6 +17,12 @@ let abs = Int64.abs
 let min = Int64.min
 let max = Int64.max
 
+let to_days t =
+  if t >= 0L
+  then Int64.(to_int (div t one_day))
+  else Int64.(to_int (div (sub t (sub one_day 1L)) one_day))
+;;
+
 let div_floor a b =
   let q = a / b
   and r = a mod b in

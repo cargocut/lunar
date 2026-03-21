@@ -137,6 +137,13 @@ let compare a b =
   Int.compare a b
 ;;
 
+let quarter_of = function
+  | Jan | Feb | Mar -> Jan, Mar
+  | Apr | May | Jun -> Apr, Jun
+  | Jul | Aug | Sep -> Jul, Sep
+  | Oct | Nov | Dec -> Oct, Dec
+;;
+
 module CE = struct
   type nonrec t = t
 

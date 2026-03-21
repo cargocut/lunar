@@ -9,12 +9,6 @@ type t =
   ; day_of_month : int
   }
 
-type resolution =
-  | Day
-  | Week of Weekday.t
-  | Month
-  | Year
-
 type error =
   | Invalid_year of int
   | Invalid_month of Month.error
@@ -81,6 +75,12 @@ let from_string s =
     and day = int_of_string d in
     make' ~year ~month ~day ()
   | _ -> Error (Invalid_string s)
+;;
+
+let from_string_exn s =
+  match from_string s with
+  | Ok x -> x
+  | Error err -> raise (Invalid_date err)
 ;;
 
 let from_duration d =
@@ -325,6 +325,21 @@ let start_of_week ?(week_start = Weekday.Mon) d =
 
 let end_of_week ?(week_start = Weekday.Mon) d =
   start_of_week ~week_start d |> add_days 6
+;;
+
+let start_of_quarter d =
+  let year = year d in
+  let month, _ = Month.quarter_of (month d) in
+  (* NOTE: Should never performs any exception here. *)
+  make_exn ~year ~month ~day:1 ()
+;;
+
+let end_of_quarter d =
+  let year = year d in
+  let _, month = Month.quarter_of (month d) in
+  let day = Month.days_in ~year month in
+  (* NOTE: Should never performs any exception here. *)
+  make_exn ~year ~month ~day ()
 ;;
 
 include Infix

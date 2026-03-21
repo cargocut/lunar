@@ -54,6 +54,10 @@ val from_string : string -> (t, error) result
     for a given year [year]. *)
 val days_in : year:int -> t -> int
 
+(** [quarter_of m] Returns the months that make up the quarter in which
+    the given month falls. *)
+val quarter_of : t -> t * t
+
 (** [succ m] returns the following month. *)
 val succ : t -> t
 

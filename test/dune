@@ -22,6 +22,7 @@
   date_age_test
   date_next_pred_day_when_test
   date_eow_eom_eoy_test
+  date_truncated_test
   time_test
   time_am_pm_test
   time_truncate_round_test
