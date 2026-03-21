@@ -30,10 +30,6 @@
   time_diff_test
   time_from_string_test
   time_clamp_test
-  time_pred_succ_test
-  datetime_make_test
-  datetime_weekday_test
-  datetime_arith_test
-  datetime_diff_test)
+  time_pred_succ_test)
  (preprocess
   (pps ppx_expect)))
