@@ -17,7 +17,7 @@ type error =
   | Invalid_second of int
   | Invalid_string of string
 
-(** And exception used for unsafe function. *)
+(** An exception used for unsafe function. *)
 exception Invalid_time of error
 
 (** {1 Building time} *)

@@ -86,7 +86,7 @@ let from_string_exn s =
 let from_duration d =
   let year, month, day_of_month, _, _, _ = Duration.to_datetime d in
   let month =
-    (* Result.get_ok should be safe because of
+    (* NOTE: Result.get_ok should be safe because of
        [to_datetime]. *)
     month |> Month.from_int |> Result.get_ok
   in

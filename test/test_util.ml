@@ -31,16 +31,6 @@ let weekday_err_to_string = function
   | Weekday.Invalid_weekday_string s -> "invalid weekday string: " ^ s
 ;;
 
-let datetime_err_to_string = function
-  | Datetime.Invalid_year x -> "invalid year: " ^ string_of_int x
-  | Datetime.Invalid_month err -> month_err_to_string err
-  | Datetime.Invalid_hour x -> "invalid hour: " ^ string_of_int x
-  | Datetime.Invalid_min x -> "invalid min: " ^ string_of_int x
-  | Datetime.Invalid_sec x -> "invalid sec: " ^ string_of_int x
-  | Datetime.Invalid_day { day_max; day } ->
-    "invalid day: " ^ string_of_int day ^ "/" ^ string_of_int day_max
-;;
-
 let date_err_to_string = function
   | Date.Invalid_string s -> "invalid string: " ^ s
   | Date.Invalid_year x -> "invalid year: " ^ string_of_int x
@@ -57,29 +47,10 @@ let dump_weekday_validation =
   dump_result Weekday.to_string weekday_err_to_string
 ;;
 
-let dump_datetime x = x |> Datetime.to_string |> print_endline
 let dump_date x = x |> Date.to_string |> print_endline
 let dump_time x = x |> Time.to_string |> print_endline
-
-let dump_datetime_validation =
-  dump_result Datetime.to_string datetime_err_to_string
-;;
-
 let dump_time_validation = dump_result Time.to_string time_err_to_string
 let dump_date_validation = dump_result Date.to_string date_err_to_string
-
-let dump_iso_week_of_year dt =
-  let wk = Datetime.day_of_week dt
-  and y, n = Datetime.week_of_year dt in
-  string_of_int y
-  ^ " W"
-  ^ string_of_int n
-  ^ ", "
-  ^ Weekday.to_short_string wk
-  ^ "/"
-  ^ string_of_int (succ (Weekday.to_int wk))
-  |> print_endline
-;;
 
 let dump_date_iso_week_of_year dt =
   let wk = Date.day_of_week dt

@@ -20,7 +20,7 @@ type error =
       }
   | Invalid_string of string
 
-(** And exception used for unsafe function. *)
+(** An exception used for unsafe function. *)
 exception Invalid_date of error
 
 (** {1 Building date} *)
@@ -28,11 +28,11 @@ exception Invalid_date of error
 (** [make ~year ~month ~day ()] create and validate a date. *)
 val make : year:int -> month:Month.t -> day:int -> unit -> (t, error) result
 
-(** [make' ?at ~year ~month ~day ()] create and validate a date, see
+(** [make' ~year ~month ~day ()] create and validate a date, see
     {!val:make}. Take an integer rather than a {!val:Month.t}. *)
 val make' : year:int -> month:int -> day:int -> unit -> (t, error) result
 
-(** [make_exn ?at ~year ~month ~day ()] create and validate a date
+(** [make_exn ~year ~month ~day ()] create and validate a date
     like {!val:make} but raise [Invalid_date] if the validation
     doesn't succeed. *)
 val make_exn : year:int -> month:Month.t -> day:int -> unit -> t
