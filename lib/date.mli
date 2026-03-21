@@ -182,33 +182,33 @@ val pred : t -> t
     [d1] and [d2]. *)
 val diff : t -> t -> Duration.t
 
-(** [next_day ~where:pred ~from] returns the first following date that
+(** [next_day ~where:pred from] returns the first following date that
     satisfies the predicate [pred] starting from the date [from]
     (exclusive). {b Note}: If the predicate always returns [false],
     the function never terminates. *)
-val next_day : where:(t -> bool) -> from:t -> t
+val next_day : where:(t -> bool) -> t -> t
 
-(** [prev_day ~where:pred ~from] returns the first previous date that
+(** [prev_day ~where:pred from] returns the first previous date that
     satisfies the predicate [pred] starting from the date [from]
     (exclusive). {b Note}: If the predicate always returns [false],
     the function never terminates. *)
-val prev_day : where:(t -> bool) -> from:t -> t
+val prev_day : where:(t -> bool) -> t -> t
 
-(** [next_day_of_week weekday ~from] returns the first following date
+(** [next_day_of_week weekday from] returns the first following date
     corresponding to the specified day of the week. *)
-val next_day_of_week : Weekday.t -> from:t -> t
+val next_day_of_week : Weekday.t -> t -> t
 
-(** [pred_day_of_week weekday ~from] returns the first previous date
+(** [pred_day_of_week weekday from] returns the first previous date
     corresponding to the specified day of the week. *)
-val prev_day_of_week : Weekday.t -> from:t -> t
+val prev_day_of_week : Weekday.t -> t -> t
 
-(** [next_weekday ~from] returns the first following day of week (not
+(** [next_weekday from] returns the first following day of week (not
     weekend). *)
-val next_weekday : from:t -> t
+val next_weekday : t -> t
 
-(** [pred_weekday ~from] returns the first previous day of week (not
+(** [pred_weekday from] returns the first previous day of week (not
     weekend). *)
-val prev_weekday : from:t -> t
+val prev_weekday : t -> t
 
 (** {2 On duration}
 
@@ -246,6 +246,30 @@ val tomorrow : t -> t
 
 (** [yesterday d] get the previous day of the given [d]. See {!val:pred}. *)
 val yesterday : t -> t
+
+(** [next_week d] returns the first day of the next week. *)
+val next_week : ?week_start:Weekday.t -> t -> t
+
+(** [prev_week d] returns the first day of the previous week. *)
+val prev_week : ?week_start:Weekday.t -> t -> t
+
+(** [next_month d] returns the first day of the next month. *)
+val next_month : t -> t
+
+(** [prev_month d] returns the first day of the previous month. *)
+val prev_month : t -> t
+
+(** [next_quarter d] returns the first day of the next quarter. *)
+val next_quarter : t -> t
+
+(** [prev_quarter d] returns the first day of the previous quarter. *)
+val prev_quarter : t -> t
+
+(** [next_year d] returns the first day of the next year. *)
+val next_year : t -> t
+
+(** [prev_year d] returns the first day of the previous year. *)
+val prev_year : t -> t
 
 (** [start_of_week ?week_start d] Returns the first day of the week
     (defined by [week_start]; default: Monday). *)

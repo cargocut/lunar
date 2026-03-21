@@ -270,7 +270,7 @@ let is_last_day_of_year { day_of_month; month; _ } =
   | _ -> false
 ;;
 
-let get_day f ~where ~from =
+let get_day f ~where from =
   let rec aux d = if where d then d else aux (f 1 d) in
   aux (f 1 from)
 ;;
@@ -378,5 +378,20 @@ let round resolution d =
     and dc = diff c d in
     if Duration.(dt <= dc) then t else c)
 ;;
+
+let next_week ?(week_start = Weekday.Mon) d =
+  d |> add_weeks 1 |> truncate (Resolution.week_with_start week_start)
+;;
+
+let prev_week ?(week_start = Weekday.Mon) d =
+  d |> sub_weeks 1 |> truncate (Resolution.week_with_start week_start)
+;;
+
+let next_month d = d |> add_months 1 |> truncate Resolution.month
+let prev_month d = d |> sub_months 1 |> truncate Resolution.month
+let next_quarter d = d |> add_months 3 |> truncate Resolution.quarter
+let prev_quarter d = d |> sub_months 3 |> truncate Resolution.quarter
+let next_year d = d |> add_years 1 |> truncate Resolution.year
+let prev_year d = d |> sub_years 1 |> truncate Resolution.year
 
 include Infix
