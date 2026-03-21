@@ -353,4 +353,30 @@ let truncate resolution d =
   | `year -> start_of_year d
 ;;
 
+let floor = truncate
+
+let ceil resolution d =
+  let t = truncate resolution d in
+  if equal t d
+  then d
+  else (
+    match resolution with
+    | `day -> d
+    | `week _ -> add_weeks 1 t
+    | `month -> add_months 1 t
+    | `quarter -> add_months 3 t
+    | `year -> add_years 1 t)
+;;
+
+let round resolution d =
+  let t = truncate resolution d in
+  let c = ceil resolution d in
+  if equal t c
+  then t
+  else (
+    let dt = diff d t
+    and dc = diff c d in
+    if Duration.(dt <= dc) then t else c)
+;;
+
 include Infix

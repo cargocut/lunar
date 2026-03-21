@@ -288,9 +288,51 @@ val age : birthday:t -> t -> int
     A negative duration can produce very strange results, which is
     why durations are converted to absolute values in rounding functions. *)
 
-(** [truncate resolution t] truncates [t] to the previous multiple of
-    [resolution]. *)
+(** [truncate resolution d] truncates [d] to the beginning of the
+    period specified by [resolution].
+
+    All units smaller than [resolution] are discarded.
+
+    Examples:
+    - [truncate `day 2024-03-15] = [2024-03-15]
+    - [truncate (`week Mon) 2024-03-13] = [2024-03-11]
+    - [truncate `month 2024-03-15] = [2024-03-01]
+    - [truncate `quarter 2024-05-10] = [2024-04-01]
+    - [truncate `year 2024-03-15] = [2024-01-01]. *)
 val truncate : [< Resolution.for_date ] -> t -> t
+
+(** [floor resolution d] is [truncate resolution d]. *)
+val floor : [< Resolution.for_date ] -> t -> t
+
+(** [round resolution d] rounds [d] to the nearest boundary of
+    the period specified by [resolution].
+
+    If [d] lies exactly halfway between two boundaries, it is rounded
+    up to the next one.
+
+    Examples:
+    - [round `month 2024-03-10] = [2024-03-01]
+    - [round `month 2024-03-20] = [2024-04-01]
+    - [round `quarter 2024-02-15] = [2024-01-01]
+    - [round `quarter 2024-03-20] = [2024-04-01]
+    - [round `year 2024-07-01] = [2025-01-01]. *)
+val round : [< Resolution.for_date ] -> t -> t
+
+(** [ceil resolution d] rounds [d] up to the next boundary of the
+    period specified by [resolution]. If [d] is already aligned with
+    [resolution], it is returned unchanged.
+
+    All units smaller than [resolution] are discarded unless rounding
+    up requires incrementing a larger unit.
+
+    Examples:
+    - [ceil `month 2024-03-01] = [2024-03-01]
+    - [ceil `month 2024-03-02] = [2024-04-01]
+    - [ceil (`week Mon) 2024-03-11] = [2024-03-11]
+    - [ceil (`week Mon) 2024-03-13] = [2024-03-18]
+    - [ceil `year 2024-01-01] = [2024-01-01]
+    - [ceil `year 2024-03-15] = [2025-01-01]. *)
+val ceil : [< Resolution.for_date ] -> t -> t
 
 (** {1 Predicates} *)
 
