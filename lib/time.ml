@@ -147,13 +147,13 @@ let round_duration dur t =
 
 let truncate resolution t =
   match resolution with
-  | Resolution.Duration dur -> truncate_duration dur t
+  | `duration dur -> truncate_duration dur t
   | _ -> midnight
 ;;
 
 let round resolution t =
   match resolution with
-  | Resolution.Duration dur -> round_duration dur t
+  | `duration dur -> round_duration dur t
   | _ -> midnight
 ;;
 
@@ -197,7 +197,7 @@ let floor = truncate
 
 let ceil resolution t =
   match resolution with
-  | Resolution.Duration dur ->
+  | `duration dur ->
     let x = truncate_duration dur t in
     if equal x t then t else add dur x
   | _ -> midnight

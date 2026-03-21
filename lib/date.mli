@@ -290,7 +290,7 @@ val age : birthday:t -> t -> int
 
 (** [truncate resolution t] truncates [t] to the previous multiple of
     [resolution]. *)
-(* val truncate : Resolution.t -> t -> t *)
+val truncate : [< Resolution.for_date ] -> t -> t
 
 (** {1 Predicates} *)
 

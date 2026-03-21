@@ -147,10 +147,10 @@ val diff : t -> t -> Duration.t
     Examples:
     - [truncate (Resolution.from_minutes 1) 12:34:56] = [12:34:00]
     - [truncate (Resolution.from_hours 1) 12:34:56] = [12:00:00]. *)
-val truncate : Resolution.t -> t -> t
+val truncate : [> Resolution.for_time ] -> t -> t
 
 (** [floor d t] is [truncate d t]. *)
-val floor : Resolution.t -> t -> t
+val floor : [> Resolution.for_time ] -> t -> t
 
 (** [round resolution t] rounds [t] to the nearest multiple of
     [resolution].
@@ -163,7 +163,7 @@ val floor : Resolution.t -> t -> t
     - [round (Resolution..from_minutes 1) 12:34:30] = [12:35:00]
     - [round (Resolution.from_hours 1) 12:29:59] = [12:00:00]
     - [round (Resolution.from_hours 1) 12:30:00] = [13:00:00]. *)
-val round : Resolution.t -> t -> t
+val round : [> Resolution.for_time ] -> t -> t
 
 (** [ceil resolution t] rounds the given [time] [t] up to the nearest multiple of
     [resolution]. If [t] is already aligned with [resolution], it is returned
@@ -177,7 +177,7 @@ val round : Resolution.t -> t -> t
     - [ceil (Resolution.from_minutes 1) 12:34:01] = [12:35:00]
     - [ceil (Resolution.from_hours 1) 12:00:00] = [12:00:00]
     - [ceil (Resolution.from_hours 1) 12:01:00] = [13:00:00]. *)
-val ceil : Resolution.t -> t -> t
+val ceil : [> Resolution.for_time ] -> t -> t
 
 (** {1 Comparison} *)
 

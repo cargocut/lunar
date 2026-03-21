@@ -342,4 +342,15 @@ let end_of_quarter d =
   make_exn ~year ~month ~day ()
 ;;
 
+let truncate resolution d =
+  match resolution with
+  | `day ->
+    (* NOTE: [Day] should not change the result *)
+    d
+  | `week week_start -> start_of_week ~week_start d
+  | `month -> start_of_month d
+  | `quarter -> start_of_quarter d
+  | `year -> start_of_year d
+;;
+
 include Infix

@@ -3,21 +3,28 @@
 
    SPDX-License-Identifier: BSD-3-Clause *)
 
-type t =
-  | Day
-  | Week of Weekday.t
-  | Month
-  | Quarter
-  | Year
-  | Duration of Duration.t
+type for_date =
+  [ `day
+  | `week of Weekday.t
+  | `month
+  | `quarter
+  | `year
+  ]
 
-let day = Day
-let week = Week Weekday.Mon
-let week_with_start s = Week s
-let month = Month
-let year = Year
-let quarter = Quarter
-let duration d = Duration (Duration.max Duration.one (Duration.abs d))
+type for_time = [ `duration of Duration.t ]
+
+type t =
+  [ for_date
+  | for_time
+  ]
+
+let day = `day
+let week = `week Weekday.Mon
+let week_with_start s = `week s
+let month = `month
+let year = `year
+let quarter = `quarter
+let duration d = `duration (Duration.max Duration.one (Duration.abs d))
 let seconds d = duration (Duration.from_seconds d)
 let minutes d = duration (Duration.from_minutes d)
 let hours d = duration (Duration.from_hours d)
