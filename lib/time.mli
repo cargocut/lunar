@@ -30,8 +30,12 @@ val make : hour:int -> min:int -> sec:int -> unit -> (t, error) result
     succeed. *)
 val make_exn : hour:int -> min:int -> sec:int -> unit -> t
 
-(** [from_string] try to read a time from a string. *)
+(** [from_string s] try to read a time from a string. *)
 val from_string : string -> (t, error) result
+
+(** [from_string_exn s] try to read a time from a string and raise and exception
+    if it fails *)
+val from_string_exn : string -> t
 
 (** [from_duration d] returns a [time] representation for the given
     duration [d]. *)

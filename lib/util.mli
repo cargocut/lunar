@@ -21,6 +21,10 @@ val mod_floor : int -> int -> int
     functions) *)
 val only_numbers : string -> bool
 
+(** [split_on_chars pred str] Returns a list of the given string [str]
+    split into all characters that satisfy the given predicate [p]. *)
+val split_on_chars : (char -> bool) -> string -> string list
+
 (** {1 Shared APIs} *)
 
 module Make_equal_infix (E : Sigs.EQUATABLE) :

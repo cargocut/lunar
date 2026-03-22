@@ -42,11 +42,11 @@ val make_exn : year:int -> month:Month.t -> day:int -> unit -> t
     succeed. *)
 val make_exn' : year:int -> month:int -> day:int -> unit -> t
 
-(** [from_string] try to read a date from a string (using the format
+(** [from_string s] try to read a date from a string (using the format
     [year-mon-day]). *)
 val from_string : string -> (t, error) result
 
-(** [from_string_exn] try to read a date from a string (using the format
+(** [from_string_exn s] try to read a date from a string (using the format
     [year-mon-day]) and raise and exception if it fails. *)
 val from_string_exn : string -> t
 

@@ -40,6 +40,7 @@ let date_err_to_string = function
 ;;
 
 let datetime_err_to_string = function
+  | Datetime.Invalid_string s -> "invalid string: " ^ s
   | Datetime.Invalid_date err -> date_err_to_string err
   | Datetime.Invalid_time err -> time_err_to_string err
   | Datetime.Invalid (a, b) ->

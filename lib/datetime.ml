@@ -9,6 +9,7 @@ type error =
   | Invalid_date of Date.error
   | Invalid_time of Time.error
   | Invalid of Date.error * Time.error
+  | Invalid_string of string
 
 exception Invalid_datetime of error
 
@@ -38,6 +39,37 @@ let make_exn' ?at ~year ~month ~day () =
   match make' ?at ~year ~month ~day () with
   | Error err -> raise (Invalid_datetime err)
   | Ok x -> x
+;;
+
+let from_string s =
+  (* TODO: improve cases. *)
+  match
+    s
+    |> Util.split_on_chars (function
+      | 'T' | ' ' | 't' | '\n' | '\t' -> true
+      | _ -> false)
+    |> List.filter_map (fun x ->
+      match String.trim x with
+      | "" -> None
+      | x -> Some x)
+  with
+  | [ date; time ] ->
+    (match Date.from_string date, Time.from_string time with
+     | Ok date, Ok time -> Ok (from date time)
+     | Error a, Error b -> Error (Invalid (a, b))
+     | Error a, _ -> Error (Invalid_date a)
+     | _, Error b -> Error (Invalid_time b))
+  | [ date ] ->
+    Date.from_string date
+    |> Result.map_error (fun err -> Invalid_date err)
+    |> Result.map from_date
+  | _ -> Error (Invalid_string s)
+;;
+
+let from_string_exn s =
+  match from_string s with
+  | Ok x -> x
+  | Error err -> raise (Invalid_datetime err)
 ;;
 
 let from_duration d =
@@ -100,6 +132,14 @@ end
 let as_duration f dt = f (to_duration dt) |> from_duration
 let add d dt = as_duration (fun dt -> Duration.add dt d) dt
 let sub d dt = as_duration (fun dt -> Duration.sub dt d) dt
+let add_seconds n = add (Duration.from_seconds n)
+let sub_seconds n = sub (Duration.from_seconds n)
+let add_minutes n = add (Duration.from_minutes n)
+let sub_minutes n = sub (Duration.from_minutes n)
+let add_hours n = add (Duration.from_hours n)
+let sub_hours n = sub (Duration.from_hours n)
+let succ = add_seconds 1
+let pred = sub_seconds 1
 
 module Infix = struct
   let ( + ) x y = add y x

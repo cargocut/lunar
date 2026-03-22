@@ -30,6 +30,20 @@ let only_numbers = function
       s
 ;;
 
+let split_on_chars pred s =
+  (* NOTE: Like in [Stdlib] but using a predicate ([char -> bool])
+     instead of a simple char. *)
+  let r = ref [] in
+  let j = ref (String.length s) in
+  for i = String.length s - 1 downto 0 do
+    if pred (String.unsafe_get s i)
+    then (
+      r := String.sub s (i + 1) (!j - i - 1) :: !r;
+      j := i)
+  done;
+  String.sub s 0 !j :: !r
+;;
+
 module Make_equal_infix (E : Sigs.EQUATABLE) = struct
   type t = E.t
 

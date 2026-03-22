@@ -70,6 +70,12 @@ let from_string s =
   | _ -> Error (Invalid_string s)
 ;;
 
+let from_string_exn s =
+  match from_string s with
+  | Ok x -> x
+  | Error err -> raise (Invalid_time err)
+;;
+
 let midnight = make_exn ~hour:0 ~min:0 ~sec:0 ()
 let noon = make_exn ~hour:12 ~min:0 ~sec:0 ()
 let end_of_day = make_exn ~hour:23 ~min:59 ~sec:59 ()

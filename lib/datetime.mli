@@ -16,6 +16,7 @@ type error =
   | Invalid_date of Date.error
   | Invalid_time of Time.error
   | Invalid of Date.error * Time.error
+  | Invalid_string of string
 
 (** An exception used for unsafe function. *)
 exception Invalid_datetime of error
@@ -62,6 +63,14 @@ val make_exn'
   -> day:int
   -> unit
   -> t
+
+(** [from_string s] try to read a date from a string (using the format
+    [year-mon-day hh:mm:ss]). *)
+val from_string : string -> (t, error) result
+
+(** [from_string_exn s] try to read a date from a string (using the format
+    [year-mon-day hh:mm:ss]) and raise and exception if it fails. *)
+val from_string_exn : string -> t
 
 (** [from d t] creates a datetime object for the given date, [d] and a
     given time [t]. *)
@@ -118,6 +127,36 @@ val add : Duration.t -> t -> t
 (** [sub duration dt] compute a new date substracting [duration] to the given
     [dt]. *)
 val sub : Duration.t -> t -> t
+
+(** [add_seconds number_of_seconds datetime] add [number_of_seconds] to the
+    given [datetime]. *)
+val add_seconds : int -> t -> t
+
+(** [sub_seconds number_of_seconds datetime] remove [number_of_seconds] to the
+    given [datetime]. *)
+val sub_seconds : int -> t -> t
+
+(** [add_minutes number_of_minutes datetime] add [number_of_minutes] to the
+    given [datetime]. *)
+val add_minutes : int -> t -> t
+
+(** [sub_minutes number_of_minutes datetime] remove [number_of_minutes] to the
+    given [datetime]. *)
+val sub_minutes : int -> t -> t
+
+(** [add_hours number_of_hours datetime] add [number_of_hours] to the
+    given [datetime]. *)
+val add_hours : int -> t -> t
+
+(** [sub_hours number_of_hours datetime] remove [number_of_hours] to the
+    given [datime]. *)
+val sub_hours : int -> t -> t
+
+(** [succ t] is [add_seconds 1]. *)
+val succ : t -> t
+
+(** [pred t] is [sub_seconds 1]. *)
+val pred : t -> t
 
 (** {2 On duration}
 
