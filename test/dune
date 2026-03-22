@@ -32,6 +32,7 @@
   time_from_string_test
   time_clamp_test
   time_pred_succ_test
-  datetime_make_test)
+  datetime_make_test
+  datetime_from_duration)
  (preprocess
   (pps ppx_expect)))
