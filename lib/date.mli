@@ -100,7 +100,7 @@ val days_in_month : t -> int
 val day_of_year : t -> int
 
 (** [week_of_year d] returns the pair [year] and [week number] for a
-    given datetime [d].
+    given date [d].
 
     The ISO 8601 standard is used where Monday is the first
     day of the week. The year is carried over if a day belongs
@@ -109,7 +109,7 @@ val day_of_year : t -> int
     {b see:} {{:https://en.wikipedia.org/wiki/ISO_8601} ISO 8601}. *)
 val week_of_year : t -> int * int
 
-(** {1 Aliases}
+(** {2 Aliases}
 
     A few aliases for common terms. *)
 

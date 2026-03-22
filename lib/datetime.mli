@@ -87,6 +87,77 @@ val from_duration : Duration.t -> t
 (** Returns the 1st January 1970 at midnight. *)
 val epoch : t
 
+(** {1 Accessors}
+
+    Information and facts about Datetime. *)
+
+(** [date dt] returns the date part of the datetime. *)
+val date : t -> Date.t
+
+(** [time dt] returns the time part of the datetime. *)
+val time : t -> Time.t
+
+(** [hour dt] returns the hour. *)
+val hour : t -> int
+
+(** [hour dt] returns the minute. *)
+val minute : t -> int
+
+(** [hour dt] returns the second. *)
+val second : t -> int
+
+(** [era dt] returns the {i era} of the given datetime [dt]. *)
+val era : t -> Era.t
+
+(** [year_of_era dt] returns the year of the associated era for the given
+    datetime [dt]. *)
+val year_of_era : t -> int
+
+(** [century d] returns the century of the associated era for the given
+    datetime [dt]. *)
+val century_of_era : t -> int
+
+(** [year_of_century d] returns the year of the century of the associated
+    era for the given datetime [dt]. *)
+val year_of_century : t -> int
+
+(** [year dt] returns the year from a datetime. *)
+val year : t -> int
+
+(** [quarter dt] Returns the quarter number ([1-4]) in which the given datetime
+    [dt] falls. *)
+val quarter : t -> int
+
+(** [month dt] returns the month from a datetime. *)
+val month : t -> Month.t
+
+(** [day_of_month dt] returns the day of month from a datetime. *)
+val day_of_month : t -> int
+
+(** [day_of_week dt] returns the day of week from a datetime. *)
+val day_of_week : t -> Weekday.t
+
+(** [days_in_month dt] returns the number of days in the month of the given
+    datetime [dt]. *)
+val days_in_month : t -> int
+
+(** [day_of_year dt] returns the day of year from a datetime. *)
+val day_of_year : t -> int
+
+(** [week_of_year dt] returns the pair [year] and [week number] for a
+    given datetime [dt]. See {!val:Date.week_of_year}. *)
+val week_of_year : t -> int * int
+
+(** {2 Aliases}
+
+    A few aliases for common terms. *)
+
+(** See {!val:day_of_month}. *)
+val day : t -> int
+
+(** See {!val:day_of_week}. *)
+val weekday : t -> Weekday.t
+
 (** {1 Component lenses}
 
     A datetime is simply a pair consisting of a
@@ -95,12 +166,6 @@ val epoch : t
 (** [to_pair dt] convert the given datetime [dt] into a pair of
     {!type:Date.t} and {!type:Time.t} *)
 val to_pair : t -> Date.t * Time.t
-
-(** [date dt] returns the date part of the datetime. *)
-val date : t -> Date.t
-
-(** [time dt] returns the time part of the datetime. *)
-val time : t -> Time.t
 
 (** [on_date f dt] apply [f] on the date part of the given datetime
     ([dt]). *)
@@ -192,15 +257,17 @@ val add_years : int -> t -> t
     given [datetime]. *)
 val sub_years : int -> t -> t
 
+(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
+    [d1] and [d2]. *)
+val diff : t -> t -> Duration.t
+
+(** {2 Succ and Pred} *)
+
 (** [succ t] is [add_seconds 1]. *)
 val succ : t -> t
 
 (** [pred t] is [sub_seconds 1]. *)
 val pred : t -> t
-
-(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
-    [d1] and [d2]. *)
-val diff : t -> t -> Duration.t
 
 (** {2 On duration}
 
