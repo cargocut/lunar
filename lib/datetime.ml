@@ -59,3 +59,9 @@ let on_date f x = x |> date |> f
 let on_time f x = x |> time |> f
 let map_date f (d, t) = f d, t
 let map_time f (d, t) = d, f t
+
+let to_string dt =
+  let d = date dt
+  and t = time dt in
+  Date.to_string d ^ " " ^ Time.to_string t
+;;

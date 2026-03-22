@@ -114,3 +114,6 @@ val map_time : (Time.t -> Time.t) -> t -> t
 (** [to_duration dt] returns a duration since {!val:epoch} for the given
     datetime [dt].*)
 val to_duration : t -> Duration.t
+
+(** [to_string dt] returns a string representation of the given [dt]. *)
+val to_string : t -> string

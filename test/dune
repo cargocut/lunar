@@ -31,6 +31,7 @@
   time_diff_test
   time_from_string_test
   time_clamp_test
-  time_pred_succ_test)
+  time_pred_succ_test
+  datetime_make_test)
  (preprocess
   (pps ppx_expect)))

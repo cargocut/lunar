@@ -86,7 +86,8 @@ let%expect_test "age: symmetry check" =
   print_int (Date.age ~birthday current);
   print_newline ();
   print_int (Date.age ~birthday:current birthday);
-  [%expect {|
+  [%expect
+    {|
     36
     -36
     |}]
