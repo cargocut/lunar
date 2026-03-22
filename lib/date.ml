@@ -224,6 +224,8 @@ let add_months n d =
 ;;
 
 let sub_months n = add_months (-n)
+let add_quarters n = add_months (n * 3)
+let sub_quarters n = add_quarters (-n)
 
 let diff a b =
   let a = to_duration a
@@ -275,13 +277,13 @@ let get_day f ~where from =
   aux (f 1 from)
 ;;
 
-let next_day = get_day add_days
-let prev_day = get_day sub_days
+let succ_day ?(where = fun _ -> true) = get_day ~where add_days
+let pred_day ?(where = fun _ -> true) = get_day ~where sub_days
 let is_dow dow d = Weekday.equal dow (day_of_week d)
-let next_day_of_week dow = next_day ~where:(is_dow dow)
-let prev_day_of_week dow = prev_day ~where:(is_dow dow)
-let next_weekday = next_day ~where:is_weekday
-let prev_weekday = prev_day ~where:is_weekday
+let succ_day_of_week dow = succ_day ~where:(is_dow dow)
+let pred_day_of_week dow = pred_day ~where:(is_dow dow)
+let succ_weekday = succ_day ~where:is_weekday
+let pred_weekday = pred_day ~where:is_weekday
 
 module Infix = struct
   let ( + ) x y = add y x
@@ -364,7 +366,7 @@ let ceil resolution d =
     | `day -> d
     | `week _ -> add_weeks 1 t
     | `month -> add_months 1 t
-    | `quarter -> add_months 3 t
+    | `quarter -> add_quarters 1 t
     | `year -> add_years 1 t)
 ;;
 
@@ -379,19 +381,19 @@ let round resolution d =
     if Duration.(dt <= dc) then t else c)
 ;;
 
-let next_week ?(week_start = Weekday.Mon) d =
+let succ_week ?(week_start = Weekday.Mon) d =
   d |> add_weeks 1 |> truncate (Resolution.week_with_start week_start)
 ;;
 
-let prev_week ?(week_start = Weekday.Mon) d =
+let pred_week ?(week_start = Weekday.Mon) d =
   d |> sub_weeks 1 |> truncate (Resolution.week_with_start week_start)
 ;;
 
-let next_month d = d |> add_months 1 |> truncate Resolution.month
-let prev_month d = d |> sub_months 1 |> truncate Resolution.month
-let next_quarter d = d |> add_months 3 |> truncate Resolution.quarter
-let prev_quarter d = d |> sub_months 3 |> truncate Resolution.quarter
-let next_year d = d |> add_years 1 |> truncate Resolution.year
-let prev_year d = d |> sub_years 1 |> truncate Resolution.year
+let succ_month d = d |> add_months 1 |> truncate Resolution.month
+let pred_month d = d |> sub_months 1 |> truncate Resolution.month
+let succ_quarter d = d |> add_quarters 1 |> truncate Resolution.quarter
+let pred_quarter d = d |> sub_quarters 1 |> truncate Resolution.quarter
+let succ_year d = d |> add_years 1 |> truncate Resolution.year
+let pred_year d = d |> sub_years 1 |> truncate Resolution.year
 
 include Infix

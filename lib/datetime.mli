@@ -33,7 +33,7 @@ val make
   -> (t, error) result
 
 (** [make' ?at ~year ~month ~day ()] create and validate a datetime. see
-    {!val:make}. Take an integer rather than a {!val:Month.t}. *)
+    {!val:make}. Take an integer rather than a {!type:Month.t}. *)
 val make'
   :  ?at:int * int * int
   -> year:int
@@ -90,10 +90,10 @@ val epoch : t
 (** {1 Component lenses}
 
     A datetime is simply a pair consisting of a
-    {!type:Date.t} and {!type:time.t}. *)
+    {!type:Date.t} and {!type:Time.t}. *)
 
 (** [to_pair dt] convert the given datetime [dt] into a pair of
-    {!type:Date.t} and {!type:time.t} *)
+    {!type:Date.t} and {!type:Time.t} *)
 val to_pair : t -> Date.t * Time.t
 
 (** [date dt] returns the date part of the datetime. *)
@@ -152,11 +152,55 @@ val add_hours : int -> t -> t
     given [datime]. *)
 val sub_hours : int -> t -> t
 
+(** [add_days number_of_days datetime] add [number_of_days] to the given
+    [datetime]. *)
+val add_days : int -> t -> t
+
+(** [sub_days number_of_days datetime] remove [number_of_days] to the
+    given [datetime]. *)
+val sub_days : int -> t -> t
+
+(** [add_weeks number_of_weeks datetime] add [number_of_weeks] to the
+    given [datetime] (a week is [7] days). *)
+val add_weeks : int -> t -> t
+
+(** [sub_weeks number_of_weeks datetime] remove [number_of_weeks] to the
+    given [datetime] (a week is [7] days). *)
+val sub_weeks : int -> t -> t
+
+(** [add_months number_of_months datetime] add [number_of_months] to the
+    given [datetime]. *)
+val add_months : int -> t -> t
+
+(** [add_months number_of_months datetime] remove [number_of_months] to
+    the given [datetime]. *)
+val sub_months : int -> t -> t
+
+(** [add_quarters number_of_quarters datetime] add [number_of_quarters] to the
+    given [datetime]. *)
+val add_quarters : int -> t -> t
+
+(** [add_quarters number_of_quarters datetime] remove [number_of_quarters] to
+    the given [datetime]. *)
+val sub_quarters : int -> t -> t
+
+(** [add_years number_of_years datetime] add [number_of_years] to the
+    given [datetime]. *)
+val add_years : int -> t -> t
+
+(** [sub_years number_of_years datetime] remove [number_of_years] to the
+    given [datetime]. *)
+val sub_years : int -> t -> t
+
 (** [succ t] is [add_seconds 1]. *)
 val succ : t -> t
 
 (** [pred t] is [sub_seconds 1]. *)
 val pred : t -> t
+
+(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
+    [d1] and [d2]. *)
+val diff : t -> t -> Duration.t
 
 (** {2 On duration}
 

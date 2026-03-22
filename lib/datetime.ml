@@ -84,6 +84,13 @@ let from_duration d =
 ;;
 
 let to_duration (d, t) = Duration.(Date.to_duration d + Time.to_duration t)
+
+let diff a b =
+  let a = to_duration a
+  and b = to_duration b in
+  Duration.sub a b
+;;
+
 let to_pair x = x
 let date = fst
 let time = snd
@@ -140,6 +147,16 @@ let add_hours n = add (Duration.from_hours n)
 let sub_hours n = sub (Duration.from_hours n)
 let succ = add_seconds 1
 let pred = sub_seconds 1
+let add_days i = map_date (Date.add_days i)
+let sub_days i = map_date (Date.sub_days i)
+let add_weeks i = map_date (Date.add_weeks i)
+let sub_weeks i = map_date (Date.sub_weeks i)
+let add_months i = map_date (Date.add_months i)
+let sub_months i = map_date (Date.sub_months i)
+let add_quarters i = map_date (Date.add_quarters i)
+let sub_quarters i = map_date (Date.sub_quarters i)
+let add_years i = map_date (Date.add_years i)
+let sub_years i = map_date (Date.sub_years i)
 
 module Infix = struct
   let ( + ) x y = add y x

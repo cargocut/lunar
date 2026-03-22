@@ -29,7 +29,7 @@ exception Invalid_date of error
 val make : year:int -> month:Month.t -> day:int -> unit -> (t, error) result
 
 (** [make' ~year ~month ~day ()] create and validate a date, see
-    {!val:make}. Take an integer rather than a {!val:Month.t}. *)
+    {!val:make}. Take an integer rather than a {!type:Month.t}. *)
 val make' : year:int -> month:int -> day:int -> unit -> (t, error) result
 
 (** [make_exn ~year ~month ~day ()] create and validate a date
@@ -164,6 +164,14 @@ val add_months : int -> t -> t
     date [d]. *)
 val sub_months : int -> t -> t
 
+(** [add_quarters number_of_quarters d] add [number_of_quarters] to the given date
+    [d]. *)
+val add_quarters : int -> t -> t
+
+(** [sub_quarters number_of_quarters d] remove [number_of_quarters] to the given date
+    [d]. *)
+val sub_quarters : int -> t -> t
+
 (** [add_years number_of_years d] add [number_of_years] to the given date
     [d]. *)
 val add_years : int -> t -> t
@@ -172,43 +180,93 @@ val add_years : int -> t -> t
     [d]. *)
 val sub_years : int -> t -> t
 
+(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
+    [d1] and [d2]. *)
+val diff : t -> t -> Duration.t
+
+(** {2 Succ and Pred}
+
+    The main difference between the [add]/[sub] and [succ]/[pred] operations
+    lies in how the result is truncated. [add] and [sub] are standard
+    arithmetic operations: you add or subtract a duration.
+    [succ] and [pred], on the other hand, calculate the next date step.
+    For example let's imagine the following date:
+
+    {eof@ocaml[
+      let a_date = Lunar.Date.make_exn' ~year:2026 ~month:3 ~day:19 ()
+    ]eof}
+
+    Adding one month will preserve [day 19]:
+
+    {@ocaml[
+      # a_date |> Lunar.Date.add_months 1 |> Lunar.Date.to_string ;;
+      - : string = "2026-04-19"
+    ]}
+
+    But going {b to the next month} :
+
+    {@ocaml[
+      # a_date |> Lunar.Date.succ_month  |> Lunar.Date.to_string ;;
+      - : string = "2026-04-01"
+    ]} *)
+
 (** [succ d] is [add_days 1]. *)
 val succ : t -> t
 
 (** [pred d] is [sub_days 1]. *)
 val pred : t -> t
 
-(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
-    [d1] and [d2]. *)
-val diff : t -> t -> Duration.t
-
-(** [next_day ~where:pred from] returns the first following date that
+(** [succ_day ?where:pred from] returns the first following date that
     satisfies the predicate [pred] starting from the date [from]
     (exclusive). {b Note}: If the predicate always returns [false],
     the function never terminates. *)
-val next_day : where:(t -> bool) -> t -> t
+val succ_day : ?where:(t -> bool) -> t -> t
 
-(** [prev_day ~where:pred from] returns the first previous date that
+(** [pred_day ~where:pred from] returns the first previous date that
     satisfies the predicate [pred] starting from the date [from]
     (exclusive). {b Note}: If the predicate always returns [false],
     the function never terminates. *)
-val prev_day : where:(t -> bool) -> t -> t
+val pred_day : ?where:(t -> bool) -> t -> t
 
-(** [next_day_of_week weekday from] returns the first following date
+(** [succ_day_of_week weekday from] returns the first following date
     corresponding to the specified day of the week. *)
-val next_day_of_week : Weekday.t -> t -> t
+val succ_day_of_week : Weekday.t -> t -> t
 
 (** [pred_day_of_week weekday from] returns the first previous date
     corresponding to the specified day of the week. *)
-val prev_day_of_week : Weekday.t -> t -> t
+val pred_day_of_week : Weekday.t -> t -> t
 
-(** [next_weekday from] returns the first following day of week (not
+(** [succ_weekday from] returns the first following day of week (not
     weekend). *)
-val next_weekday : t -> t
+val succ_weekday : t -> t
 
 (** [pred_weekday from] returns the first previous day of week (not
     weekend). *)
-val prev_weekday : t -> t
+val pred_weekday : t -> t
+
+(** [succ_week d] returns the first day of the next week. *)
+val succ_week : ?week_start:Weekday.t -> t -> t
+
+(** [pred_week d] returns the first day of the previous week. *)
+val pred_week : ?week_start:Weekday.t -> t -> t
+
+(** [succ_month d] returns the first day of the next month. *)
+val succ_month : t -> t
+
+(** [pred_month d] returns the first day of the previous month. *)
+val pred_month : t -> t
+
+(** [succ_quarter d] returns the first day of the next quarter. *)
+val succ_quarter : t -> t
+
+(** [pred_quarter d] returns the first day of the previous quarter. *)
+val pred_quarter : t -> t
+
+(** [succ_year d] returns the first day of the next year. *)
+val succ_year : t -> t
+
+(** [pred_year d] returns the first day of the previous year. *)
+val pred_year : t -> t
 
 (** {2 On duration}
 
@@ -246,30 +304,6 @@ val tomorrow : t -> t
 
 (** [yesterday d] get the previous day of the given [d]. See {!val:pred}. *)
 val yesterday : t -> t
-
-(** [next_week d] returns the first day of the next week. *)
-val next_week : ?week_start:Weekday.t -> t -> t
-
-(** [prev_week d] returns the first day of the previous week. *)
-val prev_week : ?week_start:Weekday.t -> t -> t
-
-(** [next_month d] returns the first day of the next month. *)
-val next_month : t -> t
-
-(** [prev_month d] returns the first day of the previous month. *)
-val prev_month : t -> t
-
-(** [next_quarter d] returns the first day of the next quarter. *)
-val next_quarter : t -> t
-
-(** [prev_quarter d] returns the first day of the previous quarter. *)
-val prev_quarter : t -> t
-
-(** [next_year d] returns the first day of the next year. *)
-val next_year : t -> t
-
-(** [prev_year d] returns the first day of the previous year. *)
-val prev_year : t -> t
 
 (** [start_of_week ?week_start d] Returns the first day of the week
     (defined by [week_start]; default: Monday). *)

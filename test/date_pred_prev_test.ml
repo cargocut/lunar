@@ -30,59 +30,59 @@ let%expect_test "yesterday" =
   [%expect {| 0000-12-31 |}]
 ;;
 
-let%expect_test "next_week" =
-  "2026-03-20" |> Date.from_string_exn |> Date.next_week |> dump_date;
+let%expect_test "succ_week" =
+  "2026-03-20" |> Date.from_string_exn |> Date.succ_week |> dump_date;
   [%expect {| 2026-03-23 |}]
 ;;
 
-let%expect_test "next_week (start on sunday)" =
+let%expect_test "succ_week (start on sunday)" =
   "2026-03-20"
   |> Date.from_string_exn
-  |> Date.next_week ~week_start:Weekday.Sun
+  |> Date.succ_week ~week_start:Weekday.Sun
   |> dump_date;
   [%expect {| 2026-03-22 |}]
 ;;
 
-let%expect_test "prev_week" =
-  "2026-03-20" |> Date.from_string_exn |> Date.prev_week |> dump_date;
+let%expect_test "pred_week" =
+  "2026-03-20" |> Date.from_string_exn |> Date.pred_week |> dump_date;
   [%expect {| 2026-03-09 |}]
 ;;
 
-let%expect_test "prev_week (start on sunday)" =
+let%expect_test "pred_week (start on sunday)" =
   "2026-03-20"
   |> Date.from_string_exn
-  |> Date.prev_week ~week_start:Weekday.Sun
+  |> Date.pred_week ~week_start:Weekday.Sun
   |> dump_date;
   [%expect {| 2026-03-08 |}]
 ;;
 
-let%expect_test "next_month" =
-  "2026-03-20" |> Date.from_string_exn |> Date.next_month |> dump_date;
+let%expect_test "succ_month" =
+  "2026-03-20" |> Date.from_string_exn |> Date.succ_month |> dump_date;
   [%expect {| 2026-04-01 |}]
 ;;
 
-let%expect_test "prev_month" =
-  "2026-03-20" |> Date.from_string_exn |> Date.prev_month |> dump_date;
+let%expect_test "pred_month" =
+  "2026-03-20" |> Date.from_string_exn |> Date.pred_month |> dump_date;
   [%expect {| 2026-02-01 |}]
 ;;
 
-let%expect_test "next_quarter" =
-  "2026-03-20" |> Date.from_string_exn |> Date.next_quarter |> dump_date;
+let%expect_test "succ_quarter" =
+  "2026-03-20" |> Date.from_string_exn |> Date.succ_quarter |> dump_date;
   [%expect {| 2026-04-01 |}]
 ;;
 
-let%expect_test "prev_quarter" =
-  "2026-03-20" |> Date.from_string_exn |> Date.prev_quarter |> dump_date;
+let%expect_test "pred_quarter" =
+  "2026-03-20" |> Date.from_string_exn |> Date.pred_quarter |> dump_date;
   [%expect {| 2025-10-01 |}]
 ;;
 
-let%expect_test "next_year" =
-  "2026-03-20" |> Date.from_string_exn |> Date.next_year |> dump_date;
+let%expect_test "succ_year" =
+  "2026-03-20" |> Date.from_string_exn |> Date.succ_year |> dump_date;
   [%expect {| 2027-01-01 |}]
 ;;
 
-let%expect_test "prev_year" =
-  "2026-03-20" |> Date.from_string_exn |> Date.prev_year |> dump_date;
+let%expect_test "pred_year" =
+  "2026-03-20" |> Date.from_string_exn |> Date.pred_year |> dump_date;
   [%expect {| 2025-01-01 |}]
 ;;
 
@@ -101,18 +101,18 @@ let%expect_test "yesterday before leap day" =
   [%expect {| 2024-02-29 |}]
 ;;
 
-let%expect_test "next_week starting on sunday at month boundary" =
+let%expect_test "succ_week starting on sunday at month boundary" =
   "2026-01-30"
   |> Date.from_string_exn
-  |> Date.next_week ~week_start:Weekday.Sun
+  |> Date.succ_week ~week_start:Weekday.Sun
   |> dump_date;
   [%expect {| 2026-02-01 |}]
 ;;
 
-let%expect_test "prev_week starting on sunday at month boundary" =
+let%expect_test "pred_week starting on sunday at month boundary" =
   "2026-02-01"
   |> Date.from_string_exn
-  |> Date.prev_week ~week_start:Weekday.Sun
+  |> Date.pred_week ~week_start:Weekday.Sun
   |> dump_date;
   [%expect {| 2026-01-25 |}]
 ;;

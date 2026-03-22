@@ -61,7 +61,7 @@ val duration : Duration.t -> [> for_time ]
 (** Resolve as a day. *)
 val day : [> for_date ]
 
-(** Resolve as a week (using {!val:Weekday.Mon} as a week start). *)
+(** Resolve as a week (using monday as a week start). *)
 val week : [> for_date ]
 
 (** Allows you to set the first day of the week. *)

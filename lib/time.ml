@@ -163,6 +163,8 @@ let round resolution t =
   | _ -> midnight
 ;;
 
+let succ_second = succ
+let pred_second = pred
 let succ_minute t = t |> add_minutes 1 |> truncate Resolution.minute
 let pred_minute t = t |> sub_minutes 1 |> truncate Resolution.minute
 let succ_hour t = t |> add_hours 1 |> truncate Resolution.hour

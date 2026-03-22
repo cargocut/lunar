@@ -116,11 +116,48 @@ val add_hours : int -> t -> t
     given [time]. *)
 val sub_hours : int -> t -> t
 
+(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
+    [d1] and [d2]. *)
+val diff : t -> t -> Duration.t
+
+(** {2 Succ and Pred}
+
+    The main difference between the [add]/[sub] and [succ]/[pred] operations
+    lies in how the result is truncated. [add] and [sub] are standard
+    arithmetic operations: you add or subtract a duration.
+    [succ] and [pred], on the other hand, calculate the next time step.
+    For example let's imagine the following time:
+
+    {eof@ocaml[
+      let a_time = Lunar.Time.make_exn ~hour:12 ~min:34 ~sec:51 ()
+    ]eof}
+
+    Adding one minute will preserve [sec 51]:
+
+    {@ocaml[
+      # a_time |> Lunar.Time.add_minutes 1  |> Lunar.Time.to_string ;;
+      - : string = "12:35:51"
+    ]}
+
+    But going {b to the next minute} :
+
+    {@ocaml[
+      # a_time |> Lunar.Time.succ_minute  |> Lunar.Time.to_string ;;
+      - : string = "12:35:00"
+    ]} *)
+
 (** [succ t] is [add_seconds 1]. *)
 val succ : t -> t
 
 (** [pred t] is [sub_seconds 1]. *)
 val pred : t -> t
+
+(** [succ_second t] returns the time at the next second. See {!val:succ}. *)
+val succ_second : t -> t
+
+(** [pred_second t] returns the time at the previous second. See
+    {!val:pred}. *)
+val pred_second : t -> t
 
 (** [succ_minute t] returns the time at the next minute. *)
 val succ_minute : t -> t
@@ -133,10 +170,6 @@ val succ_hour : t -> t
 
 (** [pred_hour t] returns the time at the previous hour. *)
 val pred_hour : t -> t
-
-(** [diff d1 d2] returns the difference (in {!type:Duration.t}) between
-    [d1] and [d2]. *)
-val diff : t -> t -> Duration.t
 
 (** {1 Round and truncate}
 
