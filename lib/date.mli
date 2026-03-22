@@ -76,31 +76,31 @@ val century_of_era : t -> int
     era for the given date [d]. *)
 val year_of_century : t -> int
 
-(** [year dt] returns the year from a date. *)
+(** [year d] returns the year from a date. *)
 val year : t -> int
 
 (** [quarter d] Returns the quarter number ([1-4]) in which the given date
     [d] falls. *)
 val quarter : t -> int
 
-(** [month dt] returns the month from a date. *)
+(** [month d] returns the month from a date. *)
 val month : t -> Month.t
 
-(** [day_of_month dt] returns the day of month from a date. *)
+(** [day_of_month d] returns the day of month from a date. *)
 val day_of_month : t -> int
 
-(** [day_of_week dt] returns the day of week from a date. *)
+(** [day_of_week d] returns the day of week from a date. *)
 val day_of_week : t -> Weekday.t
 
 (** [days_in_month d] returns the number of days in the month of the given
     date [d]. *)
 val days_in_month : t -> int
 
-(** [day_of_year dt] returns the day of year from a date. *)
+(** [day_of_year d] returns the day of year from a date. *)
 val day_of_year : t -> int
 
-(** [week_of_year dt] returns the pair [year] and [week number] for a
-    given datetime [dt].
+(** [week_of_year d] returns the pair [year] and [week number] for a
+    given datetime [d].
 
     The ISO 8601 standard is used where Monday is the first
     day of the week. The year is carried over if a day belongs
@@ -121,11 +121,11 @@ val weekday : t -> Weekday.t
 
 (** {1 Conversion} *)
 
-(** [to_duration dt] returns a duration since {!val:epoch} for the given
-    datetime [dt].*)
+(** [to_duration d] returns a duration since {!val:epoch} for the given
+    datetime [d].*)
 val to_duration : t -> Duration.t
 
-(** [to_string dt] returns a string representation of the given [dt]. *)
+(** [to_string d] returns a string representation of the given [d]. *)
 val to_string : t -> string
 
 (** {1 Operation on dates} *)
@@ -368,7 +368,7 @@ val is_weekend : t -> bool
     or [Sunday]. *)
 val is_weekday : t -> bool
 
-(** [is_leap_year dt] returns [true] if [year dt] is a leap year, [false]
+(** [is_leap_year d] returns [true] if [year d] is a leap year, [false]
     otherwise.*)
 val is_leap_year : t -> bool
 
