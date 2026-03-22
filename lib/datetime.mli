@@ -293,7 +293,26 @@ val as_duration : (Duration.t -> Duration.t) -> t -> t
     A negative duration can produce very strange results, which is
     why durations are converted to absolute values in rounding functions. *)
 
+(** [truncate resolution d] truncates [d] to the beginning of the period
+    specified by [resolution]. See {!val:Date.truncate} and
+    {!val:Time.truncate}.
+
+    All units smaller than [resolution] are discarded. *)
 val truncate : [< Resolution.t ] -> t -> t
+
+(** [floor resolution d] is [truncate resolution d]. *)
+val floor : [< Resolution.t ] -> t -> t
+
+(** [round resolution d] rounds [d] to the nearest boundary of the period
+    specified by [resolution]. See {!val:Date.round} and
+    {!val:Time.round}. *)
+val round : [< Resolution.t ] -> t -> t
+
+(** [ceil resolution d] rounds [d] up to the next boundary of the period
+    specified by [resolution]. If [d] is already aligned with
+    [resolution], it is returned unchanged. See {!val:Date.ceil}
+    and {!val:Time.ceil}. *)
+val ceil : [< Resolution.t ] -> t -> t
 
 (** {1 Comparison} *)
 

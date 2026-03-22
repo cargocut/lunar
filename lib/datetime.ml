@@ -192,7 +192,44 @@ let truncate resolution dt =
   match resolution with
   | `duration dur -> map_time (Time.truncate (`duration dur)) dt
   | #Resolution.for_date as r ->
-    dt |> map_date (Date.truncate r) |> map_time (Time.truncate r)
+    dt |> map_date (Date.truncate r) |> map_time (fun _ -> Time.midnight)
+;;
+
+let floor = truncate
+
+let ceil resolution dt =
+  (* KLUDGE: We need to keep logic since date and time ar now connected. *)
+  match resolution with
+  | `duration dur ->
+    let tt = time dt in
+    let tr = Time.truncate (`duration dur) tt in
+    if Time.equal tt tr then dt else add dur (map_time (fun _ -> tr) dt)
+  | #Resolution.for_date as r ->
+    let t = truncate r dt in
+    if equal dt t
+    then dt
+    else (
+      match r with
+      | `day -> add_days 1 t
+      | `week _ -> add_weeks 1 t
+      | `month -> add_months 1 t
+      | `quarter -> add_quarters 1 t
+      | `year -> add_years 1 t)
+;;
+
+let round resolution dt =
+  (* KLUDGE: We need to keep logic since date and time ar now connected. *)
+  match resolution with
+  | `duration dur -> map_time (Time.round (`duration dur)) dt
+  | #Resolution.for_date as r ->
+    let t = truncate r dt
+    and c = ceil r dt in
+    if equal t c
+    then t
+    else (
+      let dt = diff dt t
+      and dc = diff c dt in
+      if Duration.(dt <= dc) then t else c)
 ;;
 
 include Infix

@@ -37,6 +37,7 @@
   datetime_facts_test
   datetime_from_string_test
   datetime_add_sub_test
-  datetime_diff_test)
+  datetime_diff_test
+  datetime_truncate_test)
  (preprocess
   (pps ppx_expect)))

@@ -363,7 +363,7 @@ let ceil resolution d =
   then d
   else (
     match resolution with
-    | `day -> d
+    | `day -> d (* NOTE: Resolution at the day-level keep date inchanged *)
     | `week _ -> add_weeks 1 t
     | `month -> add_months 1 t
     | `quarter -> add_quarters 1 t
@@ -371,8 +371,8 @@ let ceil resolution d =
 ;;
 
 let round resolution d =
-  let t = truncate resolution d in
-  let c = ceil resolution d in
+  let t = truncate resolution d
+  and c = ceil resolution d in
   if equal t c
   then t
   else (
