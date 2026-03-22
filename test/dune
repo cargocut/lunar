@@ -35,6 +35,7 @@
   datetime_make_test
   datetime_from_duration_test
   datetime_from_string_test
-  datetime_add_sub_test)
+  datetime_add_sub_test
+  datetime_diff_test)
  (preprocess
   (pps ppx_expect)))
