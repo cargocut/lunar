@@ -109,6 +109,45 @@ val map_date : (Date.t -> Date.t) -> t -> t
     [f]. *)
 val map_time : (Time.t -> Time.t) -> t -> t
 
+(** {1 Operation on datetimes} *)
+
+(** [add duration dt] compute a new date adding [duration] to the given
+    [dt]. *)
+val add : Duration.t -> t -> t
+
+(** [sub duration dt] compute a new date substracting [duration] to the given
+    [dt]. *)
+val sub : Duration.t -> t -> t
+
+(** {2 On duration}
+
+    Arithmetic operations, such as {!val:add} and {!val:sub}, rely on
+    conversions to {!type:Duration.t}, which means, for example, that in the
+    expression: [Infix.(date + d1 + d2 + d3)], [datetime] is
+    converted to duration, added, converted back to date, added
+    again, and so on.
+
+    For simply adding a single value, this is fine, but when you want
+    to build more complex operations, this back-and-forth is a bit
+    tedious. {!val:as_duration} allows you to avoid these trips back
+    and forth. *)
+
+(** [as_duration f dt] Converts the given datetime [dt] to a duration,
+    applies the function [f] to this duration, and returns the result
+    as a date. Useful for performing multiple operations on a
+    single datetime. *)
+val as_duration : (Duration.t -> Duration.t) -> t -> t
+
+(** {1 Comparison} *)
+
+(** Equality between dates. *)
+val equal : t -> t -> bool
+
+(** [compare a b] comparison between dates, following OCaml convention. *)
+val compare : t -> t -> int
+
+include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
+
 (** {1 Conversion} *)
 
 (** [to_duration dt] returns a duration since {!val:epoch} for the given
@@ -117,3 +156,21 @@ val to_duration : t -> Duration.t
 
 (** [to_string dt] returns a string representation of the given [dt]. *)
 val to_string : t -> string
+
+(** {1 Infix Operators} *)
+
+module Infix : sig
+  (** Common and useful infix operators. *)
+
+  (** [d + dur] is {!val:add} *)
+  val ( + ) : t -> Duration.t -> t
+
+  (** [d - dur] is {!val:sub} *)
+  val ( - ) : t -> Duration.t -> t
+
+  include Sigs.EQUATABLE_INFIX with type t := t (** @inline *)
+
+  include Sigs.COMPARABLE_INFIX with type t := t (** @inline *)
+end
+
+include module type of Infix

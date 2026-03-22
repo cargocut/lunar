@@ -65,3 +65,53 @@ let to_string dt =
   and t = time dt in
   Date.to_string d ^ " " ^ Time.to_string t
 ;;
+
+let equal a b =
+  let da = date a
+  and db = date b in
+  let c = Date.equal da db in
+  if c
+  then (
+    let ta = time a
+    and tb = time b in
+    Time.equal ta tb)
+  else c
+;;
+
+let compare a b =
+  let da = date a
+  and db = date b in
+  let c = Date.compare da db in
+  if Int.equal c 0
+  then (
+    let ta = time a
+    and tb = time b in
+    Time.compare ta tb)
+  else c
+;;
+
+module CE = struct
+  type nonrec t = t
+
+  let equal = equal
+  let compare = compare
+end
+
+let as_duration f dt = f (to_duration dt) |> from_duration
+let add d dt = as_duration (fun dt -> Duration.add dt d) dt
+let sub d dt = as_duration (fun dt -> Duration.sub dt d) dt
+
+module Infix = struct
+  let ( + ) x y = add y x
+  let ( - ) x y = sub y x
+
+  include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
+
+  include (
+    Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
+end
+
+include (
+  Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
+
+include Infix
