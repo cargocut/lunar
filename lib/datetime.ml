@@ -188,4 +188,11 @@ end
 include (
   Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
 
+let truncate resolution dt =
+  match resolution with
+  | `duration dur -> map_time (Time.truncate (`duration dur)) dt
+  | #Resolution.for_date as r ->
+    dt |> map_date (Date.truncate r) |> map_time (Time.truncate r)
+;;
+
 include Infix

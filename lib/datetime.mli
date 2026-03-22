@@ -288,6 +288,13 @@ val pred : t -> t
     single datetime. *)
 val as_duration : (Duration.t -> Duration.t) -> t -> t
 
+(** {1 Round and truncate}
+
+    A negative duration can produce very strange results, which is
+    why durations are converted to absolute values in rounding functions. *)
+
+val truncate : [< Resolution.t ] -> t -> t
+
 (** {1 Comparison} *)
 
 (** Equality between dates. *)
