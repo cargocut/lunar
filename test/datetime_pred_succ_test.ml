@@ -10,7 +10,7 @@ let%expect_test "succ_second" =
   |> Datetime.from_string_exn
   |> Datetime.succ_second
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:34:57 |}]
+  [%expect {| 2026-03-19T12:34:57 |}]
 ;;
 
 let%expect_test "succ_second" =
@@ -18,7 +18,7 @@ let%expect_test "succ_second" =
   |> Datetime.from_string_exn
   |> Datetime.succ_second
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:35:00 |}]
+  [%expect {| 2026-03-19T12:35:00 |}]
 ;;
 
 let%expect_test "pred_second" =
@@ -26,7 +26,7 @@ let%expect_test "pred_second" =
   |> Datetime.from_string_exn
   |> Datetime.pred_second
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:34:58 |}]
+  [%expect {| 2026-03-19T12:34:58 |}]
 ;;
 
 let%expect_test "pred_second" =
@@ -34,7 +34,7 @@ let%expect_test "pred_second" =
   |> Datetime.from_string_exn
   |> Datetime.pred_second
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:33:59 |}]
+  [%expect {| 2026-03-19T12:33:59 |}]
 ;;
 
 let%expect_test "succ_minute" =
@@ -42,7 +42,7 @@ let%expect_test "succ_minute" =
   |> Datetime.from_string_exn
   |> Datetime.succ_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:35:00 |}]
+  [%expect {| 2026-03-19T12:35:00 |}]
 ;;
 
 let%expect_test "pred_minute" =
@@ -50,7 +50,7 @@ let%expect_test "pred_minute" =
   |> Datetime.from_string_exn
   |> Datetime.pred_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:33:00 |}]
+  [%expect {| 2026-03-19T12:33:00 |}]
 ;;
 
 let%expect_test "succ_hour" =
@@ -58,7 +58,7 @@ let%expect_test "succ_hour" =
   |> Datetime.from_string_exn
   |> Datetime.succ_hour
   |> dump_datetime;
-  [%expect {| 2026-03-19 13:00:00 |}]
+  [%expect {| 2026-03-19T13:00:00 |}]
 ;;
 
 let%expect_test "pred_hour" =
@@ -66,7 +66,7 @@ let%expect_test "pred_hour" =
   |> Datetime.from_string_exn
   |> Datetime.pred_hour
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:00:00 |}]
+  [%expect {| 2026-03-19T11:00:00 |}]
 ;;
 
 let%expect_test "succ_second - end of day" =
@@ -74,7 +74,7 @@ let%expect_test "succ_second - end of day" =
   |> Datetime.from_string_exn
   |> Datetime.succ_second
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "pred_second - start of day" =
@@ -82,7 +82,7 @@ let%expect_test "pred_second - start of day" =
   |> Datetime.from_string_exn
   |> Datetime.pred_second
   |> dump_datetime;
-  [%expect {| 2026-03-18 23:59:59 |}]
+  [%expect {| 2026-03-18T23:59:59 |}]
 ;;
 
 let%expect_test "succ_minute - end of hour" =
@@ -90,7 +90,7 @@ let%expect_test "succ_minute - end of hour" =
   |> Datetime.from_string_exn
   |> Datetime.succ_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 13:00:00 |}]
+  [%expect {| 2026-03-19T13:00:00 |}]
 ;;
 
 let%expect_test "succ_minute - end of day" =
@@ -98,7 +98,7 @@ let%expect_test "succ_minute - end of day" =
   |> Datetime.from_string_exn
   |> Datetime.succ_minute
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "pred_minute - start of hour" =
@@ -106,7 +106,7 @@ let%expect_test "pred_minute - start of hour" =
   |> Datetime.from_string_exn
   |> Datetime.pred_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:59:00 |}]
+  [%expect {| 2026-03-19T11:59:00 |}]
 ;;
 
 let%expect_test "pred_minute - start of day" =
@@ -114,7 +114,7 @@ let%expect_test "pred_minute - start of day" =
   |> Datetime.from_string_exn
   |> Datetime.pred_minute
   |> dump_datetime;
-  [%expect {| 2026-03-18 23:59:00 |}]
+  [%expect {| 2026-03-18T23:59:00 |}]
 ;;
 
 let%expect_test "succ_minute - end of hour" =
@@ -122,7 +122,7 @@ let%expect_test "succ_minute - end of hour" =
   |> Datetime.from_string_exn
   |> Datetime.succ_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 13:00:00 |}]
+  [%expect {| 2026-03-19T13:00:00 |}]
 ;;
 
 let%expect_test "succ_minute - end of day" =
@@ -130,7 +130,7 @@ let%expect_test "succ_minute - end of day" =
   |> Datetime.from_string_exn
   |> Datetime.succ_minute
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "pred_minute - start of hour" =
@@ -138,7 +138,7 @@ let%expect_test "pred_minute - start of hour" =
   |> Datetime.from_string_exn
   |> Datetime.pred_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:59:00 |}]
+  [%expect {| 2026-03-19T11:59:00 |}]
 ;;
 
 let%expect_test "pred_minute - start of day" =
@@ -146,7 +146,7 @@ let%expect_test "pred_minute - start of day" =
   |> Datetime.from_string_exn
   |> Datetime.pred_minute
   |> dump_datetime;
-  [%expect {| 2026-03-18 23:59:00 |}]
+  [%expect {| 2026-03-18T23:59:00 |}]
 ;;
 
 let%expect_test "succ_hour - end of day" =
@@ -154,7 +154,7 @@ let%expect_test "succ_hour - end of day" =
   |> Datetime.from_string_exn
   |> Datetime.succ_hour
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "pred_hour - start of day" =
@@ -162,7 +162,7 @@ let%expect_test "pred_hour - start of day" =
   |> Datetime.from_string_exn
   |> Datetime.pred_hour
   |> dump_datetime;
-  [%expect {| 2026-03-18 23:00:00 |}]
+  [%expect {| 2026-03-18T23:00:00 |}]
 ;;
 
 let%expect_test "succ_second - end of month" =
@@ -170,7 +170,7 @@ let%expect_test "succ_second - end of month" =
   |> Datetime.from_string_exn
   |> Datetime.succ_second
   |> dump_datetime;
-  [%expect {| 2026-02-01 00:00:00 |}]
+  [%expect {| 2026-02-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_second - start of month" =
@@ -178,7 +178,7 @@ let%expect_test "pred_second - start of month" =
   |> Datetime.from_string_exn
   |> Datetime.pred_second
   |> dump_datetime;
-  [%expect {| 2026-01-31 23:59:59 |}]
+  [%expect {| 2026-01-31T23:59:59 |}]
 ;;
 
 let%expect_test "succ_second - end of year" =
@@ -186,7 +186,7 @@ let%expect_test "succ_second - end of year" =
   |> Datetime.from_string_exn
   |> Datetime.succ_second
   |> dump_datetime;
-  [%expect {| 2027-01-01 00:00:00 |}]
+  [%expect {| 2027-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_second - start of year" =
@@ -194,7 +194,7 @@ let%expect_test "pred_second - start of year" =
   |> Datetime.from_string_exn
   |> Datetime.pred_second
   |> dump_datetime;
-  [%expect {| 2025-12-31 23:59:59 |}]
+  [%expect {| 2025-12-31T23:59:59 |}]
 ;;
 
 let%expect_test "succ_second - leap day" =
@@ -202,7 +202,7 @@ let%expect_test "succ_second - leap day" =
   |> Datetime.from_string_exn
   |> Datetime.succ_second
   |> dump_datetime;
-  [%expect {| 2024-03-01 00:00:00 |}]
+  [%expect {| 2024-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_second - leap day" =
@@ -210,7 +210,7 @@ let%expect_test "pred_second - leap day" =
   |> Datetime.from_string_exn
   |> Datetime.pred_second
   |> dump_datetime;
-  [%expect {| 2024-02-29 23:59:59 |}]
+  [%expect {| 2024-02-29T23:59:59 |}]
 ;;
 
 let%expect_test "pred_minute <= dt <= succ_minute" =
@@ -234,7 +234,7 @@ let%expect_test "succ_day - basic" =
   |> Datetime.from_string_exn
   |> Datetime.succ_day
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "pred_day - basic" =
@@ -242,7 +242,7 @@ let%expect_test "pred_day - basic" =
   |> Datetime.from_string_exn
   |> Datetime.pred_day
   |> dump_datetime;
-  [%expect {| 2026-03-18 00:00:00 |}]
+  [%expect {| 2026-03-18T00:00:00 |}]
 ;;
 
 let%expect_test "succ_day - end of month" =
@@ -250,7 +250,7 @@ let%expect_test "succ_day - end of month" =
   |> Datetime.from_string_exn
   |> Datetime.succ_day
   |> dump_datetime;
-  [%expect {| 2026-02-01 00:00:00 |}]
+  [%expect {| 2026-02-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_day - start of month" =
@@ -258,7 +258,7 @@ let%expect_test "pred_day - start of month" =
   |> Datetime.from_string_exn
   |> Datetime.pred_day
   |> dump_datetime;
-  [%expect {| 2026-01-31 00:00:00 |}]
+  [%expect {| 2026-01-31T00:00:00 |}]
 ;;
 
 let is_monday d = Weekday.equal (Date.day_of_week d) Weekday.Mon
@@ -268,7 +268,7 @@ let%expect_test "succ_day with predicate" =
   |> Datetime.from_string_exn
   |> Datetime.succ_day ~where:is_monday
   |> dump_datetime;
-  [%expect {| 2026-03-23 00:00:00 |}]
+  [%expect {| 2026-03-23T00:00:00 |}]
 ;;
 
 let%expect_test "pred_day with predicate" =
@@ -276,7 +276,7 @@ let%expect_test "pred_day with predicate" =
   |> Datetime.from_string_exn
   |> Datetime.pred_day ~where:is_monday
   |> dump_datetime;
-  [%expect {| 2026-03-16 00:00:00 |}]
+  [%expect {| 2026-03-16T00:00:00 |}]
 ;;
 
 let%expect_test "succ_day_of_week - same week" =
@@ -284,7 +284,7 @@ let%expect_test "succ_day_of_week - same week" =
   |> Datetime.from_string_exn
   |> Datetime.succ_day_of_week Weekday.Thu
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "succ_day_of_week - wrap next week" =
@@ -292,7 +292,7 @@ let%expect_test "succ_day_of_week - wrap next week" =
   |> Datetime.from_string_exn
   |> Datetime.succ_day_of_week Weekday.Mon
   |> dump_datetime;
-  [%expect {| 2026-03-23 00:00:00 |}]
+  [%expect {| 2026-03-23T00:00:00 |}]
 ;;
 
 let%expect_test "pred_day_of_week - wrap previous week" =
@@ -300,7 +300,7 @@ let%expect_test "pred_day_of_week - wrap previous week" =
   |> Datetime.from_string_exn
   |> Datetime.pred_day_of_week Weekday.Mon
   |> dump_datetime;
-  [%expect {| 2026-03-16 00:00:00 |}]
+  [%expect {| 2026-03-16T00:00:00 |}]
 ;;
 
 let%expect_test "succ_weekday - normal" =
@@ -308,7 +308,7 @@ let%expect_test "succ_weekday - normal" =
   |> Datetime.from_string_exn
   |> Datetime.succ_weekday
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "succ_weekday - friday skips weekend" =
@@ -316,7 +316,7 @@ let%expect_test "succ_weekday - friday skips weekend" =
   |> Datetime.from_string_exn
   |> Datetime.succ_weekday
   |> dump_datetime;
-  [%expect {| 2026-03-23 00:00:00 |}]
+  [%expect {| 2026-03-23T00:00:00 |}]
 ;;
 
 let%expect_test "pred_weekday - monday skips weekend" =
@@ -324,7 +324,7 @@ let%expect_test "pred_weekday - monday skips weekend" =
   |> Datetime.from_string_exn
   |> Datetime.pred_weekday
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "succ_week - default (Mon)" =
@@ -332,7 +332,7 @@ let%expect_test "succ_week - default (Mon)" =
   |> Datetime.from_string_exn
   |> Datetime.succ_week
   |> dump_datetime;
-  [%expect {| 2026-03-23 00:00:00 |}]
+  [%expect {| 2026-03-23T00:00:00 |}]
 ;;
 
 let%expect_test "pred_week - default (Mon)" =
@@ -340,7 +340,7 @@ let%expect_test "pred_week - default (Mon)" =
   |> Datetime.from_string_exn
   |> Datetime.pred_week
   |> dump_datetime;
-  [%expect {| 2026-03-09 00:00:00 |}]
+  [%expect {| 2026-03-09T00:00:00 |}]
 ;;
 
 let%expect_test "succ_week - sunday start" =
@@ -348,7 +348,7 @@ let%expect_test "succ_week - sunday start" =
   |> Datetime.from_string_exn
   |> Datetime.succ_week ~week_start:Weekday.Sun
   |> dump_datetime;
-  [%expect {| 2026-03-22 00:00:00 |}]
+  [%expect {| 2026-03-22T00:00:00 |}]
 ;;
 
 let%expect_test "succ_month - basic" =
@@ -356,7 +356,7 @@ let%expect_test "succ_month - basic" =
   |> Datetime.from_string_exn
   |> Datetime.succ_month
   |> dump_datetime;
-  [%expect {| 2026-04-01 00:00:00 |}]
+  [%expect {| 2026-04-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_month - basic" =
@@ -364,7 +364,7 @@ let%expect_test "pred_month - basic" =
   |> Datetime.from_string_exn
   |> Datetime.pred_month
   |> dump_datetime;
-  [%expect {| 2026-02-01 00:00:00 |}]
+  [%expect {| 2026-02-01T00:00:00 |}]
 ;;
 
 let%expect_test "succ_month - december rollover" =
@@ -372,7 +372,7 @@ let%expect_test "succ_month - december rollover" =
   |> Datetime.from_string_exn
   |> Datetime.succ_month
   |> dump_datetime;
-  [%expect {| 2027-01-01 00:00:00 |}]
+  [%expect {| 2027-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "succ_quarter - basic" =
@@ -380,7 +380,7 @@ let%expect_test "succ_quarter - basic" =
   |> Datetime.from_string_exn
   |> Datetime.succ_quarter
   |> dump_datetime;
-  [%expect {| 2026-04-01 00:00:00 |}]
+  [%expect {| 2026-04-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_quarter - basic" =
@@ -388,7 +388,7 @@ let%expect_test "pred_quarter - basic" =
   |> Datetime.from_string_exn
   |> Datetime.pred_quarter
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "succ_year - basic" =
@@ -396,7 +396,7 @@ let%expect_test "succ_year - basic" =
   |> Datetime.from_string_exn
   |> Datetime.succ_year
   |> dump_datetime;
-  [%expect {| 2027-01-01 00:00:00 |}]
+  [%expect {| 2027-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_year - basic" =
@@ -404,7 +404,7 @@ let%expect_test "pred_year - basic" =
   |> Datetime.from_string_exn
   |> Datetime.pred_year
   |> dump_datetime;
-  [%expect {| 2025-01-01 00:00:00 |}]
+  [%expect {| 2025-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "succ_month - leap february" =
@@ -412,7 +412,7 @@ let%expect_test "succ_month - leap february" =
   |> Datetime.from_string_exn
   |> Datetime.succ_month
   |> dump_datetime;
-  [%expect {| 2024-03-01 00:00:00 |}]
+  [%expect {| 2024-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "pred_month - after leap february" =
@@ -420,5 +420,5 @@ let%expect_test "pred_month - after leap february" =
   |> Datetime.from_string_exn
   |> Datetime.pred_month
   |> dump_datetime;
-  [%expect {| 2024-02-01 00:00:00 |}]
+  [%expect {| 2024-02-01T00:00:00 |}]
 ;;

@@ -19,6 +19,9 @@ type t
 (** [make ~hour ~min] describes the offset [HH:MM]. *)
 val make : hour:int -> min:int -> t
 
+(** A presaved UTC Timezone. *)
+val utc : t
+
 (** {1 Conversion} *)
 
 (** [to_duration tz] returns the offset for the given [tz]. *)

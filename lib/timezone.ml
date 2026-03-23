@@ -7,6 +7,7 @@ type t = Duration.t
 
 (* MAYBE : *)
 
+let utc = Duration.zero
 let make ~hour:h ~min:m = Duration.(from_hours h + from_minutes m)
 let equal = Duration.equal
 let compare = Duration.compare

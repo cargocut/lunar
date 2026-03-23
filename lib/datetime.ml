@@ -121,7 +121,7 @@ let weekday = on_date Date.weekday
 let to_string dt =
   let d = date dt
   and t = time dt in
-  Date.to_string d ^ " " ^ Time.to_string t
+  Date.to_string d ^ "T" ^ Time.to_string t
 ;;
 
 let equal a b =

@@ -10,7 +10,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.second
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:59 |}]
+  [%expect {| 2026-03-19T23:58:59 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -18,7 +18,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.seconds 15)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:45 |}]
+  [%expect {| 2026-03-19T23:58:45 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -26,7 +26,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:00 |}]
+  [%expect {| 2026-03-19T23:58:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -34,7 +34,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.minutes 15)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:45:00 |}]
+  [%expect {| 2026-03-19T23:45:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -42,7 +42,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.hour
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:00:00 |}]
+  [%expect {| 2026-03-19T23:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -50,7 +50,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.hours 2)
   |> dump_datetime;
-  [%expect {| 2026-03-19 22:00:00 |}]
+  [%expect {| 2026-03-19T22:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -58,7 +58,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.day
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -66,7 +66,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.week
   |> dump_datetime;
-  [%expect {| 2026-03-16 00:00:00 |}]
+  [%expect {| 2026-03-16T00:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -74,7 +74,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.week_with_start Weekday.Thu)
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -82,7 +82,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.week_with_start Weekday.Sun)
   |> dump_datetime;
-  [%expect {| 2026-03-15 00:00:00 |}]
+  [%expect {| 2026-03-15T00:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -90,7 +90,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.month
   |> dump_datetime;
-  [%expect {| 2026-03-01 00:00:00 |}]
+  [%expect {| 2026-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -98,7 +98,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.quarter
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "truncate" =
@@ -106,7 +106,7 @@ let%expect_test "truncate" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.year
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "truncate seconds - already aligned" =
@@ -114,7 +114,7 @@ let%expect_test "truncate seconds - already aligned" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.seconds 15)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:45 |}]
+  [%expect {| 2026-03-19T23:58:45 |}]
 ;;
 
 let%expect_test "truncate minutes - already aligned" =
@@ -122,7 +122,7 @@ let%expect_test "truncate minutes - already aligned" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.minutes 15)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:45:00 |}]
+  [%expect {| 2026-03-19T23:45:00 |}]
 ;;
 
 let%expect_test "truncate hours - already aligned" =
@@ -130,7 +130,7 @@ let%expect_test "truncate hours - already aligned" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.hours 2)
   |> dump_datetime;
-  [%expect {| 2026-03-19 22:00:00 |}]
+  [%expect {| 2026-03-19T22:00:00 |}]
 ;;
 
 let%expect_test "truncate seconds - small value" =
@@ -138,7 +138,7 @@ let%expect_test "truncate seconds - small value" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.seconds 5)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:05 |}]
+  [%expect {| 2026-03-19T23:58:05 |}]
 ;;
 
 let%expect_test "truncate minutes - non-trivial" =
@@ -146,7 +146,7 @@ let%expect_test "truncate minutes - non-trivial" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.minutes 7)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:55:00 |}]
+  [%expect {| 2026-03-19T23:55:00 |}]
 ;;
 
 let%expect_test "truncate hour - near midnight" =
@@ -154,7 +154,7 @@ let%expect_test "truncate hour - near midnight" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.hour
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "truncate hours - crossing midnight boundary" =
@@ -162,7 +162,7 @@ let%expect_test "truncate hours - crossing midnight boundary" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.hours 2)
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "truncate week - already start of week" =
@@ -170,7 +170,7 @@ let%expect_test "truncate week - already start of week" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.week
   |> dump_datetime;
-  [%expect {| 2026-03-16 00:00:00 |}]
+  [%expect {| 2026-03-16T00:00:00 |}]
 ;;
 
 let%expect_test "truncate week - sunday boundary" =
@@ -178,7 +178,7 @@ let%expect_test "truncate week - sunday boundary" =
   |> Datetime.from_string_exn
   |> Datetime.truncate (Resolution.week_with_start Weekday.Sun)
   |> dump_datetime;
-  [%expect {| 2026-03-15 00:00:00 |}]
+  [%expect {| 2026-03-15T00:00:00 |}]
 ;;
 
 let%expect_test "truncate month - already first day" =
@@ -186,7 +186,7 @@ let%expect_test "truncate month - already first day" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.month
   |> dump_datetime;
-  [%expect {| 2026-03-01 00:00:00 |}]
+  [%expect {| 2026-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "truncate quarter - boundary" =
@@ -194,7 +194,7 @@ let%expect_test "truncate quarter - boundary" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.quarter
   |> dump_datetime;
-  [%expect {| 2026-04-01 00:00:00 |}]
+  [%expect {| 2026-04-01T00:00:00 |}]
 ;;
 
 let%expect_test "truncate year - already first day" =
@@ -202,7 +202,7 @@ let%expect_test "truncate year - already first day" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.year
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "truncate day - leap day" =
@@ -210,7 +210,7 @@ let%expect_test "truncate day - leap day" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.day
   |> dump_datetime;
-  [%expect {| 2024-02-29 00:00:00 |}]
+  [%expect {| 2024-02-29T00:00:00 |}]
 ;;
 
 let%expect_test "truncate month - leap february" =
@@ -218,7 +218,7 @@ let%expect_test "truncate month - leap february" =
   |> Datetime.from_string_exn
   |> Datetime.truncate Resolution.month
   |> dump_datetime;
-  [%expect {| 2024-02-01 00:00:00 |}]
+  [%expect {| 2024-02-01T00:00:00 |}]
 ;;
 
 let%expect_test "truncate idempotent - minute" =
@@ -264,7 +264,7 @@ let%expect_test "ceil seconds - already aligned" =
   |> Datetime.from_string_exn
   |> Datetime.ceil (Resolution.seconds 15)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:45 |}]
+  [%expect {| 2026-03-19T23:58:45 |}]
 ;;
 
 let%expect_test "ceil seconds - small value" =
@@ -272,7 +272,7 @@ let%expect_test "ceil seconds - small value" =
   |> Datetime.from_string_exn
   |> Datetime.ceil (Resolution.seconds 5)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:10 |}]
+  [%expect {| 2026-03-19T23:58:10 |}]
 ;;
 
 let%expect_test "ceil minutes - already aligned" =
@@ -280,7 +280,7 @@ let%expect_test "ceil minutes - already aligned" =
   |> Datetime.from_string_exn
   |> Datetime.ceil (Resolution.minutes 15)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:45:00 |}]
+  [%expect {| 2026-03-19T23:45:00 |}]
 ;;
 
 let%expect_test "ceil minutes - non-trivial" =
@@ -288,7 +288,7 @@ let%expect_test "ceil minutes - non-trivial" =
   |> Datetime.from_string_exn
   |> Datetime.ceil (Resolution.minutes 7)
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:02:00 |}]
+  [%expect {| 2026-03-20T00:02:00 |}]
 ;;
 
 let%expect_test "ceil hours - crossing midnight" =
@@ -296,7 +296,7 @@ let%expect_test "ceil hours - crossing midnight" =
   |> Datetime.from_string_exn
   |> Datetime.ceil (Resolution.hours 2)
   |> dump_datetime;
-  [%expect {| 2026-03-19 02:00:00 |}]
+  [%expect {| 2026-03-19T02:00:00 |}]
 ;;
 
 let%expect_test "ceil day - already midnight" =
@@ -304,7 +304,7 @@ let%expect_test "ceil day - already midnight" =
   |> Datetime.from_string_exn
   |> Datetime.ceil Resolution.day
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "ceil day - regular" =
@@ -312,7 +312,7 @@ let%expect_test "ceil day - regular" =
   |> Datetime.from_string_exn
   |> Datetime.ceil Resolution.day
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "ceil week - start on Monday" =
@@ -320,7 +320,7 @@ let%expect_test "ceil week - start on Monday" =
   |> Datetime.from_string_exn
   |> Datetime.ceil Resolution.week
   |> dump_datetime;
-  [%expect {| 2026-03-23 00:00:00 |}]
+  [%expect {| 2026-03-23T00:00:00 |}]
 ;;
 
 let%expect_test "ceil week - start on Sunday" =
@@ -328,7 +328,7 @@ let%expect_test "ceil week - start on Sunday" =
   |> Datetime.from_string_exn
   |> Datetime.ceil (Resolution.week_with_start Weekday.Sun)
   |> dump_datetime;
-  [%expect {| 2026-03-22 00:00:00 |}]
+  [%expect {| 2026-03-22T00:00:00 |}]
 ;;
 
 let%expect_test "ceil month - leap february" =
@@ -336,7 +336,7 @@ let%expect_test "ceil month - leap february" =
   |> Datetime.from_string_exn
   |> Datetime.ceil Resolution.month
   |> dump_datetime;
-  [%expect {| 2024-03-01 00:00:00 |}]
+  [%expect {| 2024-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "ceil quarter - boundary" =
@@ -344,7 +344,7 @@ let%expect_test "ceil quarter - boundary" =
   |> Datetime.from_string_exn
   |> Datetime.ceil Resolution.quarter
   |> dump_datetime;
-  [%expect {| 2026-07-01 00:00:00 |}]
+  [%expect {| 2026-07-01T00:00:00 |}]
 ;;
 
 let%expect_test "ceil year - already first day" =
@@ -352,7 +352,7 @@ let%expect_test "ceil year - already first day" =
   |> Datetime.from_string_exn
   |> Datetime.ceil Resolution.year
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "round seconds - midpoint goes up" =
@@ -360,7 +360,7 @@ let%expect_test "round seconds - midpoint goes up" =
   |> Datetime.from_string_exn
   |> Datetime.round (Resolution.seconds 10)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:58:50 |}]
+  [%expect {| 2026-03-19T23:58:50 |}]
 ;;
 
 let%expect_test "round seconds - midpoint exact" =
@@ -368,7 +368,7 @@ let%expect_test "round seconds - midpoint exact" =
   |> Datetime.from_string_exn
   |> Datetime.round (Resolution.seconds 10)
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:59:00 |}]
+  [%expect {| 2026-03-19T23:59:00 |}]
 ;;
 
 let%expect_test "round minutes - non-trivial" =
@@ -376,7 +376,7 @@ let%expect_test "round minutes - non-trivial" =
   |> Datetime.from_string_exn
   |> Datetime.round (Resolution.minutes 7)
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:02:00 |}]
+  [%expect {| 2026-03-19T00:02:00 |}]
 ;;
 
 let%expect_test "round hours - midpoint" =
@@ -384,7 +384,7 @@ let%expect_test "round hours - midpoint" =
   |> Datetime.from_string_exn
   |> Datetime.round (Resolution.hours 2)
   |> dump_datetime;
-  [%expect {| 2026-03-19 02:00:00 |}]
+  [%expect {| 2026-03-19T02:00:00 |}]
 ;;
 
 let%expect_test "round day - midpoint" =
@@ -392,7 +392,7 @@ let%expect_test "round day - midpoint" =
   |> Datetime.from_string_exn
   |> Datetime.round Resolution.day
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "round week - midpoint" =
@@ -400,7 +400,7 @@ let%expect_test "round week - midpoint" =
   |> Datetime.from_string_exn
   |> Datetime.round Resolution.week
   |> dump_datetime;
-  [%expect {| 2026-03-16 00:00:00 |}]
+  [%expect {| 2026-03-16T00:00:00 |}]
 ;;
 
 let%expect_test "round week - after midpoint" =
@@ -408,7 +408,7 @@ let%expect_test "round week - after midpoint" =
   |> Datetime.from_string_exn
   |> Datetime.round Resolution.week
   |> dump_datetime;
-  [%expect {| 2026-03-23 00:00:00 |}]
+  [%expect {| 2026-03-23T00:00:00 |}]
 ;;
 
 let%expect_test "round month - midpoint" =
@@ -416,7 +416,7 @@ let%expect_test "round month - midpoint" =
   |> Datetime.from_string_exn
   |> Datetime.round Resolution.month
   |> dump_datetime;
-  [%expect {| 2026-03-01 00:00:00 |}]
+  [%expect {| 2026-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "round quarter - midpoint" =
@@ -424,7 +424,7 @@ let%expect_test "round quarter - midpoint" =
   |> Datetime.from_string_exn
   |> Datetime.round Resolution.quarter
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "round year - midpoint" =
@@ -432,5 +432,5 @@ let%expect_test "round year - midpoint" =
   |> Datetime.from_string_exn
   |> Datetime.round Resolution.year
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;

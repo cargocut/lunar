@@ -10,7 +10,7 @@ let%expect_test "start_of_day" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_day
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_day" =
@@ -18,7 +18,7 @@ let%expect_test "end_of_day" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_day
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:59:59 |}]
+  [%expect {| 2026-03-19T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_week" =
@@ -26,7 +26,7 @@ let%expect_test "start_of_week" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_week
   |> dump_datetime;
-  [%expect {| 2026-03-16 00:00:00 |}]
+  [%expect {| 2026-03-16T00:00:00 |}]
 ;;
 
 let%expect_test "start_of_week (Sunday)" =
@@ -34,7 +34,7 @@ let%expect_test "start_of_week (Sunday)" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_week ~week_start:Weekday.Sun
   |> dump_datetime;
-  [%expect {| 2026-03-15 00:00:00 |}]
+  [%expect {| 2026-03-15T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_week" =
@@ -42,7 +42,7 @@ let%expect_test "end_of_week" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_week
   |> dump_datetime;
-  [%expect {| 2026-03-22 23:59:59 |}]
+  [%expect {| 2026-03-22T23:59:59 |}]
 ;;
 
 let%expect_test "end_of_week (Sunday)" =
@@ -50,7 +50,7 @@ let%expect_test "end_of_week (Sunday)" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_week ~week_start:Weekday.Sun
   |> dump_datetime;
-  [%expect {| 2026-03-21 23:59:59 |}]
+  [%expect {| 2026-03-21T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_month" =
@@ -58,7 +58,7 @@ let%expect_test "start_of_month" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_month
   |> dump_datetime;
-  [%expect {| 2026-03-01 00:00:00 |}]
+  [%expect {| 2026-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_month" =
@@ -66,7 +66,7 @@ let%expect_test "end_of_month" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_month
   |> dump_datetime;
-  [%expect {| 2026-03-31 23:59:59 |}]
+  [%expect {| 2026-03-31T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_month - feb leap" =
@@ -74,7 +74,7 @@ let%expect_test "start_of_month - feb leap" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_month
   |> dump_datetime;
-  [%expect {| 2024-02-01 00:00:00 |}]
+  [%expect {| 2024-02-01T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_month - feb leap" =
@@ -82,7 +82,7 @@ let%expect_test "end_of_month - feb leap" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_month
   |> dump_datetime;
-  [%expect {| 2024-02-29 23:59:59 |}]
+  [%expect {| 2024-02-29T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_quarter" =
@@ -90,7 +90,7 @@ let%expect_test "start_of_quarter" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_quarter
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_quarter" =
@@ -98,7 +98,7 @@ let%expect_test "end_of_quarter" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_quarter
   |> dump_datetime;
-  [%expect {| 2026-03-31 23:59:59 |}]
+  [%expect {| 2026-03-31T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_quarter" =
@@ -106,7 +106,7 @@ let%expect_test "start_of_quarter" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_quarter
   |> dump_datetime;
-  [%expect {| 2026-07-01 00:00:00 |}]
+  [%expect {| 2026-07-01T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_quarter" =
@@ -114,7 +114,7 @@ let%expect_test "end_of_quarter" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_quarter
   |> dump_datetime;
-  [%expect {| 2026-12-31 23:59:59 |}]
+  [%expect {| 2026-12-31T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_year" =
@@ -122,7 +122,7 @@ let%expect_test "start_of_year" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_year
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_year" =
@@ -130,7 +130,7 @@ let%expect_test "end_of_year" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_year
   |> dump_datetime;
-  [%expect {| 2026-12-31 23:59:59 |}]
+  [%expect {| 2026-12-31T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_day idempotent" =
@@ -138,7 +138,7 @@ let%expect_test "start_of_day idempotent" =
     "2026-03-19 12:34:56" |> Datetime.from_string_exn |> Datetime.start_of_day
   in
   dt |> Datetime.start_of_day |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_month idempotent" =
@@ -146,7 +146,7 @@ let%expect_test "end_of_month idempotent" =
     "2026-03-19 12:34:56" |> Datetime.from_string_exn |> Datetime.end_of_month
   in
   dt |> Datetime.end_of_month |> dump_datetime;
-  [%expect {| 2026-03-31 23:59:59 |}]
+  [%expect {| 2026-03-31T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_day already aligned" =
@@ -154,7 +154,7 @@ let%expect_test "start_of_day already aligned" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_day
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_day already aligned" =
@@ -162,7 +162,7 @@ let%expect_test "end_of_day already aligned" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_day
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:59:59 |}]
+  [%expect {| 2026-03-19T23:59:59 |}]
 ;;
 
 let%expect_test "end_of_day near midnight" =
@@ -170,7 +170,7 @@ let%expect_test "end_of_day near midnight" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_day
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:59:59 |}]
+  [%expect {| 2026-03-19T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_day just after midnight" =
@@ -178,7 +178,7 @@ let%expect_test "start_of_day just after midnight" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_day
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:00 |}]
+  [%expect {| 2026-03-19T00:00:00 |}]
 ;;
 
 let%expect_test "start_of_week already monday" =
@@ -186,7 +186,7 @@ let%expect_test "start_of_week already monday" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_week
   |> dump_datetime;
-  [%expect {| 2026-03-16 00:00:00 |}]
+  [%expect {| 2026-03-16T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_week already sunday" =
@@ -194,7 +194,7 @@ let%expect_test "end_of_week already sunday" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_week
   |> dump_datetime;
-  [%expect {| 2026-03-22 23:59:59 |}]
+  [%expect {| 2026-03-22T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_week sunday boundary" =
@@ -202,7 +202,7 @@ let%expect_test "start_of_week sunday boundary" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_week ~week_start:Weekday.Sun
   |> dump_datetime;
-  [%expect {| 2026-03-15 00:00:00 |}]
+  [%expect {| 2026-03-15T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_month 30 days" =
@@ -210,7 +210,7 @@ let%expect_test "end_of_month 30 days" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_month
   |> dump_datetime;
-  [%expect {| 2026-04-30 23:59:59 |}]
+  [%expect {| 2026-04-30T23:59:59 |}]
 ;;
 
 let%expect_test "end_of_month non-leap february" =
@@ -218,7 +218,7 @@ let%expect_test "end_of_month non-leap february" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_month
   |> dump_datetime;
-  [%expect {| 2025-02-28 23:59:59 |}]
+  [%expect {| 2025-02-28T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_quarter boundary" =
@@ -226,7 +226,7 @@ let%expect_test "start_of_quarter boundary" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_quarter
   |> dump_datetime;
-  [%expect {| 2026-04-01 00:00:00 |}]
+  [%expect {| 2026-04-01T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_quarter boundary" =
@@ -234,7 +234,7 @@ let%expect_test "end_of_quarter boundary" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_quarter
   |> dump_datetime;
-  [%expect {| 2026-06-30 23:59:59 |}]
+  [%expect {| 2026-06-30T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_year boundary" =
@@ -242,7 +242,7 @@ let%expect_test "start_of_year boundary" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_year
   |> dump_datetime;
-  [%expect {| 2026-01-01 00:00:00 |}]
+  [%expect {| 2026-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "end_of_year boundary" =
@@ -250,7 +250,7 @@ let%expect_test "end_of_year boundary" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_year
   |> dump_datetime;
-  [%expect {| 2026-12-31 23:59:59 |}]
+  [%expect {| 2026-12-31T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_month then end_of_month" =
@@ -259,7 +259,7 @@ let%expect_test "start_of_month then end_of_month" =
   |> Datetime.start_of_month
   |> Datetime.end_of_month
   |> dump_datetime;
-  [%expect {| 2026-03-31 23:59:59 |}]
+  [%expect {| 2026-03-31T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_week then end_of_week" =
@@ -268,7 +268,7 @@ let%expect_test "start_of_week then end_of_week" =
   |> Datetime.start_of_week
   |> Datetime.end_of_week
   |> dump_datetime;
-  [%expect {| 2026-03-22 23:59:59 |}]
+  [%expect {| 2026-03-22T23:59:59 |}]
 ;;
 
 let%expect_test "start_of_minute" =
@@ -276,7 +276,7 @@ let%expect_test "start_of_minute" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:34:00 |}]
+  [%expect {| 2026-03-19T12:34:00 |}]
 ;;
 
 let%expect_test "end_of_minute" =
@@ -284,7 +284,7 @@ let%expect_test "end_of_minute" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_minute
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:34:59 |}]
+  [%expect {| 2026-03-19T12:34:59 |}]
 ;;
 
 let%expect_test "start_of_hour" =
@@ -292,7 +292,7 @@ let%expect_test "start_of_hour" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_hour
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:00:00 |}]
+  [%expect {| 2026-03-19T12:00:00 |}]
 ;;
 
 let%expect_test "end_of_hour" =
@@ -300,7 +300,7 @@ let%expect_test "end_of_hour" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_hour
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:59:59 |}]
+  [%expect {| 2026-03-19T12:59:59 |}]
 ;;
 
 let%expect_test "start_of_morning" =
@@ -308,7 +308,7 @@ let%expect_test "start_of_morning" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_morning
   |> dump_datetime;
-  [%expect {| 2026-03-19 05:00:00 |}]
+  [%expect {| 2026-03-19T05:00:00 |}]
 ;;
 
 let%expect_test "end_of_morning" =
@@ -316,7 +316,7 @@ let%expect_test "end_of_morning" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_morning
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:59:59 |}]
+  [%expect {| 2026-03-19T11:59:59 |}]
 ;;
 
 let%expect_test "start_of_afternoon" =
@@ -324,7 +324,7 @@ let%expect_test "start_of_afternoon" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_afternoon
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:00:00 |}]
+  [%expect {| 2026-03-19T12:00:00 |}]
 ;;
 
 let%expect_test "end_of_afternoon" =
@@ -332,7 +332,7 @@ let%expect_test "end_of_afternoon" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_afternoon
   |> dump_datetime;
-  [%expect {| 2026-03-19 16:59:59 |}]
+  [%expect {| 2026-03-19T16:59:59 |}]
 ;;
 
 let%expect_test "start_of_evening" =
@@ -340,7 +340,7 @@ let%expect_test "start_of_evening" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_evening
   |> dump_datetime;
-  [%expect {| 2026-03-19 17:00:00 |}]
+  [%expect {| 2026-03-19T17:00:00 |}]
 ;;
 
 let%expect_test "end_of_evening" =
@@ -348,7 +348,7 @@ let%expect_test "end_of_evening" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_evening
   |> dump_datetime;
-  [%expect {| 2026-03-19 20:59:59 |}]
+  [%expect {| 2026-03-19T20:59:59 |}]
 ;;
 
 let%expect_test "start_of_night" =
@@ -356,7 +356,7 @@ let%expect_test "start_of_night" =
   |> Datetime.from_string_exn
   |> Datetime.start_of_night
   |> dump_datetime;
-  [%expect {| 2026-03-19 21:00:00 |}]
+  [%expect {| 2026-03-19T21:00:00 |}]
 ;;
 
 let%expect_test "end_of_night" =
@@ -364,5 +364,5 @@ let%expect_test "end_of_night" =
   |> Datetime.from_string_exn
   |> Datetime.end_of_night
   |> dump_datetime;
-  [%expect {| 2026-03-19 04:59:59 |}]
+  [%expect {| 2026-03-19T04:59:59 |}]
 ;;

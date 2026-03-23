@@ -10,7 +10,7 @@ let%expect_test "add_seconds" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:01 |}]
+  [%expect {| 2026-03-19T00:00:01 |}]
 ;;
 
 let%expect_test "add_seconds" =
@@ -18,7 +18,7 @@ let%expect_test "add_seconds" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:22:24 |}]
+  [%expect {| 2026-03-19T11:22:24 |}]
 ;;
 
 let%expect_test "add_seconds" =
@@ -26,7 +26,7 @@ let%expect_test "add_seconds" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 234567890
   |> dump_datetime;
-  [%expect {| 2033-08-24 09:07:13 |}]
+  [%expect {| 2033-08-24T09:07:13 |}]
 ;;
 
 let%expect_test "sub_seconds" =
@@ -34,7 +34,7 @@ let%expect_test "sub_seconds" =
   |> Datetime.from_string_exn
   |> Datetime.sub_seconds 234567890
   |> dump_datetime;
-  [%expect {| 2018-10-12 13:37:33 |}]
+  [%expect {| 2018-10-12T13:37:33 |}]
 ;;
 
 let%expect_test "add_seconds: +1 from midnight" =
@@ -42,7 +42,7 @@ let%expect_test "add_seconds: +1 from midnight" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 00:00:01 |}]
+  [%expect {| 2026-03-19T00:00:01 |}]
 ;;
 
 let%expect_test "add_seconds: simple increment" =
@@ -50,7 +50,7 @@ let%expect_test "add_seconds: simple increment" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:22:24 |}]
+  [%expect {| 2026-03-19T11:22:24 |}]
 ;;
 
 let%expect_test "add_seconds: second overflow to minute" =
@@ -58,7 +58,7 @@ let%expect_test "add_seconds: second overflow to minute" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:23:00 |}]
+  [%expect {| 2026-03-19T11:23:00 |}]
 ;;
 
 let%expect_test "add_seconds: minute overflow to hour" =
@@ -66,7 +66,7 @@ let%expect_test "add_seconds: minute overflow to hour" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 12:00:00 |}]
+  [%expect {| 2026-03-19T12:00:00 |}]
 ;;
 
 let%expect_test "add_seconds: hour overflow to next day" =
@@ -74,7 +74,7 @@ let%expect_test "add_seconds: hour overflow to next day" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-20 00:00:00 |}]
+  [%expect {| 2026-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_seconds: crossing month boundary" =
@@ -82,7 +82,7 @@ let%expect_test "add_seconds: crossing month boundary" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-02-01 00:00:00 |}]
+  [%expect {| 2026-02-01T00:00:00 |}]
 ;;
 
 let%expect_test "add_seconds: crossing year boundary" =
@@ -90,7 +90,7 @@ let%expect_test "add_seconds: crossing year boundary" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2027-01-01 00:00:00 |}]
+  [%expect {| 2027-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "sub_seconds: simple decrement" =
@@ -98,7 +98,7 @@ let%expect_test "sub_seconds: simple decrement" =
   |> Datetime.from_string_exn
   |> Datetime.sub_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:22:22 |}]
+  [%expect {| 2026-03-19T11:22:22 |}]
 ;;
 
 let%expect_test "sub_seconds: borrow from minute" =
@@ -106,7 +106,7 @@ let%expect_test "sub_seconds: borrow from minute" =
   |> Datetime.from_string_exn
   |> Datetime.sub_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:21:59 |}]
+  [%expect {| 2026-03-19T11:21:59 |}]
 ;;
 
 let%expect_test "sub_seconds: borrow from hour" =
@@ -114,7 +114,7 @@ let%expect_test "sub_seconds: borrow from hour" =
   |> Datetime.from_string_exn
   |> Datetime.sub_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:59:59 |}]
+  [%expect {| 2026-03-19T11:59:59 |}]
 ;;
 
 let%expect_test "sub_seconds: crossing day boundary" =
@@ -122,7 +122,7 @@ let%expect_test "sub_seconds: crossing day boundary" =
   |> Datetime.from_string_exn
   |> Datetime.sub_seconds 1
   |> dump_datetime;
-  [%expect {| 2026-03-19 23:59:59 |}]
+  [%expect {| 2026-03-19T23:59:59 |}]
 ;;
 
 let%expect_test "add_seconds: large value" =
@@ -130,7 +130,7 @@ let%expect_test "add_seconds: large value" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 234567890
   |> dump_datetime;
-  [%expect {| 2033-08-24 09:07:13 |}]
+  [%expect {| 2033-08-24T09:07:13 |}]
 ;;
 
 let%expect_test "sub_seconds: large value" =
@@ -138,7 +138,7 @@ let%expect_test "sub_seconds: large value" =
   |> Datetime.from_string_exn
   |> Datetime.sub_seconds 234567890
   |> dump_datetime;
-  [%expect {| 2018-10-12 13:37:33 |}]
+  [%expect {| 2018-10-12T13:37:33 |}]
 ;;
 
 let%expect_test "add_seconds: negative behaves like sub" =
@@ -146,7 +146,7 @@ let%expect_test "add_seconds: negative behaves like sub" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds (-1)
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:22:22 |}]
+  [%expect {| 2026-03-19T11:22:22 |}]
 ;;
 
 let%expect_test "sub_seconds: negative behaves like add" =
@@ -154,7 +154,7 @@ let%expect_test "sub_seconds: negative behaves like add" =
   |> Datetime.from_string_exn
   |> Datetime.sub_seconds (-1)
   |> dump_datetime;
-  [%expect {| 2026-03-19 11:22:24 |}]
+  [%expect {| 2026-03-19T11:22:24 |}]
 ;;
 
 let%expect_test "add_seconds: leap day transition" =
@@ -162,7 +162,7 @@ let%expect_test "add_seconds: leap day transition" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2024-02-29 00:00:00 |}]
+  [%expect {| 2024-02-29T00:00:00 |}]
 ;;
 
 let%expect_test "add_seconds: after leap day" =
@@ -170,7 +170,7 @@ let%expect_test "add_seconds: after leap day" =
   |> Datetime.from_string_exn
   |> Datetime.add_seconds 1
   |> dump_datetime;
-  [%expect {| 2024-03-01 00:00:00 |}]
+  [%expect {| 2024-03-01T00:00:00 |}]
 ;;
 
 let%expect_test "add then sub cancels out" =
@@ -195,7 +195,7 @@ let%expect_test "add_months: simple" =
   |> Datetime.from_string_exn
   |> Datetime.add_months 1
   |> dump_datetime;
-  [%expect {| 2026-04-20 00:00:00 |}]
+  [%expect {| 2026-04-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_months: crossing year" =
@@ -203,7 +203,7 @@ let%expect_test "add_months: crossing year" =
   |> Datetime.from_string_exn
   |> Datetime.add_months 1
   |> dump_datetime;
-  [%expect {| 2027-01-20 00:00:00 |}]
+  [%expect {| 2027-01-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_months: clamp Jan 31 -> Feb" =
@@ -211,7 +211,7 @@ let%expect_test "add_months: clamp Jan 31 -> Feb" =
   |> Datetime.from_string_exn
   |> Datetime.add_months 1
   |> dump_datetime;
-  [%expect {| 2026-02-28 00:00:00 |}]
+  [%expect {| 2026-02-28T00:00:00 |}]
 ;;
 
 let%expect_test "add_months: clamp March 31 -> April" =
@@ -219,7 +219,7 @@ let%expect_test "add_months: clamp March 31 -> April" =
   |> Datetime.from_string_exn
   |> Datetime.add_months 1
   |> dump_datetime;
-  [%expect {| 2026-04-30 00:00:00 |}]
+  [%expect {| 2026-04-30T00:00:00 |}]
 ;;
 
 let%expect_test "add_months: leap year Feb" =
@@ -227,7 +227,7 @@ let%expect_test "add_months: leap year Feb" =
   |> Datetime.from_string_exn
   |> Datetime.add_months 1
   |> dump_datetime;
-  [%expect {| 2024-02-29 00:00:00 |}]
+  [%expect {| 2024-02-29T00:00:00 |}]
 ;;
 
 let%expect_test "sub_months: simple" =
@@ -235,7 +235,7 @@ let%expect_test "sub_months: simple" =
   |> Datetime.from_string_exn
   |> Datetime.sub_months 1
   |> dump_datetime;
-  [%expect {| 2026-02-20 00:00:00 |}]
+  [%expect {| 2026-02-20T00:00:00 |}]
 ;;
 
 let%expect_test "sub_months: crossing year" =
@@ -243,7 +243,7 @@ let%expect_test "sub_months: crossing year" =
   |> Datetime.from_string_exn
   |> Datetime.sub_months 1
   |> dump_datetime;
-  [%expect {| 2025-12-20 00:00:00 |}]
+  [%expect {| 2025-12-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_months: negative" =
@@ -251,7 +251,7 @@ let%expect_test "add_months: negative" =
   |> Datetime.from_string_exn
   |> Datetime.add_months (-1)
   |> dump_datetime;
-  [%expect {| 2026-02-20 00:00:00 |}]
+  [%expect {| 2026-02-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_months then sub_months cancels" =
@@ -266,7 +266,7 @@ let%expect_test "add_years: simple" =
   |> Datetime.from_string_exn
   |> Datetime.add_years 1
   |> dump_datetime;
-  [%expect {| 2027-03-20 00:00:00 |}]
+  [%expect {| 2027-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_years: leap day -> non leap" =
@@ -274,7 +274,7 @@ let%expect_test "add_years: leap day -> non leap" =
   |> Datetime.from_string_exn
   |> Datetime.add_years 1
   |> dump_datetime;
-  [%expect {| 2025-02-28 00:00:00 |}]
+  [%expect {| 2025-02-28T00:00:00 |}]
 ;;
 
 let%expect_test "sub_years: leap day backward" =
@@ -282,7 +282,7 @@ let%expect_test "sub_years: leap day backward" =
   |> Datetime.from_string_exn
   |> Datetime.sub_years 1
   |> dump_datetime;
-  [%expect {| 2023-02-28 00:00:00 |}]
+  [%expect {| 2023-02-28T00:00:00 |}]
 ;;
 
 let%expect_test "add_years: large" =
@@ -290,7 +290,7 @@ let%expect_test "add_years: large" =
   |> Datetime.from_string_exn
   |> Datetime.add_years 100
   |> dump_datetime;
-  [%expect {| 2126-03-20 00:00:00 |}]
+  [%expect {| 2126-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_years: negative" =
@@ -298,7 +298,7 @@ let%expect_test "add_years: negative" =
   |> Datetime.from_string_exn
   |> Datetime.add_years (-1)
   |> dump_datetime;
-  [%expect {| 2025-03-20 00:00:00 |}]
+  [%expect {| 2025-03-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_years then sub_years cancels" =
@@ -313,7 +313,7 @@ let%expect_test "add_weeks: simple" =
   |> Datetime.from_string_exn
   |> Datetime.add_weeks 1
   |> dump_datetime;
-  [%expect {| 2026-03-27 00:00:00 |}]
+  [%expect {| 2026-03-27T00:00:00 |}]
 ;;
 
 let%expect_test "add_weeks: crossing month" =
@@ -321,7 +321,7 @@ let%expect_test "add_weeks: crossing month" =
   |> Datetime.from_string_exn
   |> Datetime.add_weeks 1
   |> dump_datetime;
-  [%expect {| 2026-02-04 00:00:00 |}]
+  [%expect {| 2026-02-04T00:00:00 |}]
 ;;
 
 let%expect_test "sub_weeks: simple" =
@@ -329,7 +329,7 @@ let%expect_test "sub_weeks: simple" =
   |> Datetime.from_string_exn
   |> Datetime.sub_weeks 1
   |> dump_datetime;
-  [%expect {| 2026-03-13 00:00:00 |}]
+  [%expect {| 2026-03-13T00:00:00 |}]
 ;;
 
 let%expect_test "add_weeks then sub_weeks cancels" =
@@ -344,7 +344,7 @@ let%expect_test "add_quarters: simple" =
   |> Datetime.from_string_exn
   |> Datetime.add_quarters 1
   |> dump_datetime;
-  [%expect {| 2026-06-20 00:00:00 |}]
+  [%expect {| 2026-06-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_quarters: crossing year" =
@@ -352,7 +352,7 @@ let%expect_test "add_quarters: crossing year" =
   |> Datetime.from_string_exn
   |> Datetime.add_quarters 1
   |> dump_datetime;
-  [%expect {| 2027-02-20 00:00:00 |}]
+  [%expect {| 2027-02-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_quarters: clamp Jan 31" =
@@ -360,7 +360,7 @@ let%expect_test "add_quarters: clamp Jan 31" =
   |> Datetime.from_string_exn
   |> Datetime.add_quarters 1
   |> dump_datetime;
-  [%expect {| 2026-04-30 00:00:00 |}]
+  [%expect {| 2026-04-30T00:00:00 |}]
 ;;
 
 let%expect_test "sub_quarters: simple" =
@@ -368,7 +368,7 @@ let%expect_test "sub_quarters: simple" =
   |> Datetime.from_string_exn
   |> Datetime.sub_quarters 1
   |> dump_datetime;
-  [%expect {| 2025-12-20 00:00:00 |}]
+  [%expect {| 2025-12-20T00:00:00 |}]
 ;;
 
 let%expect_test "add_quarters then sub_quarters cancels" =

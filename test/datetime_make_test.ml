@@ -8,25 +8,25 @@ open Test_util
 let%expect_test "make: default time (midnight)" =
   Datetime.make ~year:2026 ~month:Month.Mar ~day:22 ()
   |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 00:00:00 |}]
+  [%expect {| ok: 2026-03-22T00:00:00 |}]
 ;;
 
 let%expect_test "make: explicit midnight" =
   Datetime.make ~at:(0, 0, 0) ~year:2026 ~month:Month.Mar ~day:22 ()
   |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 00:00:00 |}]
+  [%expect {| ok: 2026-03-22T00:00:00 |}]
 ;;
 
 let%expect_test "make: valid time" =
   Datetime.make ~at:(22, 12, 59) ~year:2026 ~month:Month.Mar ~day:22 ()
   |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 22:12:59 |}]
+  [%expect {| ok: 2026-03-22T22:12:59 |}]
 ;;
 
 let%expect_test "make: leap year valid (Feb 29)" =
   Datetime.make ~at:(23, 0, 59) ~year:2024 ~month:Month.Feb ~day:29 ()
   |> dump_datetime_validation;
-  [%expect {| ok: 2024-02-29 23:00:59 |}]
+  [%expect {| ok: 2024-02-29T23:00:59 |}]
 ;;
 
 let%expect_test "make: non-leap year invalid (Feb 29)" =
@@ -85,11 +85,11 @@ let%expect_test "make: multiple errors (minute + second)" =
 
 let%expect_test "make: lowest valid date" =
   Datetime.make ~year:0 ~month:Month.Jan ~day:1 () |> dump_datetime_validation;
-  [%expect {| ok: 0000-01-01 00:00:00 |}]
+  [%expect {| ok: 0000-01-01T00:00:00 |}]
 ;;
 
 let%expect_test "make: highest valid date" =
   Datetime.make ~year:9999 ~month:Month.Dec ~day:31 ()
   |> dump_datetime_validation;
-  [%expect {| ok: 9999-12-31 00:00:00 |}]
+  [%expect {| ok: 9999-12-31T00:00:00 |}]
 ;;

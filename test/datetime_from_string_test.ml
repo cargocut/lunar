@@ -7,26 +7,26 @@ open Test_util
 
 let%expect_test "from_string" =
   "2026-03-22" |> Datetime.from_string |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 00:00:00 |}]
+  [%expect {| ok: 2026-03-22T00:00:00 |}]
 ;;
 
 let%expect_test "from_string" =
   "2026-03-22 12:12:45" |> Datetime.from_string |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 12:12:45 |}]
+  [%expect {| ok: 2026-03-22T12:12:45 |}]
 ;;
 
 let%expect_test "from_string" =
   "  2026-03-22    12:12:45    "
   |> Datetime.from_string
   |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 12:12:45 |}]
+  [%expect {| ok: 2026-03-22T12:12:45 |}]
 ;;
 
 let%expect_test "from_string" =
   "  2026-03-22T12:12:45    "
   |> Datetime.from_string
   |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 12:12:45 |}]
+  [%expect {| ok: 2026-03-22T12:12:45 |}]
 ;;
 
 let%expect_test "from_string" =
@@ -59,12 +59,12 @@ let%expect_test "from_string" =
 
 let%expect_test "from_string: single-digit components" =
   "2026-3-2 1:2:3" |> Datetime.from_string |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-02 01:02:03 |}]
+  [%expect {| ok: 2026-03-02T01:02:03 |}]
 ;;
 
 let%expect_test "from_string: date only with spaces" =
   "   2026-03-22   " |> Datetime.from_string |> dump_datetime_validation;
-  [%expect {| ok: 2026-03-22 00:00:00 |}]
+  [%expect {| ok: 2026-03-22T00:00:00 |}]
 ;;
 
 let%expect_test "from_string: invalid separator" =
@@ -114,7 +114,7 @@ let%expect_test "from_string: multiple errors (day + min + sec)" =
 
 let%expect_test "from_string: valid leap day" =
   "2024-02-29 12:00:00" |> Datetime.from_string |> dump_datetime_validation;
-  [%expect {| ok: 2024-02-29 12:00:00 |}]
+  [%expect {| ok: 2024-02-29T12:00:00 |}]
 ;;
 
 let%expect_test "from_string: invalid leap day" =
@@ -124,7 +124,7 @@ let%expect_test "from_string: invalid leap day" =
 
 let%expect_test "from_string: maximum date" =
   "9999-12-31 23:59:59" |> Datetime.from_string |> dump_datetime_validation;
-  [%expect {| ok: 9999-12-31 23:59:59 |}]
+  [%expect {| ok: 9999-12-31T23:59:59 |}]
 ;;
 
 let%expect_test "from_string: extra trailing garbage" =
