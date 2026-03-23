@@ -162,8 +162,6 @@ let add_minutes n = add (Duration.from_minutes n)
 let sub_minutes n = sub (Duration.from_minutes n)
 let add_hours n = add (Duration.from_hours n)
 let sub_hours n = sub (Duration.from_hours n)
-let succ = add_seconds 1
-let pred = sub_seconds 1
 let add_days i = map_date (Date.add_days i)
 let sub_days i = map_date (Date.sub_days i)
 let add_weeks i = map_date (Date.add_weeks i)
@@ -231,5 +229,31 @@ let round resolution dt =
       and dc = diff c dt in
       if Duration.(dt <= dc) then t else c)
 ;;
+
+let succ = add_seconds 1
+let pred = sub_seconds 1
+let succ_second = succ
+let pred_second = pred
+let succ_minute dt = dt |> add_minutes 1 |> truncate Resolution.minute
+let pred_minute dt = dt |> sub_minutes 1 |> truncate Resolution.minute
+let succ_hour dt = dt |> add_hours 1 |> truncate Resolution.hour
+let pred_hour dt = dt |> sub_hours 1 |> truncate Resolution.hour
+let start_of_day dt = map_time (fun _ -> Time.midnight) dt
+let end_of_day dt = map_time (fun _ -> Time.end_of_day) dt
+let handle_succ f dt = dt |> map_date f |> start_of_day
+let succ_day ?where dt = handle_succ (Date.succ_day ?where) dt
+let pred_day ?where dt = handle_succ (Date.pred_day ?where) dt
+let succ_day_of_week wd dt = handle_succ (Date.succ_day_of_week wd) dt
+let pred_day_of_week wd dt = handle_succ (Date.pred_day_of_week wd) dt
+let succ_weekday dt = handle_succ Date.succ_weekday dt
+let pred_weekday dt = handle_succ Date.pred_weekday dt
+let succ_week ?week_start dt = handle_succ (Date.succ_week ?week_start) dt
+let pred_week ?week_start dt = handle_succ (Date.pred_week ?week_start) dt
+let succ_month dt = handle_succ Date.succ_month dt
+let pred_month dt = handle_succ Date.pred_month dt
+let succ_quarter dt = handle_succ Date.succ_quarter dt
+let pred_quarter dt = handle_succ Date.pred_quarter dt
+let succ_year dt = handle_succ Date.succ_year dt
+let pred_year dt = handle_succ Date.pred_year dt
 
 include Infix

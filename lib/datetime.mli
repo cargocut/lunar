@@ -261,13 +261,91 @@ val sub_years : int -> t -> t
     [d1] and [d2]. *)
 val diff : t -> t -> Duration.t
 
-(** {2 Succ and Pred} *)
+(** {2 Succ and Pred}
 
-(** [succ t] is [add_seconds 1]. *)
+    The main difference between the [add]/[sub] and [succ]/[pred] operations
+    lies in how the result is truncated. [add] and [sub] are standard
+    arithmetic operations: you add or subtract a duration.
+    [succ] and [pred], on the other hand, calculate the next datetime step.
+    See {!val:Time.succ} and {!val:Date.succ}. *)
+
+(** [succ dt] is [add_seconds 1]. *)
 val succ : t -> t
 
-(** [pred t] is [sub_seconds 1]. *)
+(** [pred dt] is [sub_seconds 1]. *)
 val pred : t -> t
+
+(** [succ_second dt] returns the datetime at the next second. See {!val:succ}.
+*)
+val succ_second : t -> t
+
+(** [pred_second dt] returns the datetime at the previous second. See
+    {!val:pred}. *)
+val pred_second : t -> t
+
+(** [succ_minute dt] returns the datetime at the next minute. *)
+val succ_minute : t -> t
+
+(** [pred_minute t] returns the datetime at the previous minute. *)
+val pred_minute : t -> t
+
+(** [succ_hour t] returns the datetime at the next hour. *)
+val succ_hour : t -> t
+
+(** [pred_hour t] returns the datetime at the previous hour. *)
+val pred_hour : t -> t
+
+(** [succ_day ?where:pred from] returns the first following datetime that
+    satisfies the predicate [pred] starting from the date [from]
+    (exclusive). {b Note}: If the predicate always returns [false],
+    the function never terminates. *)
+val succ_day : ?where:(Date.t -> bool) -> t -> t
+
+(** [pred_day ~where:pred from] returns the first previous datetime that
+    satisfies the predicate [pred] starting from the date [from]
+    (exclusive). {b Note}: If the predicate always returns [false],
+    the function never terminates. *)
+val pred_day : ?where:(Date.t -> bool) -> t -> t
+
+(** [succ_day_of_week weekday from] returns the first following datetime
+    corresponding to the specified day of the week. *)
+val succ_day_of_week : Weekday.t -> t -> t
+
+(** [pred_day_of_week weekday from] returns the first previous datetime
+    corresponding to the specified day of the week. *)
+val pred_day_of_week : Weekday.t -> t -> t
+
+(** [succ_weekday from] returns the first following day of week (not
+    weekend). *)
+val succ_weekday : t -> t
+
+(** [pred_weekday from] returns the first previous day of week (not
+    weekend). *)
+val pred_weekday : t -> t
+
+(** [succ_week dt] returns the first day of the next week. *)
+val succ_week : ?week_start:Weekday.t -> t -> t
+
+(** [pred_week dt] returns the first day of the previous week. *)
+val pred_week : ?week_start:Weekday.t -> t -> t
+
+(** [succ_month dt] returns the first day of the next month. *)
+val succ_month : t -> t
+
+(** [pred_month dt] returns the first day of the previous month. *)
+val pred_month : t -> t
+
+(** [succ_quarter dt] returns the first day of the next quarter. *)
+val succ_quarter : t -> t
+
+(** [pred_quarter dt] returns the first day of the previous quarter. *)
+val pred_quarter : t -> t
+
+(** [succ_year dt] returns the first day of the next year. *)
+val succ_year : t -> t
+
+(** [pred_year dt] returns the first day of the previous year. *)
+val pred_year : t -> t
 
 (** {2 On duration}
 
@@ -287,6 +365,16 @@ val pred : t -> t
     as a date. Useful for performing multiple operations on a
     single datetime. *)
 val as_duration : (Duration.t -> Duration.t) -> t -> t
+
+(** {1 Common Operations} *)
+
+(** [end_of_day dt] Returns a datetime set to the start of the day
+    (midnight). *)
+val end_of_day : t -> t
+
+(** [end_of_day dt] Returns a datetime set to the end of the day
+    (23:59:59). *)
+val start_of_day : t -> t
 
 (** {1 Round and truncate}
 
@@ -313,6 +401,8 @@ val round : [< Resolution.t ] -> t -> t
     [resolution], it is returned unchanged. See {!val:Date.ceil}
     and {!val:Time.ceil}. *)
 val ceil : [< Resolution.t ] -> t -> t
+
+(** {1 Predicates} *)
 
 (** {1 Comparison} *)
 
