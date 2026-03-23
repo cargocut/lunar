@@ -294,5 +294,14 @@ let is_morning dt = on_time Time.is_morning dt
 let is_afternoon dt = on_time Time.is_afternoon dt
 let is_evening dt = on_time Time.is_evening dt
 let is_night dt = on_time Time.is_night dt
+let is_weekend dt = on_date Date.is_weekend dt
+let is_weekday dt = on_date Date.is_weekday dt
+let is_leap_year dt = on_date Date.is_leap_year dt
+let is_first_day_of_month dt = on_date Date.is_first_day_of_month dt
+let is_last_day_of_month dt = on_date Date.is_last_day_of_month dt
+let is_first_day_of_quarter dt = on_date Date.is_first_day_of_quarter dt
+let is_last_day_of_quarter dt = on_date Date.is_last_day_of_quarter dt
+let is_first_day_of_year dt = on_date Date.is_first_day_of_year dt
+let is_last_day_of_year dt = on_date Date.is_last_day_of_year dt
 
 include Infix

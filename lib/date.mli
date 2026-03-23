@@ -398,7 +398,7 @@ val ceil : [< Resolution.for_date ] -> t -> t
     or [Sunday]. *)
 val is_weekend : t -> bool
 
-(** [is_weekday] returns [true] if the given date [d] is not on [Saturday]
+(** [is_weekday d] returns [true] if the given date [d] is not on [Saturday]
     or [Sunday]. *)
 val is_weekday : t -> bool
 
@@ -413,6 +413,14 @@ val is_first_day_of_month : t -> bool
 (** [is_last_day_of_month d] returns [true] if the given date [d] is the
     last day of the month. *)
 val is_last_day_of_month : t -> bool
+
+(** [is_first_day_of_quarter d] returns [true] if the given date [d] is the
+    first day of the current quarter. *)
+val is_first_day_of_quarter : t -> bool
+
+(** [is_last_day_of_q d] returns [true] if the given date [d] is the
+    last day of the current quarter. *)
+val is_last_day_of_quarter : t -> bool
 
 (** [is_first_day_of_year d] returns [true] if the given date [d] is the
     first day of the year. *)

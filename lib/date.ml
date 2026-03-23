@@ -396,4 +396,14 @@ let pred_quarter d = d |> sub_quarters 1 |> truncate Resolution.quarter
 let succ_year d = d |> add_years 1 |> truncate Resolution.year
 let pred_year d = d |> sub_years 1 |> truncate Resolution.year
 
+let is_first_day_of_quarter dt =
+  let qd = start_of_quarter dt in
+  equal qd dt
+;;
+
+let is_last_day_of_quarter dt =
+  let qd = end_of_quarter dt in
+  equal qd dt
+;;
+
 include Infix

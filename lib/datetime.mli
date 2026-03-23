@@ -528,6 +528,42 @@ val is_evening : t -> bool
     [21:00:00] and [04:59:59], [false] otherwise. *)
 val is_night : t -> bool
 
+(** [is_weekend dt] returns [true] if the date of the given [dt] is on
+    [Saturday] or [Sunday]. *)
+val is_weekend : t -> bool
+
+(** [is_weekday dt] returns [true] if the date of the given [dt] is not on
+    [Saturday] or [Sunday]. *)
+val is_weekday : t -> bool
+
+(** [is_leap_year dt] returns [true] if [year d] is a leap year, [false]
+    otherwise.*)
+val is_leap_year : t -> bool
+
+(** [is_first_day_of_month dt] returns [true] if the date of the given
+    [dt] is the first day of the month. *)
+val is_first_day_of_month : t -> bool
+
+(** [is_last_day_of_month dt] returns [true] if the date of the given [dt]
+    is the last day of the month. *)
+val is_last_day_of_month : t -> bool
+
+(** [is_first_day_of_quarter d] returns [true] if the date of the given [dt] is the
+    first day of the current quarter. *)
+val is_first_day_of_quarter : t -> bool
+
+(** [is_last_day_of_q d] returns [true] if the date of the given [dt] is the
+    last day of the current quarter. *)
+val is_last_day_of_quarter : t -> bool
+
+(** [is_first_day_of_year dt] returns [true] if the date of the given [dt]
+    is the first day of the year. *)
+val is_first_day_of_year : t -> bool
+
+(** [is_last_day_of_year dt] returns [true] if the date of the given [dt]
+    is the last day of the year. *)
+val is_last_day_of_year : t -> bool
+
 (** {1 Comparison} *)
 
 (** Equality between dates. *)
