@@ -286,5 +286,13 @@ let end_of_quarter dt = to_end_day Date.end_of_quarter dt
 let start_of_year dt = to_midnight Date.start_of_year dt
 let end_of_year dt = to_end_day Date.end_of_year dt
 let age ~birthday t = on_date (Date.age ~birthday) t
+let is_am dt = on_time Time.is_am dt
+let is_pm dt = on_time Time.is_pm dt
+let is_noon dt = on_time Time.is_noon dt
+let is_midnight dt = on_time Time.is_midnight dt
+let is_morning dt = on_time Time.is_morning dt
+let is_afternoon dt = on_time Time.is_afternoon dt
+let is_evening dt = on_time Time.is_evening dt
+let is_night dt = on_time Time.is_night dt
 
 include Infix

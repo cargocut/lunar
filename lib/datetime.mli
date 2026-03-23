@@ -496,6 +496,38 @@ val ceil : [< Resolution.t ] -> t -> t
 
 (** {1 Predicates} *)
 
+(** [is_am dt] returns [true] if the time of the given [dt] is between
+    [00:00:00] and [11:59:59], [false] otherwise. *)
+val is_am : t -> bool
+
+(** [is_pm dt] returns [true] if the time of the given [dt] is between
+    [12:00:00] and [23:59:59], [false] otherwise. *)
+val is_pm : t -> bool
+
+(** [is_noon dt] returns [true] if the time of the given [dt] is exactly
+    [12:00:00], [false] otherwise. *)
+val is_noon : t -> bool
+
+(** [is_midnight dt] returns [true] if the time of the given [dt] is
+    exactly [00:00:00], [false] otherwise. *)
+val is_midnight : t -> bool
+
+(** [is_morning dt] returns [true] if the time of the given [dt] is
+    between [05:00:00] and [11:59:59], [false] otherwise. *)
+val is_morning : t -> bool
+
+(** [is_afternoon dt] returns [true] if the time of the given [dt] is
+    between [12:00:00] and [16:59:59], [false] otherwise. *)
+val is_afternoon : t -> bool
+
+(** [is_evening dt] returns [true] if the time of the given [dt] is
+    between [17:00:00] and [20:59:59], [false] otherwise. *)
+val is_evening : t -> bool
+
+(** [is_night dt] returns [true] if the time of the given [dt] is between
+    [21:00:00] and [04:59:59], [false] otherwise. *)
+val is_night : t -> bool
+
 (** {1 Comparison} *)
 
 (** Equality between dates. *)
