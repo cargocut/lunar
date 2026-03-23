@@ -78,7 +78,16 @@ let from_string_exn s =
 
 let midnight = make_exn ~hour:0 ~min:0 ~sec:0 ()
 let noon = make_exn ~hour:12 ~min:0 ~sec:0 ()
+let start_of_day = midnight
 let end_of_day = make_exn ~hour:23 ~min:59 ~sec:59 ()
+let start_of_morning = make_exn ~hour:5 ~min:0 ~sec:0 ()
+let end_of_morning = make_exn ~hour:11 ~min:59 ~sec:59 ()
+let start_of_afternoon = noon
+let end_of_afternoon = make_exn ~hour:16 ~min:59 ~sec:59 ()
+let start_of_evening = make_exn ~hour:17 ~min:0 ~sec:0 ()
+let end_of_evening = make_exn ~hour:20 ~min:59 ~sec:59 ()
+let start_of_night = make_exn ~hour:21 ~min:0 ~sec:0 ()
+let end_of_night = make_exn ~hour:4 ~min:59 ~sec:59 ()
 let hour t = t / 3600
 let minute t = t mod 3600 / 60
 let second t = t mod 60
@@ -210,5 +219,10 @@ let ceil resolution t =
     if equal x t then t else add dur x
   | _ -> midnight
 ;;
+
+let start_of_minute t = t |> truncate Resolution.minute
+let end_of_minute t = t |> start_of_minute |> add_seconds 59
+let start_of_hour t = t |> truncate Resolution.hour
+let end_of_hour t = t |> start_of_hour |> add_minutes 59 |> add_seconds 59
 
 include Infix

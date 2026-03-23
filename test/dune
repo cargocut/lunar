@@ -32,6 +32,7 @@
   time_from_string_test
   time_clamp_test
   time_pred_succ_test
+  time_start_end_test
   datetime_make_test
   datetime_from_duration_test
   datetime_facts_test

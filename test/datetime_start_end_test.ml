@@ -270,3 +270,99 @@ let%expect_test "start_of_week then end_of_week" =
   |> dump_datetime;
   [%expect {| 2026-03-22 23:59:59 |}]
 ;;
+
+let%expect_test "start_of_minute" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.start_of_minute
+  |> dump_datetime;
+  [%expect {| 2026-03-19 12:34:00 |}]
+;;
+
+let%expect_test "end_of_minute" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.end_of_minute
+  |> dump_datetime;
+  [%expect {| 2026-03-19 12:34:59 |}]
+;;
+
+let%expect_test "start_of_hour" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.start_of_hour
+  |> dump_datetime;
+  [%expect {| 2026-03-19 12:00:00 |}]
+;;
+
+let%expect_test "end_of_hour" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.end_of_hour
+  |> dump_datetime;
+  [%expect {| 2026-03-19 12:59:59 |}]
+;;
+
+let%expect_test "start_of_morning" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.start_of_morning
+  |> dump_datetime;
+  [%expect {| 2026-03-19 05:00:00 |}]
+;;
+
+let%expect_test "end_of_morning" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.end_of_morning
+  |> dump_datetime;
+  [%expect {| 2026-03-19 11:59:59 |}]
+;;
+
+let%expect_test "start_of_afternoon" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.start_of_afternoon
+  |> dump_datetime;
+  [%expect {| 2026-03-19 12:00:00 |}]
+;;
+
+let%expect_test "end_of_afternoon" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.end_of_afternoon
+  |> dump_datetime;
+  [%expect {| 2026-03-19 16:59:59 |}]
+;;
+
+let%expect_test "start_of_evening" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.start_of_evening
+  |> dump_datetime;
+  [%expect {| 2026-03-19 17:00:00 |}]
+;;
+
+let%expect_test "end_of_evening" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.end_of_evening
+  |> dump_datetime;
+  [%expect {| 2026-03-19 20:59:59 |}]
+;;
+
+let%expect_test "start_of_night" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.start_of_night
+  |> dump_datetime;
+  [%expect {| 2026-03-19 21:00:00 |}]
+;;
+
+let%expect_test "end_of_night" =
+  "2026-03-19 12:34:56"
+  |> Datetime.from_string_exn
+  |> Datetime.end_of_night
+  |> dump_datetime;
+  [%expect {| 2026-03-19 04:59:59 |}]
+;;

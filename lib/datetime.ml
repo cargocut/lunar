@@ -98,6 +98,8 @@ let on_date f x = x |> date |> f
 let on_time f x = x |> time |> f
 let map_date f (d, t) = f d, t
 let map_time f (d, t) = d, f t
+let with_time t dt = map_time (fun _ -> t) dt
+let with_date d dt = map_date (fun _ -> d) dt
 let hour = on_time Time.hour
 let minute = on_time Time.minute
 let second = on_time Time.second
@@ -190,7 +192,7 @@ let truncate resolution dt =
   match resolution with
   | `duration dur -> map_time (Time.truncate (`duration dur)) dt
   | #Resolution.for_date as r ->
-    dt |> map_date (Date.truncate r) |> map_time (fun _ -> Time.midnight)
+    dt |> map_date (Date.truncate r) |> with_time Time.midnight
 ;;
 
 let floor = truncate
@@ -201,7 +203,7 @@ let ceil resolution dt =
   | `duration dur ->
     let tt = time dt in
     let tr = Time.truncate (`duration dur) tt in
-    if Time.equal tt tr then dt else add dur (map_time (fun _ -> tr) dt)
+    if Time.equal tt tr then dt else add dur (with_time tr dt)
   | #Resolution.for_date as r ->
     let t = truncate r dt in
     if equal dt t
@@ -230,8 +232,8 @@ let round resolution dt =
       if Duration.(dt <= dc) then t else c)
 ;;
 
-let start_of_day dt = map_time (fun _ -> Time.midnight) dt
-let end_of_day dt = map_time (fun _ -> Time.end_of_day) dt
+let start_of_day dt = with_time Time.midnight dt
+let end_of_day dt = with_time Time.end_of_day dt
 let to_midnight f dt = dt |> map_date f |> start_of_day
 let to_end_day f dt = dt |> map_date f |> end_of_day
 let succ = add_seconds 1
@@ -258,6 +260,19 @@ let succ_year dt = to_midnight Date.succ_year dt
 let pred_year dt = to_midnight Date.pred_year dt
 let tomorrow dt = succ_day dt
 let yesterday dt = pred_day dt
+let start_of_minute dt = map_time Time.start_of_minute dt
+let start_of_hour dt = map_time Time.start_of_hour dt
+let end_of_minute dt = map_time Time.end_of_minute dt
+let end_of_hour dt = map_time Time.end_of_hour dt
+let start_of_morning dt = with_time Time.start_of_morning dt
+let end_of_morning dt = with_time Time.end_of_morning dt
+let start_of_afternoon dt = with_time Time.start_of_afternoon dt
+let end_of_afternoon dt = with_time Time.end_of_afternoon dt
+let start_of_evening dt = with_time Time.start_of_evening dt
+let end_of_evening dt = with_time Time.end_of_evening dt
+let start_of_night dt = with_time Time.start_of_night dt
+let end_of_night dt = with_time Time.end_of_night dt
+let at_noon = start_of_afternoon
 
 let start_of_week ?week_start dt =
   to_midnight (Date.start_of_week ?week_start) dt

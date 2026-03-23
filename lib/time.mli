@@ -44,11 +44,38 @@ val from_duration : Duration.t -> t
 (** [midnight] is [00:00:00]. *)
 val midnight : t
 
+(** [start_of_day] is {!val:midnight}. *)
+val start_of_day : t
+
 (** [noon] is [12:00:00]. *)
 val noon : t
 
 (** [end_of_day] is [23:59:59]. *)
 val end_of_day : t
+
+(** [start_of_morning] is [05:00:00] *)
+val start_of_morning : t
+
+(** [end_of_morning] is [11:59:59] *)
+val end_of_morning : t
+
+(** [start_of_afternoon] is {!val:noon}. *)
+val start_of_afternoon : t
+
+(** [end_of_afternoon] is [16:59:59] *)
+val end_of_afternoon : t
+
+(** [start_of_evening] is [17:00:00] *)
+val start_of_evening : t
+
+(** [end_of_evening] is [20:59:59] *)
+val end_of_evening : t
+
+(** [start_of_night] is [21:00:00] *)
+val start_of_night : t
+
+(** [end_of_night] is [04:59:59] *)
+val end_of_night : t
 
 (** [am h] is a safe builder (using [mod]) to build an hour. *)
 val am : int -> t
@@ -170,6 +197,22 @@ val succ_hour : t -> t
 
 (** [pred_hour t] returns the time at the previous hour. *)
 val pred_hour : t -> t
+
+(** [start_of_minute t] returns the time at the start of the current
+    minute. *)
+val start_of_minute : t -> t
+
+(** [end_of_minute t] returns the time at the end of the current
+    minute. *)
+val end_of_minute : t -> t
+
+(** [start_of_hour t] returns the time at the start of the current
+    hour. *)
+val start_of_hour : t -> t
+
+(** [end_of_hour t] returns the time at the end of the current
+    hour. *)
+val end_of_hour : t -> t
 
 (** {1 Round and truncate}
 

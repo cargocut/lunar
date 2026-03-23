@@ -368,12 +368,34 @@ val as_duration : (Duration.t -> Duration.t) -> t -> t
 
 (** {1 Common Operations} *)
 
+(** [with_time time datetime] replace the [time] of the given [datetime]. *)
+val with_time : Time.t -> t -> t
+
+(** [with_date date datetime] replace the [date] of the given [datetime]. *)
+val with_date : Date.t -> t -> t
+
 (** [tomorrow dt] get the next day of the given [dt]. See {!val:succ_day}. *)
 val tomorrow : t -> t
 
 (** [yesterday dt] get the previous day of the given [dt]. See
     {!val:pred_day}. *)
 val yesterday : t -> t
+
+(** [start_of_minute dt] returns the datetime at the start of the current
+    minute. *)
+val start_of_minute : t -> t
+
+(** [end_of_minute dt] returns the datetime at the end of the current
+    minute. *)
+val end_of_minute : t -> t
+
+(** [start_of_hour dt] returns the datetime at the start of the current
+    hour. *)
+val start_of_hour : t -> t
+
+(** [end_of_hour dt] returns the datetime at the end of the current
+    hour. *)
+val end_of_hour : t -> t
 
 (** [start_of_day dt] Returns a datetime set to the start of the day
     (midnight). *)
@@ -382,6 +404,33 @@ val start_of_day : t -> t
 (** [end_of_day dt] Returns a datetime set to the end of the day
     (23:59:59). *)
 val end_of_day : t -> t
+
+(** [start_of_morning dt] returns the datetime at 05:00:00. *)
+val start_of_morning : t -> t
+
+(** [end_of_morning dt] returns the datetime at 11:59:59. *)
+val end_of_morning : t -> t
+
+(** [start_of_afternoon dt] returns the datetime at 12:00:00. *)
+val start_of_afternoon : t -> t
+
+(** [at_noon] is {!val:start_of_afternoon}. *)
+val at_noon : t -> t
+
+(** [end_of_afternoon dt] returns the datetime at 16:59:59. *)
+val end_of_afternoon : t -> t
+
+(** [start_of_evening dt] returns the datetime at 17:00:00. *)
+val start_of_evening : t -> t
+
+(** [end_of_evening dt] returns the datetime at 20:59:59. *)
+val end_of_evening : t -> t
+
+(** [start_of_night dt] returns the datetime at 21:00:00. *)
+val start_of_night : t -> t
+
+(** [end_of_night dt] returns the datetime at 04:59:59. *)
+val end_of_night : t -> t
 
 (** [start_of_week ?week_start dt] Returns the first day of the week
     (defined by [week_start]; default: Monday). *)
