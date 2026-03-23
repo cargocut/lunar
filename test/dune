@@ -39,6 +39,7 @@
   datetime_add_sub_test
   datetime_diff_test
   datetime_truncate_test
-  datetime_pred_succ_test)
+  datetime_pred_succ_test
+  datetime_start_end_test)
  (preprocess
   (pps ppx_expect)))

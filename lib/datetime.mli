@@ -368,13 +368,56 @@ val as_duration : (Duration.t -> Duration.t) -> t -> t
 
 (** {1 Common Operations} *)
 
-(** [end_of_day dt] Returns a datetime set to the start of the day
+(** [tomorrow dt] get the next day of the given [dt]. See {!val:succ_day}. *)
+val tomorrow : t -> t
+
+(** [yesterday dt] get the previous day of the given [dt]. See
+    {!val:pred_day}. *)
+val yesterday : t -> t
+
+(** [start_of_day dt] Returns a datetime set to the start of the day
     (midnight). *)
-val end_of_day : t -> t
+val start_of_day : t -> t
 
 (** [end_of_day dt] Returns a datetime set to the end of the day
     (23:59:59). *)
-val start_of_day : t -> t
+val end_of_day : t -> t
+
+(** [start_of_week ?week_start dt] Returns the first day of the week
+    (defined by [week_start]; default: Monday). *)
+val start_of_week : ?week_start:Weekday.t -> t -> t
+
+(** [end_of_week ?week_start dt] Returns the last day of the week
+    (defined by [week_start - 1]; default: Monday). *)
+val end_of_week : ?week_start:Weekday.t -> t -> t
+
+(** [start_of_month dt] returns the first day of the month of the given
+    datetime [dt]. *)
+val start_of_month : t -> t
+
+(** [end_of_month dt] returns the last day of the month of the given
+    datetime [dt]. *)
+val end_of_month : t -> t
+
+(** [start_of_quarter dt] returns the first day of the quarter of the given
+    datetime [dt]. *)
+val start_of_quarter : t -> t
+
+(** [end_of_quarter dt] returns the last day of the quarter of the given
+    datetime [dt]. *)
+val end_of_quarter : t -> t
+
+(** [start_of_year dt] returns the first day of the year of the given
+    datetime [d]. *)
+val start_of_year : t -> t
+
+(** [end_of_year dt] returns the last day of the year of the given
+    datetime [dt]. *)
+val end_of_year : t -> t
+
+(** [age ~birthday current] returns the age calculated from [birthday]
+    using the given datetime [current] as the current date. *)
+val age : birthday:Date.t -> t -> int
 
 (** {1 Round and truncate}
 
