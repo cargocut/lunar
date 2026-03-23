@@ -7,10 +7,20 @@ type t = Duration.t
 
 (* MAYBE : *)
 
-let positive ~hour:h ~min:m = Duration.(from_hours h + from_minutes m)
-let negative ~hour ~min = Duration.neg (positive ~hour ~min)
+let make ~hour:h ~min:m = Duration.(from_hours h + from_minutes m)
 let equal = Duration.equal
 let compare = Duration.compare
+let to_duration x = x
+
+let to_string x =
+  let d = to_duration x in
+  if Duration.equal d Duration.zero
+  then "Z"
+  else (
+    let sign = if Duration.(zero > d) then "-" else "+" in
+    let h, m, _ = Duration.hms d in
+    sign ^ Util.lpad ~size:2 (Int.abs h) ^ ":" ^ Util.lpad ~size:2 (Int.abs m))
+;;
 
 module CE = struct
   type nonrec t = t
@@ -20,9 +30,6 @@ module CE = struct
 end
 
 module Infix = struct
-  let ( ~+ ) (hour, min) = positive ~hour ~min
-  let ( ~- ) (hour, min) = negative ~hour ~min
-
   include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
 
   include (

@@ -43,6 +43,7 @@
   datetime_truncate_test
   datetime_pred_succ_test
   datetime_start_end_test
-  datetime_predicate_test)
+  datetime_predicate_test
+  timezone_test)
  (preprocess
   (pps ppx_expect)))

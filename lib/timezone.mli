@@ -16,11 +16,16 @@ type t
     Since defining time zones (and their historical data) is a complex process,
     creating a time zone does not trigger any specific validation checks. *)
 
-(** [positive ~hour ~min] describes the offset [+HH:MM]. *)
-val positive : hour:int -> min:int -> t
+(** [make ~hour ~min] describes the offset [HH:MM]. *)
+val make : hour:int -> min:int -> t
 
-(** [negative ~hour ~min] describes the offset [+HH:MM]. *)
-val negative : hour:int -> min:int -> t
+(** {1 Conversion} *)
+
+(** [to_duration tz] returns the offset for the given [tz]. *)
+val to_duration : t -> Duration.t
+
+(** [to_string tz] returns a string representation of the given [d]. *)
+val to_string : t -> string
 
 (** {1 Comparison} *)
 
@@ -36,12 +41,6 @@ include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
 
 module Infix : sig
   (** Common and useful infix operators. *)
-
-  (** [~+(hour, min)] is [positive ~hour ~min]. *)
-  val ( ~+ ) : int * int -> t
-
-  (** [~-(hour, min)] is [negative ~hour ~min]. *)
-  val ( ~- ) : int * int -> t
 
   include Sigs.EQUATABLE_INFIX with type t := t (** @inline *)
 

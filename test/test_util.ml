@@ -12,6 +12,7 @@ let dump_result f_r f_e = function
 ;;
 
 let dump_month m = m |> Month.to_string |> print_endline
+let dump_tz tz = tz |> Timezone.to_string |> print_endline
 
 let time_err_to_string = function
   | Time.Invalid_hour x -> "invalid hour: " ^ string_of_int x
