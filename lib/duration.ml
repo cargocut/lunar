@@ -16,6 +16,7 @@ let one_day = from_days 1
 let abs = Int64.abs
 let min = Int64.min
 let max = Int64.max
+let neg x = Int64.(sub zero x)
 
 let to_days t =
   if t >= 0L
@@ -101,20 +102,32 @@ let mul ts x = Int64.(mul ts (of_int x))
 let succ = Int64.succ
 let pred = Int64.pred
 
+let wdhms x =
+  let weeks, rem = Util.i64_div_mod_floor x (from_days 7) in
+  let days, rem = Util.i64_div_mod_floor rem (from_days 1) in
+  let hour, rem = Util.i64_div_mod_floor rem (from_hours 1) in
+  let min, sec = Util.i64_div_mod_floor rem (from_minutes 1) in
+  (* MAYBE: an opportunity for labelled-tuple. *)
+  ( Int64.to_int weeks
+  , Int64.to_int days
+  , Int64.to_int hour
+  , Int64.to_int min
+  , Int64.to_int sec )
+;;
+
 let dhms x =
-  let day_len = from_days 1 in
-  let hour_len = from_hours 1 in
-  let min_len = from_minutes 1 in
-  let days = Int64.div x day_len in
-  let rem = Int64.rem x day_len in
-  let days, rem =
-    if rem < 0L then Int64.pred days, Int64.add rem day_len else days, rem
-  in
-  let hour = Int64.div rem hour_len in
-  let rem = Int64.rem rem hour_len in
-  let min = Int64.div rem min_len in
-  let sec = Int64.rem rem min_len in
+  let days, rem = Util.i64_div_mod_floor x (from_days 1) in
+  let hour, rem = Util.i64_div_mod_floor rem (from_hours 1) in
+  let min, sec = Util.i64_div_mod_floor rem (from_minutes 1) in
+  (* MAYBE: an opportunity for labelled-tuple. *)
   Int64.to_int days, Int64.to_int hour, Int64.to_int min, Int64.to_int sec
+;;
+
+let hms x =
+  let hours, rem = Util.i64_div_mod_floor x (from_hours 1) in
+  let min, sec = Util.i64_div_mod_floor rem (from_minutes 1) in
+  (* MAYBE: an opportunity for labelled-tuple. *)
+  Int64.to_int hours, Int64.to_int min, Int64.to_int sec
 ;;
 
 let weekday x =

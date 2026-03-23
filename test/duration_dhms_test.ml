@@ -85,3 +85,112 @@ let%expect_test "dhms far past date" =
   |> dump_dhms;
   [%expect {| -1084605d, 0:0:0 |}]
 ;;
+
+let%expect_test "hms epoch" =
+  Duration.from_datetime ~year:1970 ~month:1 ~day:1 ~hour:0 ~min:0 ~sec:0
+  |> dump_hms;
+  [%expect {| 0:0:0 |}]
+;;
+
+let%expect_test "hms simple hour" =
+  Duration.from_hours 1 |> dump_hms;
+  [%expect {| 1:0:0 |}]
+;;
+
+let%expect_test "hms composed duration" =
+  Duration.(from_hours 23 + from_minutes 21 + from_seconds 3601) |> dump_hms;
+  [%expect {| 24:21:1 |}]
+;;
+
+let%expect_test "hms full day" =
+  Duration.from_days 1 |> dump_hms;
+  [%expect {| 24:0:0 |}]
+;;
+
+let%expect_test "hms multiple days" =
+  Duration.(from_days 2 + from_hours 3) |> dump_hms;
+  [%expect {| 51:0:0 |}]
+;;
+
+let%expect_test "hms next day minus one second" =
+  Duration.from_datetime ~year:1970 ~month:1 ~day:2 ~hour:0 ~min:0 ~sec:(-1)
+  |> dump_hms;
+  [%expect {| 23:59:59 |}]
+;;
+
+let%expect_test "hms one second before epoch" =
+  Duration.from_datetime ~year:1969 ~month:12 ~day:31 ~hour:23 ~min:59 ~sec:59
+  |> dump_hms;
+  [%expect {| -1:59:59 |}]
+;;
+
+let%expect_test "hms negative exact hour" =
+  Duration.from_hours (-1) |> dump_hms;
+  [%expect {| -1:0:0 |}]
+;;
+
+let%expect_test "hms negative with remainder" =
+  Duration.(from_seconds (-3661)) |> dump_hms;
+  [%expect {| -2:58:59 |}]
+;;
+
+let%expect_test "hms large span" =
+  Duration.from_datetime ~year:2000 ~month:1 ~day:1 ~hour:0 ~min:0 ~sec:0
+  |> dump_hms;
+  [%expect {| 262968:0:0 |}]
+;;
+
+let%expect_test "wdhms epoch" =
+  Duration.from_datetime ~year:1970 ~month:1 ~day:1 ~hour:0 ~min:0 ~sec:0
+  |> dump_wdhms;
+  [%expect {| 0w, 0d, 0:0:0 |}]
+;;
+
+let%expect_test "wdhms one week" =
+  Duration.from_days 7 |> dump_wdhms;
+  [%expect {| 1w, 0d, 0:0:0 |}]
+;;
+
+let%expect_test "wdhms one week plus days" =
+  Duration.from_days 10 |> dump_wdhms;
+  [%expect {| 1w, 3d, 0:0:0 |}]
+;;
+
+let%expect_test "wdhms composed duration" =
+  Duration.(from_days 8 + from_hours 2 + from_minutes 3 + from_seconds 4)
+  |> dump_wdhms;
+  [%expect {| 1w, 1d, 2:3:4 |}]
+;;
+
+let%expect_test "wdhms next day minus one second" =
+  Duration.from_datetime ~year:1970 ~month:1 ~day:2 ~hour:0 ~min:0 ~sec:(-1)
+  |> dump_wdhms;
+  [%expect {| 0w, 0d, 23:59:59 |}]
+;;
+
+let%expect_test "wdhms one second before epoch" =
+  Duration.from_datetime ~year:1969 ~month:12 ~day:31 ~hour:23 ~min:59 ~sec:59
+  |> dump_wdhms;
+  [%expect {| -1w, 6d, 23:59:59 |}]
+;;
+
+let%expect_test "wdhms negative exact week" =
+  Duration.from_days (-7) |> dump_wdhms;
+  [%expect {| -1w, 0d, 0:0:0 |}]
+;;
+
+let%expect_test "wdhms negative with remainder" =
+  Duration.from_days (-8) |> dump_wdhms;
+  [%expect {| -2w, 6d, 0:0:0 |}]
+;;
+
+let%expect_test "wdhms negative with time" =
+  Duration.(from_days (-10) + from_hours 5) |> dump_wdhms;
+  [%expect {| -2w, 4d, 5:0:0 |}]
+;;
+
+let%expect_test "wdhms large span" =
+  Duration.from_datetime ~year:2000 ~month:1 ~day:1 ~hour:0 ~min:0 ~sec:0
+  |> dump_wdhms;
+  [%expect {| 1565w, 2d, 0:0:0 |}]
+;;

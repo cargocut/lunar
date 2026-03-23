@@ -16,6 +16,9 @@ val lpad : ?char:char -> size:int -> int -> string
 (** [mod_floor a b] modulo works using negative numbers. *)
 val mod_floor : int -> int -> int
 
+(** [i64_div_mod_floor t unit] divide and remain! *)
+val i64_div_mod_floor : int64 -> int64 -> int64 * int64
+
 (** [only_numbers s] returns [true] if a string is only composed by
     number, [false] otherwise. (Mostly used for [from_string]
     functions) *)

@@ -69,9 +69,17 @@ val to_datetime : t -> int * int * int * int * int * int
 (** [to_int64 d] returns the int64 representation of a duration.*)
 val to_int64 : t -> int64
 
+(** [wdhms duration] returns the number of weeks, days, hours, minutes, and
+    seconds that describe the duration.*)
+val wdhms : t -> int * int * int * int * int
+
 (** [dhms duration] returns the number of days, hours, minutes, and
     seconds that describe the duration.*)
 val dhms : t -> int * int * int * int
+
+(** [hms duration] returns the number of hours, minutes, and
+    seconds that describe the duration.*)
+val hms : t -> int * int * int
 
 (** [to_days duration] get a day approx for a duration. *)
 val to_days : t -> int
@@ -107,6 +115,9 @@ val sub : t -> t -> t
 
 (** [mul d i] multiplies a duration by an integer. *)
 val mul : t -> int -> t
+
+(** [neg x] is [-x]. *)
+val neg : t -> t
 
 (** [succ d] adds 1 second to [d]. *)
 val succ : t -> t

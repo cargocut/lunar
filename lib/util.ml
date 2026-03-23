@@ -20,6 +20,12 @@ let mod_floor a b =
   if r < 0 then r + b else r
 ;;
 
+let i64_div_mod_floor x unit =
+  let q = Int64.div x unit in
+  let r = Int64.rem x unit in
+  if r < 0L then Int64.pred q, Int64.add r unit else q, r
+;;
+
 let only_numbers = function
   | "" -> false
   | s ->

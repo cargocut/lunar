@@ -91,6 +91,20 @@ let dump_date_iso_week_of_year dt =
   |> print_endline
 ;;
 
+let dump_wdhms d =
+  let w, d, h, m, s = d |> Duration.wdhms in
+  string_of_int w
+  ^ "w, "
+  ^ string_of_int d
+  ^ "d, "
+  ^ string_of_int h
+  ^ ":"
+  ^ string_of_int m
+  ^ ":"
+  ^ string_of_int s
+  |> print_endline
+;;
+
 let dump_dhms d =
   let d, h, m, s = d |> Duration.dhms in
   string_of_int d
@@ -100,6 +114,12 @@ let dump_dhms d =
   ^ string_of_int m
   ^ ":"
   ^ string_of_int s
+  |> print_endline
+;;
+
+let dump_hms d =
+  let h, m, s = d |> Duration.hms in
+  string_of_int h ^ ":" ^ string_of_int m ^ ":" ^ string_of_int s
   |> print_endline
 ;;
 
