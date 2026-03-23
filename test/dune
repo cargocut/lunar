@@ -24,6 +24,7 @@
   date_eow_eom_eoy_test
   date_truncated_test
   date_pred_prev_test
+  date_large_set_test
   time_test
   time_am_pm_test
   time_truncate_round_test
