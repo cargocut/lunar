@@ -16,7 +16,7 @@ type t
 (** [from_local ?tz dt] attach a timezone to a regular
     {!type:Datetime.t}. The default Timezone [tz] is
     {!val:Timezone.utc}. *)
-val from_local : ?tz:Timezone.t -> Datetime.t -> t
+val from_datetime : ?tz:Timezone.t -> Datetime.t -> t
 
 (** [make ?tz ?at ~year ~month ~day ()] create and validate a zoned
     datetime. The default Timezone [tz] is {!val:Timezone.utc}.
@@ -102,7 +102,3 @@ val epoch : ?tz:Timezone.t -> unit -> t
 
 (** [to_string dt] returns a string representation of the given [dt]. *)
 val to_string : t -> string
-
-(** [to_locat zdt] applies the time zone to the date and returns it in the
-    local format ({!type:Datetime.t}). *)
-val to_local : t -> Datetime.t

@@ -5,34 +5,24 @@
 
 type t =
   { tz : Timezone.t
-  ; datetime : Datetime.t
+  ; local : Datetime.t
   }
 
-let from_local ?(tz = Timezone.utc) datetime = { tz; datetime }
-let epoch ?tz () = from_local ?tz Datetime.epoch
+let from_datetime ?(tz = Timezone.utc) local = { tz; local }
+let from ?tz date time = time |> Datetime.from date |> from_datetime ?tz
+let from_date ?tz date = date |> Datetime.from_date |> from_datetime ?tz
+let epoch ?tz () = from_datetime ?tz Datetime.epoch
 
-let from ?(tz = Timezone.utc) date time =
-  { tz; datetime = Datetime.from date time }
+let from_duration ?tz duration =
+  duration |> Datetime.from_duration |> from_datetime ?tz
 ;;
 
-let from_date ?(tz = Timezone.utc) date =
-  { tz; datetime = Datetime.from_date date }
+let make ?tz ?at ~year ~month ~day () =
+  Result.map (from_datetime ?tz) (Datetime.make ?at ~year ~month ~day ())
 ;;
 
-let from_duration ?(tz = Timezone.utc) duration =
-  { tz; datetime = Datetime.from_duration duration }
-;;
-
-let make ?(tz = Timezone.utc) ?at ~year ~month ~day () =
-  Result.map
-    (fun datetime -> { tz; datetime })
-    (Datetime.make ?at ~year ~month ~day ())
-;;
-
-let make' ?(tz = Timezone.utc) ?at ~year ~month ~day () =
-  Result.map
-    (fun datetime -> { tz; datetime })
-    (Datetime.make' ?at ~year ~month ~day ())
+let make' ?tz ?at ~year ~month ~day () =
+  Result.map (from_datetime ?tz) (Datetime.make' ?at ~year ~month ~day ())
 ;;
 
 let make_exn ?tz ?at ~year ~month ~day () =
@@ -47,13 +37,4 @@ let make_exn' ?tz ?at ~year ~month ~day () =
   | Ok x -> x
 ;;
 
-(* let datetime { datetime; _ } = datetime *)
-(* let timezome { tz; _ } = tz *)
-
-let to_local { datetime; tz } =
-  datetime |> Datetime.add (Timezone.to_duration tz)
-;;
-
-let to_string { tz; datetime } =
-  Datetime.to_string datetime ^ Timezone.to_string tz
-;;
+let to_string { tz; local } = Datetime.to_string local ^ Timezone.to_string tz
