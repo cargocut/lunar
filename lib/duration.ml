@@ -14,8 +14,6 @@ let from_hours x = x |> from_seconds |> Int64.mul 3600L
 let from_days x = x |> from_seconds |> Int64.mul 86400L
 let one_day = from_days 1
 let abs = Int64.abs
-let min = Int64.min
-let max = Int64.max
 let neg x = Int64.(sub zero x)
 
 let to_days t =
@@ -137,16 +135,21 @@ let weekday x =
   weekdays.((id + 7) mod 7)
 ;;
 
+module CE = struct
+  type nonrec t = t
+
+  let equal = equal
+  let compare = compare
+end
+
 module Infix = struct
   let ( + ) = Int64.add
   let ( - ) = Int64.sub
   let ( * ) = mul
-  let ( = ) = equal
-  let ( <> ) x y = not (equal x y)
-  let ( > ) x y = compare x y > 0
-  let ( >= ) x y = compare x y >= 0
-  let ( < ) x y = compare x y < 0
-  let ( <= ) x y = compare x y <= 0
+
+  include Util.Make_equal_infix (CE)
+  include Util.Make_compare_infix (CE)
 end
 
+include Util.Make_compare_helpers (CE)
 include Infix

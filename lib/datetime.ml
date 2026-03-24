@@ -148,6 +148,10 @@ let compare a b =
   else c
 ;;
 
+let as_duration f dt = f (to_duration dt) |> from_duration
+let add d dt = as_duration (fun dt -> Duration.add dt d) dt
+let sub d dt = as_duration (fun dt -> Duration.sub dt d) dt
+
 module CE = struct
   type nonrec t = t
 
@@ -155,9 +159,16 @@ module CE = struct
   let compare = compare
 end
 
-let as_duration f dt = f (to_duration dt) |> from_duration
-let add d dt = as_duration (fun dt -> Duration.add dt d) dt
-let sub d dt = as_duration (fun dt -> Duration.sub dt d) dt
+module Infix = struct
+  let ( + ) x y = add y x
+  let ( - ) x y = sub y x
+
+  include Util.Make_equal_infix (CE)
+  include Util.Make_compare_infix (CE)
+end
+
+include Util.Make_compare_helpers (CE)
+
 let add_seconds n = add (Duration.from_seconds n)
 let sub_seconds n = sub (Duration.from_seconds n)
 let add_minutes n = add (Duration.from_minutes n)
@@ -174,19 +185,6 @@ let add_quarters i = map_date (Date.add_quarters i)
 let sub_quarters i = map_date (Date.sub_quarters i)
 let add_years i = map_date (Date.add_years i)
 let sub_years i = map_date (Date.sub_years i)
-
-module Infix = struct
-  let ( + ) x y = add y x
-  let ( - ) x y = sub y x
-
-  include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
-
-  include (
-    Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
-end
-
-include (
-  Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
 
 let truncate resolution dt =
   match resolution with

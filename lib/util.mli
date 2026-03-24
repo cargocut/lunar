@@ -31,10 +31,10 @@ val split_on_chars : (char -> bool) -> string -> string list
 (** {1 Shared APIs} *)
 
 module Make_equal_infix (E : Sigs.EQUATABLE) :
-  Sigs.EQUATABLE_INFIX with type t = E.t
+  Sigs.EQUATABLE_INFIX with type t := E.t
 
 module Make_compare_infix (E : Sigs.COMPARABLE) :
-  Sigs.COMPARABLE_INFIX with type t = E.t
+  Sigs.COMPARABLE_INFIX with type t := E.t
 
 module Make_compare_helpers (E : Sigs.COMPARABLE) :
-  Sigs.COMPARABLE_HELPERS with type t = E.t
+  Sigs.COMPARABLE_HELPERS with type t := E.t

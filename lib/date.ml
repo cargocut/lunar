@@ -177,13 +177,6 @@ let compare { year; month; day_of_month } b =
   else c
 ;;
 
-module CE = struct
-  type nonrec t = t
-
-  let equal = equal
-  let compare = compare
-end
-
 let as_duration f dt = f (to_duration dt) |> from_duration
 let add d dt = as_duration (fun dt -> Duration.add dt d) dt
 let sub d dt = as_duration (fun dt -> Duration.sub dt d) dt
@@ -285,18 +278,22 @@ let pred_day_of_week dow = pred_day ~where:(is_dow dow)
 let succ_weekday = succ_day ~where:is_weekday
 let pred_weekday = pred_day ~where:is_weekday
 
+module CE = struct
+  type nonrec t = t
+
+  let equal = equal
+  let compare = compare
+end
+
 module Infix = struct
   let ( + ) x y = add y x
   let ( - ) x y = sub y x
 
-  include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
-
-  include (
-    Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
+  include Util.Make_equal_infix (CE)
+  include Util.Make_compare_infix (CE)
 end
 
-include (
-  Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
+include Util.Make_compare_helpers (CE)
 
 let age ~birthday current =
   let sign, earlier, later =

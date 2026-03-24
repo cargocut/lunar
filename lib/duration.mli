@@ -96,11 +96,7 @@ val compare : t -> t -> int
 (** [equal a b] equality between duration. *)
 val equal : t -> t -> bool
 
-(** [min d1 d2] returns the smaller between [d1] and [d2]. *)
-val min : t -> t -> t
-
-(** [max d1 d2] returns the greater between [d1] and [d2]. *)
-val max : t -> t -> t
+include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
 
 (** {1 Arithmetic operation} *)
 
@@ -139,23 +135,9 @@ module Infix : sig
   (** [d * i] is [mul d i], see {!val:mul}. *)
   val ( * ) : t -> int -> t
 
-  (** [d1 = d2] is [equal d1 d2]. *)
-  val ( = ) : t -> t -> bool
+  include Sigs.EQUATABLE_INFIX with type t := t (** @inline *)
 
-  (** [d1 <> d2] is [not (equal d1 d2)]. *)
-  val ( <> ) : t -> t -> bool
-
-  (** [d1 > d2] returns [true] if [d1] is greater than [d2]. *)
-  val ( > ) : t -> t -> bool
-
-  (** [d1 >= d2] returns [true] if [d1] is greater or equal to [d2]. *)
-  val ( >= ) : t -> t -> bool
-
-  (** [d1 < d2] returns [true] if [d2] is greater than [d1]. *)
-  val ( < ) : t -> t -> bool
-
-  (** [d1 <= d2] returns [true] if [d2] is greater or equal to [d1]. *)
-  val ( <= ) : t -> t -> bool
+  include Sigs.COMPARABLE_INFIX with type t := t (** @inline *)
 end
 
 include module type of Infix

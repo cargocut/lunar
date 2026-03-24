@@ -38,3 +38,31 @@ let make_exn' ?tz ?at ~year ~month ~day () =
 ;;
 
 let to_string { tz; local } = Datetime.to_string local ^ Timezone.to_string tz
+let to_utc { tz; local } = Datetime.sub (Timezone.to_duration tz) local
+
+let compare a b =
+  let a = to_utc a
+  and b = to_utc b in
+  Datetime.compare a b
+;;
+
+let equal a b =
+  let a = to_utc a
+  and b = to_utc b in
+  Datetime.equal a b
+;;
+
+module CE = struct
+  type nonrec t = t
+
+  let equal = equal
+  let compare = compare
+end
+
+module Infix = struct
+  include Util.Make_equal_infix (CE)
+  include Util.Make_compare_infix (CE)
+end
+
+include Util.Make_compare_helpers (CE)
+include Infix

@@ -101,8 +101,7 @@ module CE = struct
   let compare = compare
 end
 
-include (
-  Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
+include Util.Make_compare_helpers (CE)
 
 let to_string t =
   (* NOTE: The function does not rely on Format for Js_of_ocaml, but it
@@ -183,10 +182,8 @@ module Infix = struct
   let ( + ) x y = add y x
   let ( - ) x y = sub y x
 
-  include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
-
-  include (
-    Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
+  include Util.Make_equal_infix (CE)
+  include Util.Make_compare_infix (CE)
 end
 
 let is_am t = t < noon

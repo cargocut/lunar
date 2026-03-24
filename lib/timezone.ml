@@ -31,13 +31,9 @@ module CE = struct
 end
 
 module Infix = struct
-  include (Util.Make_equal_infix (CE) : Sigs.EQUATABLE_INFIX with type t := t)
-
-  include (
-    Util.Make_compare_infix (CE) : Sigs.COMPARABLE_INFIX with type t := t)
+  include Util.Make_equal_infix (CE)
+  include Util.Make_compare_infix (CE)
 end
 
-include (
-  Util.Make_compare_helpers (CE) : Sigs.COMPARABLE_HELPERS with type t := t)
-
+include Util.Make_compare_helpers (CE)
 include Infix
