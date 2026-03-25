@@ -3,13 +3,18 @@
 
    SPDX-License-Identifier: BSD-3-Clause *)
 
-(**  A {!type:Datetime.t} associated with a {!type:Timezone.t}.
+(** A {!type:Datetime.t} associated with a {!type:Timezone.t}.
 
-     Internally stored as a UTC datetime with an associated timezone offset.
+    Internally stored as a UTC datetime with an associated timezone
+    offset.
 
-     The concept behind a zone-based datetime can be explained as follows:
-     A datetime (expressed in local time) is associated with a time zone, and
-     the APIs as a whole allow the internal resolution to be hidden. *)
+    The concept behind a zone-based datetime can be explained as follows:
+    A datetime (expressed in local time) is associated with a time zone, and
+    the APIs as a whole allow the internal resolution to be hidden.
+
+    The API is generally similar to that of {!module:Datetime}, except
+    that certain functions that handle durations are omitted (to allow users to
+    choose whether or not to convert to local time on demand). *)
 
 (** {1 Types} *)
 
@@ -454,6 +459,90 @@ val round : [< Resolution.t ] -> t -> t
     [resolution], it is returned unchanged. See {!val:Datetime.ceil}
     and {!val:Time.ceil}. *)
 val ceil : [< Resolution.t ] -> t -> t
+
+(** {1 Predicates}
+
+    Every predicate are computed on the local-time representation. *)
+
+(** [is_am dt] returns [true] if the time of the given [dt] is between
+    [00:00:00] and [11:59:59], [false] otherwise. *)
+val is_am : t -> bool
+
+(** [is_pm dt] returns [true] if the time of the given [dt] is between
+    [12:00:00] and [23:59:59], [false] otherwise. *)
+val is_pm : t -> bool
+
+(** [is_noon dt] returns [true] if the time of the given [dt] is exactly
+    [12:00:00], [false] otherwise. *)
+val is_noon : t -> bool
+
+(** [is_midnight dt] returns [true] if the time of the given [dt] is
+    exactly [00:00:00], [false] otherwise. *)
+val is_midnight : t -> bool
+
+(** [is_morning dt] returns [true] if the time of the given [dt] is
+    between [05:00:00] and [11:59:59], [false] otherwise. *)
+val is_morning : t -> bool
+
+(** [is_afternoon dt] returns [true] if the time of the given [dt] is
+    between [12:00:00] and [16:59:59], [false] otherwise. *)
+val is_afternoon : t -> bool
+
+(** [is_evening dt] returns [true] if the time of the given [dt] is
+    between [17:00:00] and [20:59:59], [false] otherwise. *)
+val is_evening : t -> bool
+
+(** [is_night dt] returns [true] if the time of the given [dt] is between
+    [21:00:00] and [04:59:59], [false] otherwise. *)
+val is_night : t -> bool
+
+(** [is_weekend dt] returns [true] if the date of the given [dt] is on
+    [Saturday] or [Sunday]. *)
+val is_weekend : t -> bool
+
+(** [is_weekday dt] returns [true] if the date of the given [dt] is not on
+    [Saturday] or [Sunday]. *)
+val is_weekday : t -> bool
+
+(** [is_day_of_week wd d] returns [true] if the current day of week is the
+    given one [wd], [false] otherwise.*)
+val is_day_of_week : Weekday.t -> t -> bool
+
+(** [is_first_day_of_week ?week_start d] returns [true] if the given date [d] is the
+    first day of the week. *)
+val is_first_day_of_week : ?week_start:Weekday.t -> t -> bool
+
+(** [is_last_day_of_week ?week_start d] returns [true] if the given date [d] is the
+    last day of the week. *)
+val is_last_day_of_week : ?week_start:Weekday.t -> t -> bool
+
+(** [is_leap_year dt] returns [true] if [year d] is a leap year, [false]
+    otherwise.*)
+val is_leap_year : t -> bool
+
+(** [is_first_day_of_month dt] returns [true] if the date of the given
+    [dt] is the first day of the month. *)
+val is_first_day_of_month : t -> bool
+
+(** [is_last_day_of_month dt] returns [true] if the date of the given [dt]
+    is the last day of the month. *)
+val is_last_day_of_month : t -> bool
+
+(** [is_first_day_of_quarter d] returns [true] if the date of the given [dt] is the
+    first day of the current quarter. *)
+val is_first_day_of_quarter : t -> bool
+
+(** [is_last_day_of_q d] returns [true] if the date of the given [dt] is the
+    last day of the current quarter. *)
+val is_last_day_of_quarter : t -> bool
+
+(** [is_first_day_of_year dt] returns [true] if the date of the given [dt]
+    is the first day of the year. *)
+val is_first_day_of_year : t -> bool
+
+(** [is_last_day_of_year dt] returns [true] if the date of the given [dt]
+    is the last day of the year. *)
+val is_last_day_of_year : t -> bool
 
 (** {1 Comparison} *)
 

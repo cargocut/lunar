@@ -403,4 +403,16 @@ let is_last_day_of_quarter dt =
   equal qd dt
 ;;
 
+let is_day_of_week wd d = Weekday.equal (weekday d) wd
+
+let is_first_day_of_week ?week_start d =
+  let ws = start_of_week ?week_start d in
+  equal ws d
+;;
+
+let is_last_day_of_week ?week_start d =
+  let ws = end_of_week ?week_start d in
+  equal ws d
+;;
+
 include Infix

@@ -536,6 +536,18 @@ val is_weekend : t -> bool
     [Saturday] or [Sunday]. *)
 val is_weekday : t -> bool
 
+(** [is_day_of_week wd d] returns [true] if the current day of week is the
+    given one [wd], [false] otherwise.*)
+val is_day_of_week : Weekday.t -> t -> bool
+
+(** [is_first_day_of_week ?week_start d] returns [true] if the given date [d] is the
+    first day of the week. *)
+val is_first_day_of_week : ?week_start:Weekday.t -> t -> bool
+
+(** [is_last_day_of_week ?week_start d] returns [true] if the given date [d] is the
+    last day of the week. *)
+val is_last_day_of_week : ?week_start:Weekday.t -> t -> bool
+
 (** [is_leap_year dt] returns [true] if [year d] is a leap year, [false]
     otherwise.*)
 val is_leap_year : t -> bool

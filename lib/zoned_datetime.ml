@@ -172,6 +172,35 @@ let floor = truncate
 let ceil r = classify_resolution Datetime.ceil r
 let round r = classify_resolution Datetime.round r
 
+(* NOTE: here, everything is local-based *)
+
+let is_am = on_local Datetime.is_am
+let is_pm = on_local Datetime.is_pm
+let is_noon = on_local Datetime.is_noon
+let is_midnight = on_local Datetime.is_midnight
+let is_morning = on_local Datetime.is_morning
+let is_afternoon = on_local Datetime.is_afternoon
+let is_evening = on_local Datetime.is_evening
+let is_night = on_local Datetime.is_night
+let is_weekend = on_local Datetime.is_weekend
+let is_weekday = on_local Datetime.is_weekday
+let is_leap_year = on_local Datetime.is_leap_year
+let is_first_day_of_month = on_local Datetime.is_first_day_of_month
+let is_last_day_of_month = on_local Datetime.is_last_day_of_month
+let is_first_day_of_quarter = on_local Datetime.is_first_day_of_quarter
+let is_last_day_of_quarter = on_local Datetime.is_last_day_of_quarter
+let is_first_day_of_year = on_local Datetime.is_first_day_of_year
+let is_last_day_of_year = on_local Datetime.is_last_day_of_year
+let is_day_of_week wd = on_local (Datetime.is_day_of_week wd)
+
+let is_first_day_of_week ?week_start =
+  on_local (Datetime.is_first_day_of_week ?week_start)
+;;
+
+let is_last_day_of_week ?week_start =
+  on_local (Datetime.is_last_day_of_week ?week_start)
+;;
+
 module CE = struct
   type nonrec t = t
 

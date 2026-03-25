@@ -295,11 +295,20 @@ let is_night dt = on_time Time.is_night dt
 let is_weekend dt = on_date Date.is_weekend dt
 let is_weekday dt = on_date Date.is_weekday dt
 let is_leap_year dt = on_date Date.is_leap_year dt
+let is_day_of_week wd = on_date (Date.is_day_of_week wd)
 let is_first_day_of_month dt = on_date Date.is_first_day_of_month dt
 let is_last_day_of_month dt = on_date Date.is_last_day_of_month dt
 let is_first_day_of_quarter dt = on_date Date.is_first_day_of_quarter dt
 let is_last_day_of_quarter dt = on_date Date.is_last_day_of_quarter dt
 let is_first_day_of_year dt = on_date Date.is_first_day_of_year dt
 let is_last_day_of_year dt = on_date Date.is_last_day_of_year dt
+
+let is_first_day_of_week ?week_start dt =
+  on_date (Date.is_first_day_of_week ?week_start) dt
+;;
+
+let is_last_day_of_week ?week_start dt =
+  on_date (Date.is_last_day_of_week ?week_start) dt
+;;
 
 include Infix
