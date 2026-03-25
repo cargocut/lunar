@@ -125,3 +125,10 @@ let dump_hms d =
 ;;
 
 let dump_era era = era |> Era.to_string |> print_endline
+let dump_zoned_datetime zdt = zdt |> Zoned_datetime.to_string |> print_endline
+
+let dump_zoned_local zdt =
+  let stra = Zoned_datetime.to_string zdt
+  and strb = zdt |> Zoned_datetime.to_utc |> Datetime.to_string in
+  stra ^ " | " ^ strb |> print_endline
+;;
