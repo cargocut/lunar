@@ -45,6 +45,7 @@
   datetime_start_end_test
   datetime_predicate_test
   timezone_test
-  zoned_meeting_test)
+  zoned_meeting_test
+  calendarlib_inspired_test)
  (preprocess
   (pps ppx_expect)))
