@@ -311,4 +311,6 @@ let is_last_day_of_week ?week_start dt =
   on_date (Date.is_last_day_of_week ?week_start) dt
 ;;
 
+module Map = Stdlib.Map.Make (CE)
+module Set = Stdlib.Set.Make (CE)
 include Infix

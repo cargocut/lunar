@@ -51,4 +51,6 @@ module Infix = struct
   include Util.Make_compare_infix (CE)
 end
 
+module Map = Stdlib.Map.Make (CE)
+module Set = Stdlib.Set.Make (CE)
 include Infix

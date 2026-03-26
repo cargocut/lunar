@@ -222,4 +222,6 @@ let end_of_minute t = t |> start_of_minute |> add_seconds 59
 let start_of_hour t = t |> truncate Resolution.hour
 let end_of_hour t = t |> start_of_hour |> add_minutes 59 |> add_seconds 59
 
+module Map = Stdlib.Map.Make (CE)
+module Set = Stdlib.Set.Make (CE)
 include Infix

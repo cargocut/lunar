@@ -217,4 +217,16 @@ module Infix = struct
 end
 
 include Util.Make_compare_helpers (CE)
+
+module Strong_comparison = struct
+  type nonrec t = t
+
+  let compare a b =
+    let c = Timezone.compare (timezone a) (timezone b) in
+    if Int.equal c 0 then CE.compare a b else c
+  ;;
+end
+
+module Map = Stdlib.Map.Make (Strong_comparison)
+module Set = Stdlib.Set.Make (Strong_comparison)
 include Infix

@@ -595,6 +595,11 @@ val to_duration : t -> Duration.t
 (** [to_string dt] returns a string representation of the given [dt]. *)
 val to_string : t -> string
 
+(** {1 Map and Set} *)
+
+module Map : Stdlib.Map.S with type key = t
+module Set : Stdlib.Set.S with type elt = t
+
 (** {1 Infix Operators} *)
 
 module Infix : sig

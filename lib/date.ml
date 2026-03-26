@@ -415,4 +415,6 @@ let is_last_day_of_week ?week_start d =
   equal ws d
 ;;
 
+module Map = Stdlib.Map.Make (CE)
+module Set = Stdlib.Set.Make (CE)
 include Infix

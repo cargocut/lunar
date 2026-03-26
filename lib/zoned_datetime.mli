@@ -561,6 +561,17 @@ include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
     ISO 8601}). *)
 val to_string : t -> string
 
+(** {1 Map and Set}
+
+    Please note that the comparison function used by Maps and Sets differs
+    from the {!val:compare} function described above. This is because the compare
+    function uses the UTC representation, so two dates in different time zones
+    may be considered equal. Here, however, the time zone is included
+    in the comparison. *)
+
+module Map : Stdlib.Map.S with type key = t
+module Set : Stdlib.Set.S with type elt = t
+
 (** {1 Infix Operators} *)
 
 module Infix : sig

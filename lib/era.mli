@@ -50,6 +50,11 @@ val compare : t -> t -> int
 
 include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
 
+(** {1 Map and Set} *)
+
+module Map : Stdlib.Map.S with type key = t
+module Set : Stdlib.Set.S with type elt = t
+
 (** {1 Infix operators} *)
 
 module Infix : sig
