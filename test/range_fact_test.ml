@@ -6,6 +6,12 @@
 open Test_util
 module Date_range = Range.Make (Date)
 
+let mkr a b =
+  let first = Date.from_string_exn a
+  and last = Date.from_string_exn b in
+  Date_range.make ~first ~last
+;;
+
 let%expect_test "first elt" =
   let first = Date.from_string_exn "2026-03-01"
   and last = Date.from_string_exn "2026-03-10" in
@@ -101,8 +107,8 @@ let%expect_test "singleton range" =
     2026-03-05
     2026-03-05
     2026-03-05
-    false
-    false
+    true
+    true
     |}]
 ;;
 
@@ -296,4 +302,235 @@ let%expect_test "sort cross-year reversed" =
   let range = Date_range.make ~first ~last in
   range |> Date_range.sort |> dump_range Date.to_string (module Date_range);
   [%expect {| (2025-12-30..2026-01-02) |}]
+;;
+
+let%expect_test "contains" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10"
+  and subject = Date.from_string_exn "2026-03-05" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "contains out of bounds" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10"
+  and subject = Date.from_string_exn "2026-03-11" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "contains out of bounds" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10"
+  and subject = Date.from_string_exn "2026-02-28" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "contains lower bound" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains first |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "contains upper bound" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains last |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "contains descending range" =
+  let first = Date.from_string_exn "2026-03-10"
+  and last = Date.from_string_exn "2026-03-01"
+  and subject = Date.from_string_exn "2026-03-05" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "contains descending out of bounds" =
+  let first = Date.from_string_exn "2026-03-10"
+  and last = Date.from_string_exn "2026-03-01"
+  and subject = Date.from_string_exn "2026-03-11" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "contains singleton hit" =
+  let d = Date.from_string_exn "2026-03-05" in
+  let range = Date_range.make ~first:d ~last:d in
+  range |> Date_range.contains d |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "contains singleton miss" =
+  let d = Date.from_string_exn "2026-03-05"
+  and other = Date.from_string_exn "2026-03-06" in
+  let range = Date_range.make ~first:d ~last:d in
+  range |> Date_range.contains other |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "contains just below lower bound" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10"
+  and subject = Date.from_string_exn "2026-02-28" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "contains just above upper bound" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10"
+  and subject = Date.from_string_exn "2026-03-11" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "contains invariant under rev" =
+  let first = Date.from_string_exn "2026-03-01"
+  and last = Date.from_string_exn "2026-03-10"
+  and subject = Date.from_string_exn "2026-03-05" in
+  let range = Date_range.make ~first ~last in
+  let r1 = Date_range.contains subject range in
+  let r2 = Date_range.(range |> rev |> contains subject) in
+  dump_bool r1;
+  dump_bool r2;
+  [%expect
+    {|
+    true
+    true
+  |}]
+;;
+
+let%expect_test "contains invariant under sort" =
+  let first = Date.from_string_exn "2026-03-10"
+  and last = Date.from_string_exn "2026-03-01"
+  and subject = Date.from_string_exn "2026-03-05" in
+  let range = Date_range.make ~first ~last in
+  let r1 = Date_range.contains subject range in
+  let r2 = Date_range.(range |> sort |> contains subject) in
+  dump_bool r1;
+  dump_bool r2;
+  [%expect
+    {|
+    true
+    true
+  |}]
+;;
+
+let%expect_test "contains across year boundary" =
+  let first = Date.from_string_exn "2025-12-30"
+  and last = Date.from_string_exn "2026-01-02"
+  and subject = Date.from_string_exn "2026-01-01" in
+  let range = Date_range.make ~first ~last in
+  range |> Date_range.contains subject |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps self" =
+  let a = mkr "2026-03-01" "2026-03-10" in
+  a |> Date_range.overlaps a |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps self reversed" =
+  let a = mkr "2026-03-01" "2026-03-10" in
+  a |> Date_range.(overlaps @@ rev a) |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps partial" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-03-05" "2026-03-15" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps disjoint after" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-03-11" "2026-03-15" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "overlaps disjoint before" =
+  let a = mkr "2026-03-05" "2026-03-15"
+  and b = mkr "2026-03-01" "2026-03-04" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "overlaps touching end" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-03-10" "2026-03-15" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps touching start" =
+  let a = mkr "2026-03-10" "2026-03-15"
+  and b = mkr "2026-03-01" "2026-03-10" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps singleton inside" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-03-05" "2026-03-05" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps singleton equals start" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-03-01" "2026-03-01" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps singleton equals end" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-03-10" "2026-03-10" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps singleton before" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-02-28" "2026-02-28" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "overlaps singleton after" =
+  let a = mkr "2026-03-01" "2026-03-10"
+  and b = mkr "2026-03-11" "2026-03-11" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "overlaps descending" =
+  let a = mkr "2026-03-10" "2026-03-01"
+  and b = mkr "2026-03-05" "2026-03-15" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "overlaps descending disjoint" =
+  let a = mkr "2026-03-10" "2026-03-01"
+  and b = mkr "2026-03-11" "2026-03-20" in
+  a |> Date_range.overlaps b |> dump_bool;
+  [%expect {| false |}]
 ;;

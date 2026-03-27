@@ -109,11 +109,11 @@ module type RANGE = sig
   (** [last_elt r] returns the last element of the range [r]. *)
   val last_elt : t -> elt
 
-  (** [is_ascending r] returns [true] if [first r < last r ], [false]
+  (** [is_ascending r] returns [true] if [first r <= last r ], [false]
       otherwise. *)
   val is_ascending : t -> bool
 
-  (** [is_descending r] returns [true] if [last r < first r ], [false]
+  (** [is_descending r] returns [true] if [last r <= first r ], [false]
       otherwise. *)
   val is_descending : t -> bool
 
@@ -123,6 +123,10 @@ module type RANGE = sig
   (** [max_elt r] returns the greatest [elt] for the given range [r]. *)
   val max_elt : t -> elt
 
+  (** [contains elt r] Returns [true] if the given element [elt] is included
+      in the range [r]. *)
+  val contains : elt -> t -> bool
+
   (** {1 Modifiying Ranges} *)
 
   (** [rev r] reverse the range [r] ([first_elt] become [last_elt] {i and
@@ -131,4 +135,28 @@ module type RANGE = sig
 
   (** [sort r] sorts the range [r] in ascending order. *)
   val sort : t -> t
+
+  (** {1 Equalities}
+
+      The concept of comparing ranges is ambiguous, which is why the API only
+      exposes range equality operations. *)
+
+  (** [equal ra rb] equalities betweem [ra] and [rb]. *)
+  val equal : t -> t -> bool
+
+  (** {1 Relations between ranges} *)
+
+  (** [overlaps r1 r2] returns [true] if the two ranges share
+      at least one common date. *)
+  val overlaps : t -> t -> bool
+
+  (** {1 Infix Operators} *)
+
+  module Infix : sig
+    (** Common and useful infix operators. *)
+
+    include EQUATABLE_INFIX with type t := t (** @inline *)
+  end
+
+  include module type of Infix
 end
