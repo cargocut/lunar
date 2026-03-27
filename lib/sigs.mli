@@ -80,3 +80,55 @@ module type EQUATABLE_INFIX = sig
   (** [v1 <> v2] is [not (equal v1 v2)]. *)
   val ( <> ) : t -> t -> bool
 end
+
+module type RANGE = sig
+  (** Describes a range (an interval between two comparable elements). *)
+
+  (** {1 Types} *)
+
+  (** The type that describes the elements of a range. *)
+  type elt
+
+  (** The type describing a range. *)
+  type t
+
+  (** {1 Creating Range} *)
+
+  (** [make ~first ~last] constructs a range with [first] as the first
+      element and [last] as the last element.
+
+      You'll notice that a range may not be in ascending order
+      (hence the names [first] and [last]). *)
+  val make : first:elt -> last:elt -> t
+
+  (** {1 Facts about Range} *)
+
+  (** [first_elt r] returns the first element of the range [r]. *)
+  val first_elt : t -> elt
+
+  (** [last_elt r] returns the last element of the range [r]. *)
+  val last_elt : t -> elt
+
+  (** [is_ascending r] returns [true] if [first r < last r ], [false]
+      otherwise. *)
+  val is_ascending : t -> bool
+
+  (** [is_descending r] returns [true] if [last r < first r ], [false]
+      otherwise. *)
+  val is_descending : t -> bool
+
+  (** [min_elt r] returns the smallest [elt] for the given range [r]. *)
+  val min_elt : t -> elt
+
+  (** [max_elt r] returns the greatest [elt] for the given range [r]. *)
+  val max_elt : t -> elt
+
+  (** {1 Modifiying Ranges} *)
+
+  (** [rev r] reverse the range [r] ([first_elt] become [last_elt] {i and
+      vice-versa}). *)
+  val rev : t -> t
+
+  (** [sort r] sorts the range [r] in ascending order. *)
+  val sort : t -> t
+end

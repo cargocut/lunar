@@ -132,3 +132,12 @@ let dump_zoned_local zdt =
   and strb = zdt |> Zoned_datetime.to_utc |> Datetime.to_string in
   stra ^ " | " ^ strb |> print_endline
 ;;
+
+let dump_range
+      (type a b)
+      (f : a -> string)
+      (module R : Sigs.RANGE with type elt = a and type t = b)
+      (r : b)
+  =
+  print_endline @@ "(" ^ f (R.first_elt r) ^ ".." ^ f (R.last_elt r) ^ ")"
+;;

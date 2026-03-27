@@ -26,3 +26,9 @@ val dump_wdhms : Duration.t -> unit
 val dump_hms : Duration.t -> unit
 val dump_era : Era.t -> unit
 val dump_date_error : Date.error -> unit
+
+val dump_range
+  :  ('a -> string)
+  -> (module Sigs.RANGE with type elt = 'a and type t = 'b)
+  -> 'b
+  -> unit
