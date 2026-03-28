@@ -45,6 +45,7 @@
   datetime_start_end_test
   datetime_predicate_test
   timezone_test
+  timezone_from_string_test
   zoned_meeting_test
   calendarlib_inspired_test
   range_fact_test

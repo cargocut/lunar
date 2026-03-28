@@ -4,14 +4,49 @@
    SPDX-License-Identifier: BSD-3-Clause *)
 
 type t = Duration.t
+type error = Invalid_string of string
 
-(* MAYBE : *)
+exception Invalid_timezone of error
 
 let utc = Duration.zero
 let make ~hour:h ~min:m = Duration.(from_hours h + from_minutes m)
 let equal = Duration.equal
 let compare = Duration.compare
 let to_duration x = x
+
+let str_to_pair s =
+  ( s.[0]
+  , String.make 1 s.[1] ^ String.make 1 s.[2]
+  , s.[3]
+  , String.make 1 s.[4] ^ String.make 1 s.[5] )
+;;
+
+let from_string s =
+  if String.equal "Z" s
+  then Ok utc
+  else if String.equal "" s
+  then Error (Invalid_string s)
+  else (
+    let len = String.length s in
+    if len = 6
+    then (
+      match str_to_pair s with
+      | (('-' | '+') as sign), hour, ':', min
+        when Util.only_numbers hour && Util.only_numbers min ->
+        let hour = int_of_string (String.make 1 sign ^ hour)
+        and min = int_of_string min in
+        if min > 59 || min < 0
+        then Error (Invalid_string s)
+        else Ok (make ~hour ~min)
+      | _ -> Error (Invalid_string s))
+    else Error (Invalid_string s))
+;;
+
+let from_string_exn s =
+  match from_string s with
+  | Ok x -> x
+  | Error err -> raise (Invalid_timezone err)
+;;
 
 let to_string x =
   let d = to_duration x in

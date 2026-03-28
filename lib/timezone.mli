@@ -11,6 +11,12 @@
 (**The type representing a time zone offset. *)
 type t
 
+(** Type listing errors that may occur when working with timezone. *)
+type error = Invalid_string of string
+
+(** An exception used for unsafe function. *)
+exception Invalid_timezone of error
+
 (** {1 Building Timezone offsets}
 
     Since defining time zones (and their historical data) is a complex process,
@@ -21,6 +27,13 @@ val make : hour:int -> min:int -> t
 
 (** A presaved UTC Timezone. *)
 val utc : t
+
+(** [from_string s] try to read a timezone from a string. *)
+val from_string : string -> (t, error) result
+
+(** [from_string_exn s] try to read a timezone from a string and raise and
+    exception if it fails *)
+val from_string_exn : string -> t
 
 (** {1 Conversion} *)
 

@@ -65,11 +65,11 @@ val make_exn'
   -> t
 
 (** [from_string s] try to read a date from a string (using the format
-    [year-mon-day hh:mm:ss]). *)
+    [year-mon-dayThh:mm:ss]). *)
 val from_string : string -> (t, error) result
 
 (** [from_string_exn s] try to read a date from a string (using the format
-    [year-mon-day hh:mm:ss]) and raise and exception if it fails. *)
+    [year-mon-dayThh:mm:ss]) and raise and exception if it fails. *)
 val from_string_exn : string -> t
 
 (** [from d t] creates a datetime object for the given date, [d] and a

@@ -83,6 +83,16 @@ val make_exn'
   -> unit
   -> t
 
+(*
+   (** [from_string s] try to read a date from a string (using the format
+   [year-mon-dayThh:mm:ssTZ], according to RFC3339). *)
+   val from_string : string -> (t, Datetime.error) result
+
+   (** [from_string_exn s] try to read a date from a string (using the format
+   [year-mon-dayThh:mm:ssTZ], according to RFC3339) and raise and
+   exception if it fails. *)
+   val from_string_exn : string -> t *)
+
 (** [from d t] creates a zoned datetime object for the given date, [d] and a
     given time [t]. The default Timezone [tz] is {!val:Timezone.utc}.
 
