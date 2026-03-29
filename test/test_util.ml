@@ -57,6 +57,12 @@ let tz_err_to_string = function
   | Timezone.Invalid_string s -> "invalid string: " ^ s
 ;;
 
+let zoned_dt_err_to_string = function
+  | Zoned_datetime.Invalid_datetime err -> datetime_err_to_string err
+  | Zoned_datetime.Invalid_timezone err -> tz_err_to_string err
+  | Zoned_datetime.Invalid_string s -> "invalid string: " ^ s
+;;
+
 let dump_date_error err = err |> date_err_to_string |> print_endline
 let dump_month_validation = dump_result Month.to_string month_err_to_string
 let dump_weekday x = x |> Weekday.to_string |> print_endline
@@ -71,6 +77,10 @@ let dump_datetime x = x |> Datetime.to_string |> print_endline
 let dump_time_validation = dump_result Time.to_string time_err_to_string
 let dump_date_validation = dump_result Date.to_string date_err_to_string
 let dump_tz_validation = dump_result Timezone.to_string tz_err_to_string
+
+let dump_zoned_validation =
+  dump_result Zoned_datetime.to_string zoned_dt_err_to_string
+;;
 
 let dump_datetime_validation =
   dump_result Datetime.to_string datetime_err_to_string

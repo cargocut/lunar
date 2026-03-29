@@ -21,6 +21,15 @@
 (** The type describing a Zoned Datetime. *)
 type t
 
+(** Type listing errors that may occur when working with zoned datetime. *)
+type error =
+  | Invalid_string of string
+  | Invalid_datetime of Datetime.error
+  | Invalid_timezone of Timezone.error
+
+(** An exception used for unsafe function. *)
+exception Invalid_zoned_datetime of error
+
 (** {1 Building zoned datetime} *)
 
 (** [from_local_datetime ?tz dt] attach a timezone to a regular
@@ -83,15 +92,14 @@ val make_exn'
   -> unit
   -> t
 
-(*
-   (** [from_string s] try to read a date from a string (using the format
-   [year-mon-dayThh:mm:ssTZ], according to RFC3339). *)
-   val from_string : string -> (t, Datetime.error) result
+(** [from_string s] try to read a date from a string (using the format
+    [year-mon-dayThh:mm:ssTZ], according to RFC3339). *)
+val from_string : string -> (t, error) result
 
-   (** [from_string_exn s] try to read a date from a string (using the format
-   [year-mon-dayThh:mm:ssTZ], according to RFC3339) and raise and
-   exception if it fails. *)
-   val from_string_exn : string -> t *)
+(** [from_string_exn s] try to read a date from a string (using the format
+    [year-mon-dayThh:mm:ssTZ], according to RFC3339) and raise and
+    exception if it fails. *)
+val from_string_exn : string -> t
 
 (** [from d t] creates a zoned datetime object for the given date, [d] and a
     given time [t]. The default Timezone [tz] is {!val:Timezone.utc}.

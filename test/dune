@@ -47,6 +47,7 @@
   timezone_test
   timezone_from_string_test
   zoned_meeting_test
+  zoned_datetime_from_string_test
   calendarlib_inspired_test
   range_fact_test
   range_comb_test

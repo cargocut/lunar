@@ -8,6 +8,13 @@ type t =
   ; utc : Datetime.t
   }
 
+type error =
+  | Invalid_string of string
+  | Invalid_datetime of Datetime.error
+  | Invalid_timezone of Timezone.error
+
+exception Invalid_zoned_datetime of error
+
 let from_local_datetime ?(tz = Timezone.utc) local =
   let utc = Datetime.sub (Timezone.to_duration tz) local in
   { tz; utc }
@@ -199,6 +206,33 @@ let is_first_day_of_week ?week_start =
 
 let is_last_day_of_week ?week_start =
   on_local (Datetime.is_last_day_of_week ?week_start)
+;;
+
+let from_string s =
+  let ( let* ) = Result.bind in
+  let len = String.length s in
+  let* dt, tz =
+    if String.ends_with ~suffix:"Z" s
+    then Ok (String.sub s 0 (len - 1), "Z")
+    else if len >= 6
+    then Ok (String.sub s 0 (len - 6), String.sub s (len - 6) 6)
+    else Error (Invalid_string s)
+  in
+  let* datetime =
+    Datetime.from_string dt
+    |> Result.map_error (fun err -> Invalid_datetime err)
+  in
+  let* timezone =
+    Timezone.from_string tz
+    |> Result.map_error (fun err -> Invalid_timezone err)
+  in
+  Ok (from_local_datetime ~tz:timezone datetime)
+;;
+
+let from_string_exn s =
+  match from_string s with
+  | Ok x -> x
+  | Error err -> raise (Invalid_zoned_datetime err)
 ;;
 
 module CE = struct
