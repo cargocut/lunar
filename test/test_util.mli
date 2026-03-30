@@ -6,6 +6,7 @@
 val dump_duration : Duration.t -> unit
 val dump_bool : bool -> unit
 val dump_result : ('a -> string) -> ('b -> string) -> ('a, 'b) result -> unit
+val dump_option : ('a -> unit) -> 'a option -> unit
 val dump_tz : Timezone.t -> unit
 val dump_month : Month.t -> unit
 val dump_month_validation : (Month.t, Month.error) result -> unit

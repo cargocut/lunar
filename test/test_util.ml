@@ -11,6 +11,11 @@ let dump_result f_r f_e = function
   | Error err -> "error: " ^ f_e err |> print_endline
 ;;
 
+let dump_option f = function
+  | None -> ()
+  | Some x -> f x
+;;
+
 let dump_month m = m |> Month.to_string |> print_endline
 let dump_tz tz = tz |> Timezone.to_string |> print_endline
 

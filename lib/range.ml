@@ -27,11 +27,18 @@ module Make (Comp : Sigs.COMPARABLE) = struct
     ; last : elt
     }
 
+  type iterator =
+    { pred : elt -> elt
+    ; succ : elt -> elt
+    }
+
+  let iterator ~pred ~succ = { pred; succ }
   let make ~first ~last = { first; last }
   let first_elt { first; _ } = first
   let last_elt { last; _ } = last
   let is_ascending r = Elt.(first_elt r <= last_elt r)
   let is_descending r = Elt.(first_elt r >= last_elt r)
+  let is_singleton r = Elt.equal (first_elt r) (last_elt r)
   let min_elt r = if is_ascending r then first_elt r else last_elt r
   let max_elt r = if is_ascending r then last_elt r else first_elt r
   let bounds r = min_elt r, max_elt r
@@ -60,6 +67,80 @@ module Make (Comp : Sigs.COMPARABLE) = struct
   let includes parent r =
     let f, l = bounds r in
     contains f parent && contains l parent
+  ;;
+
+  let shift f r =
+    let first = f (first_elt r)
+    and last = f (last_elt r) in
+    make ~first ~last
+  ;;
+
+  let map = shift
+
+  let span ra rb =
+    let ma, mb = bounds ra
+    and na, nb = bounds rb in
+    let first = Elt.min ma na
+    and last = Elt.max mb nb in
+    make ~first ~last
+  ;;
+
+  let intersection ra rb =
+    if not (overlaps ra rb)
+    then None
+    else (
+      let amin, amax = bounds ra
+      and bmin, bmax = bounds rb in
+      let first = Elt.max amin bmin
+      and last = Elt.min amax bmax in
+      Some (make ~first ~last))
+  ;;
+
+  let clamp ~within r = intersection within r
+
+  let fold_left
+        ?(include_boundaries = true)
+        ~iterator:{ pred; succ }
+        f
+        acc
+        range
+    =
+    let curr = first_elt range
+    and last = last_elt range in
+    let next, comp =
+      if is_ascending range then succ, Elt.( > ) else pred, Elt.( < )
+    in
+    let rec aux curr acc =
+      if Elt.equal curr last
+      then f curr acc
+      else if comp curr last && include_boundaries
+      then
+        (* NOTE: If we include the bounds, we must apply [f] to the last element
+           we passed.*)
+        f last acc
+      else aux (next curr) (f curr acc)
+    in
+    aux curr acc
+  ;;
+
+  let fold_right ?include_boundaries ~iterator f acc range =
+    fold_left ?include_boundaries ~iterator f acc (rev range)
+  ;;
+
+  let length ?include_boundaries ~iterator =
+    fold_left ?include_boundaries ~iterator (fun _ x -> x + 1) 0
+  ;;
+
+  let iter ?include_boundaries ~iterator f =
+    fold_left ?include_boundaries ~iterator (fun curr () -> f curr) ()
+  ;;
+
+  let to_list ?include_boundaries ~iterator =
+    fold_right ?include_boundaries ~iterator List.cons []
+  ;;
+
+  let to_seq ?include_boundaries ~iterator =
+    fold_right ?include_boundaries ~iterator Seq.cons Seq.empty
   ;;
 
   module CE = struct
