@@ -123,9 +123,15 @@ module type RANGE = sig
   (** [max_elt r] returns the greatest [elt] for the given range [r]. *)
   val max_elt : t -> elt
 
+  (**  [bounds r] is [min_elt r, max_elt r]. *)
+  val bounds : t -> elt * elt
+
   (** [contains elt r] Returns [true] if the given element [elt] is included
       in the range [r]. *)
   val contains : elt -> t -> bool
+
+  (** [mem] is an alias for {!val:contains}. *)
+  val mem : elt -> t -> bool
 
   (** {1 Modifiying Ranges} *)
 
@@ -149,6 +155,14 @@ module type RANGE = sig
   (** [overlaps r1 r2] returns [true] if the two ranges share
       at least one common date. *)
   val overlaps : t -> t -> bool
+
+  (** [disjoint r1 r2] returns [true] if [r1] and [r2]
+      share no common element. *)
+  val disjoint : t -> t -> bool
+
+  (** [includes parent child] returns [true] if every element of
+      [child] is contained in [parent]. *)
+  val includes : t -> t -> bool
 
   (** {1 Infix Operators} *)
 

@@ -534,3 +534,65 @@ let%expect_test "overlaps descending disjoint" =
   a |> Date_range.overlaps b |> dump_bool;
   [%expect {| false |}]
 ;;
+
+let%expect_test "includes equal" =
+  let a = mkr "2026-03-01" "2026-03-10" in
+  Date_range.includes a a |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "includes strict" =
+  let parent = mkr "2026-03-01" "2026-03-10"
+  and child = mkr "2026-03-03" "2026-03-05" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "includes touching lower" =
+  let parent = mkr "2026-03-01" "2026-03-10"
+  and child = mkr "2026-03-01" "2026-03-05" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "includes touching upper" =
+  let parent = mkr "2026-03-01" "2026-03-10"
+  and child = mkr "2026-03-05" "2026-03-10" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "includes touching upper" =
+  let parent = mkr "2026-03-01" "2026-03-10"
+  and child = mkr "2026-03-05" "2026-03-10" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "includes outside left" =
+  let parent = mkr "2026-03-01" "2026-03-10"
+  and child = mkr "2026-02-28" "2026-03-05" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "includes outside right" =
+  let parent = mkr "2026-03-01" "2026-03-10"
+  and child = mkr "2026-03-05" "2026-03-11" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| false |}]
+;;
+
+let%expect_test "includes reversed parent" =
+  let parent = mkr "2026-03-10" "2026-03-01"
+  and child = mkr "2026-03-03" "2026-03-05" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| true |}]
+;;
+
+let%expect_test "includes reversed child" =
+  let parent = mkr "2026-03-01" "2026-03-10"
+  and child = mkr "2026-03-05" "2026-03-03" in
+  Date_range.includes parent child |> dump_bool;
+  [%expect {| true |}]
+;;

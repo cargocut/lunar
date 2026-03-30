@@ -47,10 +47,19 @@ module Make (Comp : Sigs.COMPARABLE) = struct
     Elt.(x >= a && x <= b)
   ;;
 
+  let mem = contains
+
   let overlaps ra rb =
     let min1, max1 = bounds ra in
     let min2, max2 = bounds rb in
     not Elt.(max1 < min2 || max2 < min1)
+  ;;
+
+  let disjoint ra rb = not (overlaps ra rb)
+
+  let includes parent r =
+    let f, l = bounds r in
+    contains f parent && contains l parent
   ;;
 
   module CE = struct
