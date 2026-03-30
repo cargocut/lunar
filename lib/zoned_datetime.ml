@@ -229,4 +229,45 @@ end
 
 module Map = Stdlib.Map.Make (Strong_comparison)
 module Set = Stdlib.Set.Make (Strong_comparison)
+
+module Range = struct
+  include Range.Make (CE)
+
+  let iterator_second = iterator ~pred:pred_second ~succ:succ_second
+  let iterator_minute = iterator ~pred:pred_minute ~succ:succ_minute
+  let iterator_hour = iterator ~pred:pred_hour ~succ:succ_hour
+  let iterator_day = iterator ~pred:pred_day ~succ:succ_day
+
+  let iterator_day_of_week weekday =
+    iterator ~pred:(pred_day_of_week weekday) ~succ:(succ_day_of_week weekday)
+  ;;
+
+  let iterator_week ?week_start () =
+    iterator ~pred:(pred_week ?week_start) ~succ:(succ_week ?week_start)
+  ;;
+
+  let iterator_month = iterator ~pred:pred_month ~succ:succ_month
+  let iterator_quarter = iterator ~pred:pred_quarter ~succ:succ_quarter
+  let iterator_year = iterator ~pred:pred_year ~succ:succ_year
+  let day dt = make ~first:(start_of_day dt) ~last:(end_of_day dt)
+  let morning dt = make ~first:(start_of_morning dt) ~last:(end_of_morning dt)
+
+  let afternoon dt =
+    make ~first:(start_of_afternoon dt) ~last:(end_of_afternoon dt)
+  ;;
+
+  let evening dt = make ~first:(start_of_day dt) ~last:(end_of_evening dt)
+  let night dt = make ~first:(start_of_night dt) ~last:(end_of_night dt)
+  let minute dt = make ~first:(start_of_minute dt) ~last:(end_of_minute dt)
+  let hour dt = make ~first:(start_of_hour dt) ~last:(end_of_hour dt)
+
+  let week ?week_start t =
+    make ~first:(start_of_week ?week_start t) ~last:(end_of_week ?week_start t)
+  ;;
+
+  let month t = make ~first:(start_of_month t) ~last:(end_of_month t)
+  let quarter t = make ~first:(start_of_quarter t) ~last:(end_of_quarter t)
+  let year t = make ~first:(start_of_year t) ~last:(end_of_year t)
+end
+
 include Infix

@@ -561,7 +561,7 @@ include Sigs.COMPARABLE_HELPERS with type t := t (** @inline *)
     ISO 8601}). *)
 val to_string : t -> string
 
-(** {1 Map and Set}
+(** {1 Map, Set and Range}
 
     Please note that the comparison function used by Maps and Sets differs
     from the {!val:compare} function described above. This is because the compare
@@ -571,6 +571,82 @@ val to_string : t -> string
 
 module Map : Stdlib.Map.S with type key = t
 module Set : Stdlib.Set.S with type elt = t
+
+module Range : sig
+  type zoned_datetime := t
+
+  include Range.S with type elt = t
+
+  (** {1 Iterators} *)
+
+  (** Iterator by one second. *)
+  val iterator_second : iterator
+
+  (** Iterator by one minute. *)
+  val iterator_minute : iterator
+
+  (** Iterator by one hour. *)
+  val iterator_hour : iterator
+
+  (** iterator by day. *)
+  val iterator_day : iterator
+
+  (** iterator by day of week. *)
+  val iterator_day_of_week : Weekday.t -> iterator
+
+  (** iterator by week. *)
+  val iterator_week : ?week_start:Weekday.t -> unit -> iterator
+
+  (** iterator by month. *)
+  val iterator_month : iterator
+
+  (** iterator by quarter *)
+  val iterator_quarter : iterator
+
+  (** iterator by year. *)
+  val iterator_year : iterator
+
+  (** {1 Zoned_Datetime range} *)
+
+  (** [day] returns a range between 00:00:00 and 23:59:59 *)
+  val day : zoned_datetime -> t
+
+  (** [morning] returns a range between 05:00:00 and 11:59:59 *)
+  val morning : zoned_datetime -> t
+
+  (** [afternoon] returns a range between 12:00:00 and 16:59:59 *)
+  val afternoon : zoned_datetime -> t
+
+  (** [evening] returns a range between 17:00:00 and 20:59:59 *)
+  val evening : zoned_datetime -> t
+
+  (** [night] returns a range between 21:00:00 and 04:59:59 *)
+  val night : zoned_datetime -> t
+
+  (** [minute t] creates a range at the beginning and end of the specified
+      minute. *)
+  val minute : zoned_datetime -> t
+
+  (** [hour t] creates a range at the beginning and end of the specified
+      hour. *)
+  val hour : zoned_datetime -> t
+
+  (** [week ?week_start zoned_datetime] creates a range from the beginning to the end
+      of the week. *)
+  val week : ?week_start:Weekday.t -> zoned_datetime -> t
+
+  (** [month zoned_datetime] creates a range from the beginning to the end
+      of the month. *)
+  val month : zoned_datetime -> t
+
+  (** [quarter zoned_datetime] creates a range from the beginning to the end
+      of the quarter. *)
+  val quarter : zoned_datetime -> t
+
+  (** [year zoned_datetime] creates a range from the beginning to the end
+      of the year. *)
+  val year : zoned_datetime -> t
+end
 
 (** {1 Infix Operators} *)
 
