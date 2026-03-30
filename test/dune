@@ -49,6 +49,7 @@
   calendarlib_inspired_test
   range_fact_test
   range_comb_test
-  range_iter_test)
+  range_iter_test
+  range_prebuilt_test)
  (preprocess
   (pps ppx_expect)))

@@ -100,6 +100,16 @@ module Make (Comp : Sigs.COMPARABLE) = struct
 
   let clamp ~within r = intersection within r
 
+  let end_with_capture_cycle is_ascending last next curr =
+    (* KLUDGE: In certain cases involving intervals, such as time, the
+       results wrap around, so you need to calculate the out-of-bounds
+       values.*)
+    let next = next curr in
+    if is_ascending
+    then Elt.(curr > last) || Elt.(next <= curr)
+    else Elt.(curr < last) || Elt.(next >= curr)
+  ;;
+
   let fold_left
         ?(include_boundaries = true)
         ~iterator:{ pred; succ }
@@ -110,12 +120,14 @@ module Make (Comp : Sigs.COMPARABLE) = struct
     let curr = first_elt range
     and last = last_elt range in
     let next, comp =
-      if is_ascending range then succ, Elt.( > ) else pred, Elt.( < )
+      if is_ascending range
+      then succ, end_with_capture_cycle true last succ
+      else pred, end_with_capture_cycle false last pred
     in
     let rec aux curr acc =
       if Elt.equal curr last
       then f curr acc
-      else if comp curr last
+      else if comp curr
       then
         if include_boundaries
         then
