@@ -11,6 +11,11 @@ let%expect_test "add_days" =
 ;;
 
 let%expect_test "add_days" =
+  Date.make_exn' ~year:2020 ~month:03 ~day:10 () |> Date.add_days 2 |> dump_date;
+  [%expect {| 2020-03-12 |}]
+;;
+
+let%expect_test "add_days" =
   Date.make_exn' ~year:2020 ~month:2 ~day:29 () |> Date.sub_days 10 |> dump_date;
   [%expect {| 2020-02-19 |}]
 ;;

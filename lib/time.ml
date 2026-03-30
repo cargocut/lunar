@@ -225,3 +225,18 @@ let end_of_hour t = t |> start_of_hour |> add_minutes 59 |> add_seconds 59
 module Map = Stdlib.Map.Make (CE)
 module Set = Stdlib.Set.Make (CE)
 include Infix
+
+module Range = struct
+  include Range.Make (CE)
+
+  let iterator_second = iterator ~pred:pred_second ~succ:succ_second
+  let iterator_minute = iterator ~pred:pred_minute ~succ:succ_minute
+  let iterator_hour = iterator ~pred:pred_hour ~succ:succ_hour
+  let day = make ~first:start_of_day ~last:end_of_day
+  let morning = make ~first:start_of_morning ~last:end_of_morning
+  let afternoon = make ~first:start_of_afternoon ~last:end_of_afternoon
+  let evening = make ~first:start_of_day ~last:end_of_evening
+  let night = make ~first:start_of_night ~last:end_of_night
+  let minute t = make ~first:(start_of_minute t) ~last:(end_of_minute t)
+  let hour t = make ~first:(start_of_hour t) ~last:(end_of_hour t)
+end

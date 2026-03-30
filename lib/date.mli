@@ -442,10 +442,54 @@ val is_first_day_of_year : t -> bool
     last day of the year. *)
 val is_last_day_of_year : t -> bool
 
-(** {1 Map and Set} *)
+(** {1 Map, Set and Range} *)
 
 module Map : Stdlib.Map.S with type key = t
 module Set : Stdlib.Set.S with type elt = t
+
+module Range : sig
+  type date := t
+
+  include Range.S with type elt = t
+
+  (** {1 Iterators} *)
+
+  (** iterator by day. *)
+  val iterator_day : iterator
+
+  (** iterator by day of week. *)
+  val iterator_day_of_week : Weekday.t -> iterator
+
+  (** iterator by week. *)
+  val iterator_week : ?week_start:Weekday.t -> unit -> iterator
+
+  (** iterator by month. *)
+  val iterator_month : iterator
+
+  (** iterator by quarter *)
+  val iterator_quarter : iterator
+
+  (** iterator by year. *)
+  val iterator_year : iterator
+
+  (** {1 Date range} *)
+
+  (** [week ?week_start date] creates a range from the beginning to the end
+      of the week. *)
+  val week : ?week_start:Weekday.t -> date -> t
+
+  (** [month date] creates a range from the beginning to the end
+      of the month. *)
+  val month : date -> t
+
+  (** [quarter date] creates a range from the beginning to the end
+      of the quarter. *)
+  val quarter : date -> t
+
+  (** [year date] creates a range from the beginning to the end
+      of the year. *)
+  val year : date -> t
+end
 
 (** {1 Infix Operators} *)
 

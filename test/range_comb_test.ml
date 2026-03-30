@@ -4,13 +4,6 @@
    SPDX-License-Identifier: BSD-3-Clause *)
 
 open Test_util
-module Date_range = Range.Make (Date)
-
-let mkr a b =
-  let first = Date.from_string_exn a
-  and last = Date.from_string_exn b in
-  Date_range.make ~first ~last
-;;
 
 let%expect_test "span overlap" =
   let a = mkr "2026-03-01" "2026-03-10"

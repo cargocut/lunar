@@ -595,10 +595,86 @@ val to_duration : t -> Duration.t
 (** [to_string dt] returns a string representation of the given [dt]. *)
 val to_string : t -> string
 
-(** {1 Map and Set} *)
+(** {1 Map, Set and Range} *)
 
 module Map : Stdlib.Map.S with type key = t
 module Set : Stdlib.Set.S with type elt = t
+
+module Range : sig
+  type datetime := t
+
+  include Range.S with type elt = t
+
+  (** {1 Iterators} *)
+
+  (** Iterator by one second. *)
+  val iterator_second : iterator
+
+  (** Iterator by one minute. *)
+  val iterator_minute : iterator
+
+  (** Iterator by one hour. *)
+  val iterator_hour : iterator
+
+  (** iterator by day. *)
+  val iterator_day : iterator
+
+  (** iterator by day of week. *)
+  val iterator_day_of_week : Weekday.t -> iterator
+
+  (** iterator by week. *)
+  val iterator_week : ?week_start:Weekday.t -> unit -> iterator
+
+  (** iterator by month. *)
+  val iterator_month : iterator
+
+  (** iterator by quarter *)
+  val iterator_quarter : iterator
+
+  (** iterator by year. *)
+  val iterator_year : iterator
+
+  (** {1 Datetime range} *)
+
+  (** [day] returns a range between 00:00:00 and 23:59:59 *)
+  val day : datetime -> t
+
+  (** [morning] returns a range between 05:00:00 and 11:59:59 *)
+  val morning : datetime -> t
+
+  (** [afternoon] returns a range between 12:00:00 and 16:59:59 *)
+  val afternoon : datetime -> t
+
+  (** [evening] returns a range between 17:00:00 and 20:59:59 *)
+  val evening : datetime -> t
+
+  (** [night] returns a range between 21:00:00 and 04:59:59 *)
+  val night : datetime -> t
+
+  (** [minute t] creates a range at the beginning and end of the specified
+      minute. *)
+  val minute : datetime -> t
+
+  (** [hour t] creates a range at the beginning and end of the specified
+      hour. *)
+  val hour : datetime -> t
+
+  (** [week ?week_start datetime] creates a range from the beginning to the end
+      of the week. *)
+  val week : ?week_start:Weekday.t -> datetime -> t
+
+  (** [month datetime] creates a range from the beginning to the end
+      of the month. *)
+  val month : datetime -> t
+
+  (** [quarter datetime] creates a range from the beginning to the end
+      of the quarter. *)
+  val quarter : datetime -> t
+
+  (** [year datetime] creates a range from the beginning to the end
+      of the year. *)
+  val year : datetime -> t
+end
 
 (** {1 Infix Operators} *)
 

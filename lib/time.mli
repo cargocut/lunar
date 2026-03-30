@@ -303,10 +303,52 @@ val is_evening : t -> bool
     [04:59:59], [false] otherwise. *)
 val is_night : t -> bool
 
-(** {1 Map and Set} *)
+(** {1 Map, Set and Range} *)
 
 module Map : Stdlib.Map.S with type key = t
 module Set : Stdlib.Set.S with type elt = t
+
+module Range : sig
+  type time := t
+
+  include Range.S with type elt = t
+
+  (** {1 Iterators} *)
+
+  (** Iterator by one second. *)
+  val iterator_second : iterator
+
+  (** Iterator by one minute. *)
+  val iterator_minute : iterator
+
+  (** Iterator by one hour. *)
+  val iterator_hour : iterator
+
+  (** {1 Time range} *)
+
+  (** [day] returns a range between 00:00:00 and 23:59:59 *)
+  val day : t
+
+  (** [morning] returns a range between 05:00:00 and 11:59:59 *)
+  val morning : t
+
+  (** [afternoon] returns a range between 12:00:00 and 16:59:59 *)
+  val afternoon : t
+
+  (** [evening] returns a range between 17:00:00 and 20:59:59 *)
+  val evening : t
+
+  (** [night] returns a range between 21:00:00 and 04:59:59 *)
+  val night : t
+
+  (** [minute t] creates a range at the beginning and end of the specified
+      minute. *)
+  val minute : time -> t
+
+  (** [hour t] creates a range at the beginning and end of the specified
+      hour. *)
+  val hour : time -> t
+end
 
 (** {1 Infix Operators} *)
 

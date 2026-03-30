@@ -417,4 +417,31 @@ let is_last_day_of_week ?week_start d =
 
 module Map = Stdlib.Map.Make (CE)
 module Set = Stdlib.Set.Make (CE)
+
+module Range = struct
+  include Range.Make (CE)
+
+  let iterator_day = iterator ~pred:pred_day ~succ:succ_day
+
+  let iterator_day_of_week weekday =
+    iterator ~pred:(pred_day_of_week weekday) ~succ:(succ_day_of_week weekday)
+  ;;
+
+  let iterator_week ?week_start () =
+    iterator ~pred:(pred_week ?week_start) ~succ:(succ_week ?week_start)
+  ;;
+
+  let iterator_month = iterator ~pred:pred_month ~succ:succ_month
+  let iterator_quarter = iterator ~pred:pred_quarter ~succ:succ_quarter
+  let iterator_year = iterator ~pred:pred_year ~succ:succ_year
+
+  let week ?week_start t =
+    make ~first:(start_of_week ?week_start t) ~last:(end_of_week ?week_start t)
+  ;;
+
+  let month t = make ~first:(start_of_month t) ~last:(end_of_month t)
+  let quarter t = make ~first:(start_of_quarter t) ~last:(end_of_quarter t)
+  let year t = make ~first:(start_of_year t) ~last:(end_of_year t)
+end
+
 include Infix

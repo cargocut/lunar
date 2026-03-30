@@ -146,3 +146,11 @@ let dump_range
   =
   print_endline @@ "(" ^ f (R.first_elt r) ^ ".." ^ f (R.last_elt r) ^ ")"
 ;;
+
+module Date_range = Range.Make (Date)
+
+let mkr a b =
+  let first = Date.from_string_exn a
+  and last = Date.from_string_exn b in
+  Date_range.make ~first ~last
+;;

@@ -33,3 +33,7 @@ val dump_range
   -> (module Sigs.RANGE with type elt = 'a and type t = 'b)
   -> 'b
   -> unit
+
+module Date_range : Sigs.RANGE with type elt = Date.t
+
+val mkr : string -> string -> Date_range.t

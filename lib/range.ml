@@ -3,6 +3,8 @@
 
    SPDX-License-Identifier: BSD-3-Clause *)
 
+module type S = Sigs.RANGE
+
 module Make (Comp : Sigs.COMPARABLE) = struct
   type elt = Comp.t
 
@@ -113,11 +115,14 @@ module Make (Comp : Sigs.COMPARABLE) = struct
     let rec aux curr acc =
       if Elt.equal curr last
       then f curr acc
-      else if comp curr last && include_boundaries
+      else if comp curr last
       then
-        (* NOTE: If we include the bounds, we must apply [f] to the last element
-           we passed.*)
-        f last acc
+        if include_boundaries
+        then
+          (* NOTE: If we include the bounds, we must apply [f] to the last element
+             we passed.*)
+          f last acc
+        else acc
       else aux (next curr) (f curr acc)
     in
     aux curr acc
@@ -135,12 +140,12 @@ module Make (Comp : Sigs.COMPARABLE) = struct
     fold_left ?include_boundaries ~iterator (fun curr () -> f curr) ()
   ;;
 
-  let to_list ?include_boundaries ~iterator =
-    fold_right ?include_boundaries ~iterator List.cons []
+  let to_list ?include_boundaries ~iterator range =
+    range |> fold_left ?include_boundaries ~iterator List.cons [] |> List.rev
   ;;
 
-  let to_seq ?include_boundaries ~iterator =
-    fold_right ?include_boundaries ~iterator Seq.cons Seq.empty
+  let to_seq ?include_boundaries ~iterator range =
+    range |> to_list ?include_boundaries ~iterator |> List.to_seq
   ;;
 
   module CE = struct

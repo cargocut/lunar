@@ -48,6 +48,7 @@
   zoned_meeting_test
   calendarlib_inspired_test
   range_fact_test
-  range_comb_test)
+  range_comb_test
+  range_iter_test)
  (preprocess
   (pps ppx_expect)))
