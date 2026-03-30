@@ -35,6 +35,13 @@ module Make (Comp : Sigs.COMPARABLE) = struct
     }
 
   let iterator ~pred ~succ = { pred; succ }
+
+  let linear_iterator f x =
+    let pred = f (-x)
+    and succ = f x in
+    iterator ~pred ~succ
+  ;;
+
   let make ~first ~last = { first; last }
   let first_elt { first; _ } = first
   let last_elt { last; _ } = last
@@ -100,42 +107,29 @@ module Make (Comp : Sigs.COMPARABLE) = struct
 
   let clamp ~within r = intersection within r
 
-  let end_with_capture_cycle is_ascending last next curr =
-    (* KLUDGE: In certain cases involving intervals, such as time, the
-       results wrap around, so you need to calculate the out-of-bounds
-       values.*)
-    let next = next curr in
-    if is_ascending
-    then Elt.(curr > last) || Elt.(next <= curr)
-    else Elt.(curr < last) || Elt.(next >= curr)
-  ;;
-
   let fold_left
         ?(include_boundaries = true)
-        ~iterator:{ pred; succ }
+        ~iterator:{ succ; pred }
         f
         acc
         range
     =
-    let curr = first_elt range
-    and last = last_elt range in
-    let next, comp =
-      if is_ascending range
-      then succ, end_with_capture_cycle true last succ
-      else pred, end_with_capture_cycle false last pred
-    in
+    let curr = first_elt range in
+    let last = last_elt range in
+    let is_asc = is_ascending range in
+    let next_fn = if is_asc then succ else pred in
     let rec aux curr acc =
       if Elt.equal curr last
       then f curr acc
-      else if comp curr
-      then
-        if include_boundaries
-        then
-          (* NOTE: If we include the bounds, we must apply [f] to the last element
-             we passed.*)
-          f last acc
-        else acc
-      else aux (next curr) (f curr acc)
+      else (
+        let next = next_fn curr in
+        (* KLUDGE: stop if next overshoots last or wraps around (cycle) mostly
+           for [time] reason *)
+        if
+          (is_asc && (Elt.(next > last) || Elt.(next <= curr)))
+          || ((not is_asc) && (Elt.(next < last) || Elt.(next >= curr)))
+        then if include_boundaries then f last (f curr acc) else f curr acc
+        else aux next (f curr acc))
     in
     aux curr acc
   ;;

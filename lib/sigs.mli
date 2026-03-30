@@ -205,6 +205,10 @@ module type RANGE = sig
       [pred], [succ]. *)
   val iterator : pred:(elt -> elt) -> succ:(elt -> elt) -> iterator
 
+  (** [linear_iterator f n] creates an iterator for a function that takes a
+      quantity as an argument. *)
+  val linear_iterator : (int -> elt -> elt) -> int -> iterator
+
   (** The following functions include an [include_boundaries]
       parameter. This is primarily because iterators can {i skip}
       the last element of an iteration. For example, suppose we
