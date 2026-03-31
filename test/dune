@@ -50,6 +50,7 @@
   range_fact_test
   range_comb_test
   range_iter_test
-  range_prebuilt_test)
+  range_prebuilt_test
+  misc_test)
  (preprocess
   (pps ppx_expect)))
