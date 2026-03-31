@@ -23,8 +23,9 @@ representation](https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar).
 The **smallest unit of measurement in Lunar is the second**, so this
 library is not intended for high-precision calculations (but rather
 serves as a foundation for describing applications centered around
-calendars).
+calendars so it also **does not support negative years or leap
+seconds**).
 
-> [!WARNING]  
+> [!IMPORTANT]  
 > At the moment, parsing tools and (_available_) encoded time zones
 > are very limited.
