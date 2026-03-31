@@ -4,7 +4,9 @@
    SPDX-License-Identifier: BSD-3-Clause *)
 
 (** Era identifies the historical period relative to year numbering. In
-    the Gregorian/ISO calendar there are two eras: [BCE] and [CE]. *)
+    the Gregorian/ISO calendar there are two eras: [BCE] and
+    [CE]. Since Lunar just support dates between the years [0000] (in
+    an astronomic sense), [BCE] is probably never used. *)
 
 (** {1 Types} *)
 
