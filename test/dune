@@ -53,6 +53,7 @@
   range_comb_test
   range_iter_test
   range_prebuilt_test
-  misc_test)
+  misc_test
+  unix_comparison_test)
  (preprocess
   (pps ppx_expect)))
