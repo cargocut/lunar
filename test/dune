@@ -1,6 +1,5 @@
 (library
  (name lunar_test)
- (package lunar)
  (inline_tests)
  (flags (:standard) -open Lunar)
  (libraries lunar)
