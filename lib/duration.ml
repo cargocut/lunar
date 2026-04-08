@@ -13,14 +13,10 @@ let from_minutes x = x |> from_seconds |> Int64.mul 60L
 let from_hours x = x |> from_seconds |> Int64.mul 3600L
 let from_days x = x |> from_seconds |> Int64.mul 86400L
 let one_day = from_days 1
+let one_minute = from_minutes 1
+let one_hour = from_hours 1
 let abs = Int64.abs
 let neg x = Int64.(sub zero x)
-
-let to_days t =
-  if t >= 0L
-  then Int64.(to_int (div t one_day))
-  else Int64.(to_int (div (sub t (sub one_day 1L)) one_day))
-;;
 
 let div_floor a b =
   let q = a / b
@@ -102,9 +98,9 @@ let pred = Int64.pred
 
 let wdhms x =
   let weeks, rem = Util.i64_div_mod_floor x (from_days 7) in
-  let days, rem = Util.i64_div_mod_floor rem (from_days 1) in
-  let hour, rem = Util.i64_div_mod_floor rem (from_hours 1) in
-  let min, sec = Util.i64_div_mod_floor rem (from_minutes 1) in
+  let days, rem = Util.i64_div_mod_floor rem one_day in
+  let hour, rem = Util.i64_div_mod_floor rem one_hour in
+  let min, sec = Util.i64_div_mod_floor rem one_minute in
   (* MAYBE: an opportunity for labelled-tuple. *)
   ( Int64.to_int weeks
   , Int64.to_int days
@@ -114,16 +110,16 @@ let wdhms x =
 ;;
 
 let dhms x =
-  let days, rem = Util.i64_div_mod_floor x (from_days 1) in
-  let hour, rem = Util.i64_div_mod_floor rem (from_hours 1) in
-  let min, sec = Util.i64_div_mod_floor rem (from_minutes 1) in
+  let days, rem = Util.i64_div_mod_floor x one_day in
+  let hour, rem = Util.i64_div_mod_floor rem one_hour in
+  let min, sec = Util.i64_div_mod_floor rem one_minute in
   (* MAYBE: an opportunity for labelled-tuple. *)
   Int64.to_int days, Int64.to_int hour, Int64.to_int min, Int64.to_int sec
 ;;
 
 let hms x =
-  let hours, rem = Util.i64_div_mod_floor x (from_hours 1) in
-  let min, sec = Util.i64_div_mod_floor rem (from_minutes 1) in
+  let hours, rem = Util.i64_div_mod_floor x one_hour in
+  let min, sec = Util.i64_div_mod_floor rem one_minute in
   (* MAYBE: an opportunity for labelled-tuple. *)
   Int64.to_int hours, Int64.to_int min, Int64.to_int sec
 ;;
@@ -134,6 +130,11 @@ let weekday x =
   let id = (d + 4) mod 7 in
   weekdays.((id + 7) mod 7)
 ;;
+
+let to_seconds t = t |> to_int64 |> Int64.to_int
+let to_minutes t = Int64.(to_int (div t one_minute))
+let to_hours t = Int64.(to_int (div t one_hour))
+let to_days t = Int64.(to_int (div t one_day))
 
 module CE = struct
   type nonrec t = t

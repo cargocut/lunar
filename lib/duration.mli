@@ -66,7 +66,8 @@ val from_datetime
     [year * month * day_of_month * hour * minute * second]. *)
 val to_datetime : t -> int * int * int * int * int * int
 
-(** [to_int64 d] returns the int64 representation of a duration.*)
+(** [to_int64 d] returns the int64 representation of a duration in
+    seconds. *)
 val to_int64 : t -> int64
 
 (** [wdhms duration] returns the number of weeks, days, hours, minutes, and
@@ -81,7 +82,18 @@ val dhms : t -> int * int * int * int
     seconds that describe the duration.*)
 val hms : t -> int * int * int
 
-(** [to_days duration] get a day approx for a duration. *)
+(** [to_seconds duration] get a seconds approx for a duration. *)
+val to_seconds : t -> int
+
+(** [to_minutes duration] get a minute approx for a duration (drop seconds). *)
+val to_minutes : t -> int
+
+(** [to_hours duration] get a hour approx for a duration (drop seconds,
+    minutes). *)
+val to_hours : t -> int
+
+(** [to_days duration] get a day approx for a duration (drop seconds,
+    minutes and hours). *)
 val to_days : t -> int
 
 (** [weekday d] returns the {!type:Weekday.t} for the given duration since

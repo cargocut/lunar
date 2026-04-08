@@ -5,6 +5,7 @@
  (libraries lunar)
  (private_modules
   duration_test
+  duration_conv_test
   month_test
   duration_dhms_test
   duration_weekday_test
