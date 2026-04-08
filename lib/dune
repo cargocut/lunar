@@ -1,7 +1,7 @@
 (library
  (name lunar)
  (public_name lunar)
- (modules_without_implementation sigs lunar)
+ (modules_without_implementation sigs)
  (private_modules util))
 
 (mdx
