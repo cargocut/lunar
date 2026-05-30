@@ -32,7 +32,7 @@ exception Invalid_zoned_datetime of error
 
 (** {1 Building zoned datetime} *)
 
-(** [from_local_datetime ?tz dt] attach a timezone to a regular
+(** [from_local_datetime ?tz dt] attaches a timezone to a local
     {!type:Datetime.t}. The default Timezone [tz] is
     {!val:Timezone.utc}. *)
 val from_local_datetime : ?tz:Timezone.t -> Datetime.t -> t
@@ -101,30 +101,30 @@ val from_string : string -> (t, error) result
     exception if it fails. *)
 val from_string_exn : string -> t
 
-(** [from d t] creates a zoned datetime object for the given date, [d] and a
-    given time [t]. The default Timezone [tz] is {!val:Timezone.utc}.
+(** [from d t] creates a zoned datetime object for the local date [d] and
+    time [t]. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.from} *)
 val from : ?tz:Timezone.t -> Date.t -> Time.t -> t
 
-(** [from_date d] creates a zoned datetime object for the given date, [d], at
+(** [from_date d] creates a zoned datetime object for the local date [d], at
     midnight. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.from_date} *)
 val from_date : ?tz:Timezone.t -> Date.t -> t
 
-(** [from_duration d] converts a duration to a date.  [0] is the
-    1970-01-01 at 00:00:00. The default Timezone [tz] is
+(** [from_duration d] converts a (local) duration to a date. [0] is the
+    date 1970-01-01 at 00:00:00. The default Timezone [tz] is
     {!val:Timezone.utc}.
 
     See {!val:Datetime.from_duration} *)
 val from_duration : ?tz:Timezone.t -> Duration.t -> t
 
-(** [from_utc ?tz dt] creates a zoned datetime from an UTC datetime (does not do
-    any conversion). *)
+(** [from_utc ?tz dt] creates a zoned datetime from a UTC datetime. No
+    conversion is done. The default Timezone [tz] is {!val:Timezone.utc}. *)
 val from_utc : ?tz:Timezone.t -> Datetime.t -> t
 
-(** Returns the 1st January 1970 at midnight. The default Timezone [tz] is
+(** Returns the 1st January 1970 at midnight in local time. The default Timezone [tz] is
     {!val:Timezone.utc}.
 
     See {!val:Datetime.epoch} *)
