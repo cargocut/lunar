@@ -20,7 +20,7 @@ let from_local_datetime ?(tz = Timezone.utc) local =
   { tz; utc }
 ;;
 
-let from_utc utc = { tz = Timezone.utc; utc }
+let from_utc ?(tz = Timezone.utc) utc = { tz; utc }
 let from ?tz date time = time |> Datetime.from date |> from_local_datetime ?tz
 let from_date ?tz date = date |> Datetime.from_date |> from_local_datetime ?tz
 let epoch ?tz () = from_local_datetime ?tz Datetime.epoch

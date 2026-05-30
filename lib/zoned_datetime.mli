@@ -120,9 +120,9 @@ val from_date : ?tz:Timezone.t -> Date.t -> t
     See {!val:Datetime.from_duration} *)
 val from_duration : ?tz:Timezone.t -> Duration.t -> t
 
-(** [from_utc dt] creates a zoned datetime from an UTC datetime (does
-    not any conversion). *)
-val from_utc : Datetime.t -> t
+(** [from_utc ?tz dt] creates a zoned datetime from an UTC datetime (does not do
+    any conversion). *)
+val from_utc : ?tz:Timezone.t -> Datetime.t -> t
 
 (** Returns the 1st January 1970 at midnight. The default Timezone [tz] is
     {!val:Timezone.utc}.
