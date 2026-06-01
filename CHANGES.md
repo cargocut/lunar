@@ -1,3 +1,8 @@
+### unreleased
+
+- Add an optional timezone `tz` argument to the `Zoned_datetime.from_utc`
+  function and refine doc comments.  ([voodoos](https://github.com/voodoos))
+
 ### v1.1.0
 
 - Add `Duration.to_(seconds|minutes|hours)` ([gr-im](https://github.com/gr-im))

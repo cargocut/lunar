@@ -27,17 +27,17 @@ type error =
   | Invalid_datetime of Datetime.error
   | Invalid_timezone of Timezone.error
 
-(** An exception used for unsafe function. *)
+(** An exception used by unsafe functions. *)
 exception Invalid_zoned_datetime of error
 
 (** {1 Building zoned datetime} *)
 
-(** [from_local_datetime ?tz dt] attach a timezone to a regular
+(** [from_local_datetime ?tz dt] attaches a timezone to a local
     {!type:Datetime.t}. The default Timezone [tz] is
     {!val:Timezone.utc}. *)
 val from_local_datetime : ?tz:Timezone.t -> Datetime.t -> t
 
-(** [make ?tz ?at ~year ~month ~day ()] create and validate a zoned
+(** [make ?tz ?at ~year ~month ~day ()] creates and validates a zoned
     datetime. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.make} *)
@@ -50,8 +50,8 @@ val make
   -> unit
   -> (t, Datetime.error) result
 
-(** [make' ?at ~year ~month ~day ()] create and validate a zoned
-    datetime. see {!val:make}. Take an integer rather than a
+(** [make' ?at ~year ~month ~day ()] creates and validates a zoned
+    datetime. see {!val:make}. Takes an integer rather than a
     {!type:Month.t}. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.make'} *)
@@ -64,9 +64,9 @@ val make'
   -> unit
   -> (t, Datetime.error) result
 
-(** [make_exn ?at ~year ~month ~day ()] create and validate a datetime
-    like {!val:make} but raise [Invalid_datetime] if the validation
-    doesn't succeed. The default Timezone [tz] is {!val:Timezone.utc}.
+(** [make_exn ?at ~year ~month ~day ()] creates and validates a datetime
+    like {!val:make} but raises [Invalid_datetime] if the validation
+    does not succeed. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.make_exn} *)
 val make_exn
@@ -78,8 +78,8 @@ val make_exn
   -> unit
   -> t
 
-(** [make_exn' ?at ~year ~month ~day ()] create and validate a zoned datetime,
-    like {!val:make'} but raise [Invalid_datetime] if the validation doesn't
+(** [make_exn' ?at ~year ~month ~day ()] creates and validates a zoned datetime,
+    like {!val:make'} but raise [Invalid_datetime] if the validation does not
     succeed. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.make_exn'} *)
@@ -92,39 +92,39 @@ val make_exn'
   -> unit
   -> t
 
-(** [from_string s] try to read a date from a string (using the format
+(** [from_string s] tries to read a date from a string (using the format
     [year-mon-dayThh:mm:ssTZ], according to RFC3339). *)
 val from_string : string -> (t, error) result
 
-(** [from_string_exn s] try to read a date from a string (using the format
+(** [from_string_exn s] tries to read a date from a string (using the format
     [year-mon-dayThh:mm:ssTZ], according to RFC3339) and raise and
     exception if it fails. *)
 val from_string_exn : string -> t
 
-(** [from d t] creates a zoned datetime object for the given date, [d] and a
-    given time [t]. The default Timezone [tz] is {!val:Timezone.utc}.
+(** [from d t] creates a zoned datetime object for the local date [d] and
+    time [t]. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.from} *)
 val from : ?tz:Timezone.t -> Date.t -> Time.t -> t
 
-(** [from_date d] creates a zoned datetime object for the given date, [d], at
+(** [from_date d] creates a zoned datetime object for the local date [d], at
     midnight. The default Timezone [tz] is {!val:Timezone.utc}.
 
     See {!val:Datetime.from_date} *)
 val from_date : ?tz:Timezone.t -> Date.t -> t
 
-(** [from_duration d] converts a duration to a date.  [0] is the
-    1970-01-01 at 00:00:00. The default Timezone [tz] is
+(** [from_duration d] converts a (local) duration to a date. [0] is the
+    date 1970-01-01 at 00:00:00. The default Timezone [tz] is
     {!val:Timezone.utc}.
 
     See {!val:Datetime.from_duration} *)
 val from_duration : ?tz:Timezone.t -> Duration.t -> t
 
-(** [from_utc dt] creates a zoned datetime from an UTC datetime (does
-    not any conversion). *)
-val from_utc : Datetime.t -> t
+(** [from_utc ?tz dt] creates a zoned datetime from a UTC datetime. No
+    conversion is done. The default Timezone [tz] is {!val:Timezone.utc}. *)
+val from_utc : ?tz:Timezone.t -> Datetime.t -> t
 
-(** Returns the 1st January 1970 at midnight. The default Timezone [tz] is
+(** Returns the 1st January 1970 at midnight in local time. The default Timezone [tz] is
     {!val:Timezone.utc}.
 
     See {!val:Datetime.epoch} *)
@@ -135,10 +135,10 @@ val epoch : ?tz:Timezone.t -> unit -> t
 (** [timezone zdt] returns the attached timezone to the given [zdt]. *)
 val timezone : t -> Timezone.t
 
-(** [on_utc f zdt] apply [f] on the datetime (in UTC) of [zdt]. *)
+(** [on_utc f zdt] applies [f] on the datetime (in UTC) of [zdt]. *)
 val on_utc : (Datetime.t -> 'a) -> t -> 'a
 
-(** [on_local f zdt] apply [f] on the local datetime of [zdt]. *)
+(** [on_local f zdt] applies [f] on the local datetime of [zdt]. *)
 val on_local : (Datetime.t -> 'a) -> t -> 'a
 
 (** [map_utc f zdt] applies [f] to the underlying UTC datetime.
@@ -177,75 +177,75 @@ val change_timezone : tz:Timezone.t -> t -> t
 
 (** {1 Operation on zoned datetimes} *)
 
-(** [add duration zdt] compute a new date adding [duration] to the given
+(** [add duration zdt] computes a new date adding [duration] to the given
     [zdt]. *)
 val add : Duration.t -> t -> t
 
-(** [sub duration zdt] compute a new date substracting [duration] to the given
+(** [sub duration zdt] computes a new date substracting [duration] to the given
     [zdt]. *)
 val sub : Duration.t -> t -> t
 
-(** [add_seconds number_of_seconds zoned_datetime] add [number_of_seconds] to the
+(** [add_seconds number_of_seconds zoned_datetime] adds [number_of_seconds] to the
     given [zoned_datetime]. *)
 val add_seconds : int -> t -> t
 
-(** [sub_seconds number_of_seconds zoned_datetime] remove [number_of_seconds] to the
+(** [sub_seconds number_of_seconds zoned_datetime] removes [number_of_seconds] to the
     given [zoned_datetime]. *)
 val sub_seconds : int -> t -> t
 
-(** [add_minutes number_of_minutes zoned_datetime] add [number_of_minutes] to the
+(** [add_minutes number_of_minutes zoned_datetime] adds [number_of_minutes] to the
     given [zoned_datetime]. *)
 val add_minutes : int -> t -> t
 
-(** [sub_minutes number_of_minutes zoned_datetime] remove [number_of_minutes] to the
+(** [sub_minutes number_of_minutes zoned_datetime] removes [number_of_minutes] to the
     given [zoned_datetime]. *)
 val sub_minutes : int -> t -> t
 
-(** [add_hours number_of_hours zoned_datetime] add [number_of_hours] to the
+(** [add_hours number_of_hours zoned_datetime] adds [number_of_hours] to the
     given [zoned_datetime]. *)
 val add_hours : int -> t -> t
 
-(** [sub_hours number_of_hours zoned_datetime] remove [number_of_hours] to the
+(** [sub_hours number_of_hours zoned_datetime] removes [number_of_hours] to the
     given [datime]. *)
 val sub_hours : int -> t -> t
 
-(** [add_days number_of_days zoned_datetime] add [number_of_days] to the given
+(** [add_days number_of_days zoned_datetime] adds [number_of_days] to the given
     [zoned_datetime]. *)
 val add_days : int -> t -> t
 
-(** [sub_days number_of_days zoned_datetime] remove [number_of_days] to the
+(** [sub_days number_of_days zoned_datetime] removes [number_of_days] to the
     given [zoned_datetime]. *)
 val sub_days : int -> t -> t
 
-(** [add_weeks number_of_weeks zoned_datetime] add [number_of_weeks] to the
+(** [add_weeks number_of_weeks zoned_datetime] adds [number_of_weeks] to the
     given [zoned_datetime] (a week is [7] days). *)
 val add_weeks : int -> t -> t
 
-(** [sub_weeks number_of_weeks zoned_datetime] remove [number_of_weeks] to the
+(** [sub_weeks number_of_weeks zoned_datetime] removes [number_of_weeks] to the
     given [zoned_datetime] (a week is [7] days). *)
 val sub_weeks : int -> t -> t
 
-(** [add_months number_of_months zoned_datetime] add [number_of_months] to the
+(** [add_months number_of_months zoned_datetime] adds [number_of_months] to the
     given [zoned_datetime]. *)
 val add_months : int -> t -> t
 
-(** [add_months number_of_months zoned_datetime] remove [number_of_months] to
+(** [add_months number_of_months zoned_datetime] removes [number_of_months] to
     the given [zoned_datetime]. *)
 val sub_months : int -> t -> t
 
-(** [add_quarters number_of_quarters zoned_datetime] add [number_of_quarters] to the
+(** [add_quarters number_of_quarters zoned_datetime] adds [number_of_quarters] to the
     given [zoned_datetime]. *)
 val add_quarters : int -> t -> t
 
-(** [add_quarters number_of_quarters zoned_datetime] remove [number_of_quarters] to
+(** [add_quarters number_of_quarters zoned_datetime] removes [number_of_quarters] to
     the given [zoned_datetime]. *)
 val sub_quarters : int -> t -> t
 
-(** [add_years number_of_years zoned_datetime] add [number_of_years] to the
+(** [add_years number_of_years zoned_datetime] adds [number_of_years] to the
     given [zoned_datetime]. *)
 val add_years : int -> t -> t
 
-(** [sub_years number_of_years zoned_datetime] remove [number_of_years] to the
+(** [sub_years number_of_years zoned_datetime] removes [number_of_years] to the
     given [zoned_datetime]. *)
 val sub_years : int -> t -> t
 
@@ -350,18 +350,18 @@ val pred_year : t -> t
     datetime has the given time. *)
 val with_local_time : Time.t -> t -> t
 
-(** [with_local_date date zoned_datetime] replace the [date] of the given
+(** [with_local_date date zoned_datetime] replaces the [date] of the given
     [zoned_datetime].
 
     This changes the underlying instant so that the resulting local
     datetime has the given time. *)
 val with_local_date : Date.t -> t -> t
 
-(** [tomorrow zdt] get the next day of the given [zdt]. See
+(** [tomorrow zdt] gets the next day of the given [zdt]. See
     {!val:succ_day}. *)
 val tomorrow : t -> t
 
-(** [yesterday zdt] get the previous day of the given [zdt]. See
+(** [yesterday zdt] gets the previous day of the given [zdt]. See
     {!val:pred_day}. *)
 val yesterday : t -> t
 
