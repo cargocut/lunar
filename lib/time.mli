@@ -156,7 +156,7 @@ val diff : t -> t -> Duration.t
     For example let's imagine the following time:
 
     {eof@ocaml[
-      let a_time = Lunar.Time.make_exn ~hour:12 ~min:34 ~sec:51 ()
+    let a_time = Lunar.Time.make_exn ~hour:12 ~min:34 ~sec:51 ()
     ]eof}
 
     Adding one minute will preserve [sec 51]:

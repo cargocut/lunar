@@ -193,7 +193,7 @@ val diff : t -> t -> Duration.t
     For example let's imagine the following date:
 
     {eof@ocaml[
-      let a_date = Lunar.Date.make_exn' ~year:2026 ~month:3 ~day:19 ()
+    let a_date = Lunar.Date.make_exn' ~year:2026 ~month:3 ~day:19 ()
     ]eof}
 
     Adding one month will preserve [day 19]:
