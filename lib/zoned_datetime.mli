@@ -469,7 +469,7 @@ val floor : [< Resolution.t ] -> t -> t
 
 (** [round resolution d] rounds [d] to the nearest boundary of the period
     specified by [resolution]. See {!val:Datetime.round} and
-    {!val:Timetime.round}. *)
+    {!val:Time.round}. *)
 val round : [< Resolution.t ] -> t -> t
 
 (** [ceil resolution d] rounds [d] up to the next boundary of the period
