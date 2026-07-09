@@ -1,4 +1,4 @@
-### unreleased
+### v1.2.0
 
 - Add an optional timezone `tz` argument to the `Zoned_datetime.from_utc`
   function and refine doc comments.  ([voodoos](https://github.com/voodoos))
