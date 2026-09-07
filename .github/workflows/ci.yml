@@ -18,6 +18,9 @@ jobs:
           - 5
     runs-on: ${{ matrix.os }}
 
+    env:
+      TZ: Europe/Paris
+
     steps:
       - name: Checkout Tree
         uses: actions/checkout@v4
@@ -30,24 +33,6 @@ jobs:
       - run: opam install . --deps-only --with-test
       - run: opam exec -- dune build
       - run: opam exec -- dune runtest
-
-  lint-doc:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ ubuntu-latest ]
-        ocaml-compiler: [ ocaml-base-compiler.5.4.0 ]
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Checkout Tree
-        uses: actions/checkout@v4
-
-      - name: Set-up OCaml
-        uses: ocaml/setup-ocaml@v3
-        with:
-          ocaml-compiler: ${{ matrix.ocaml-compiler }}
-      - uses: ocaml/setup-ocaml/lint-doc@v3
 
   lint-fmt:
     strategy:

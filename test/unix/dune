@@ -1,0 +1,8 @@
+(library
+ (name lunar_unix_test)
+ (inline_tests)
+ (flags (:standard) -open Lunar)
+ (libraries lunar lunar.unix)
+ (private_modules unix_test)
+ (preprocess
+  (pps ppx_expect)))

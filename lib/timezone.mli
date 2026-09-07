@@ -28,6 +28,12 @@ val make : hour:int -> min:int -> t
 (** A presaved UTC Timezone. *)
 val utc : t
 
+(** [compute_from ~utc ~local] calculates an offset using a local time description
+    ([local]) and a global time description ([utc]). This allows you
+    to restore the process's current offset (Suitable with the Unix
+    module). *)
+val compute_from : utc:Datetime.t -> local:Datetime.t -> t
+
 (** [from_string s] try to read a timezone from a string. *)
 val from_string : string -> (t, error) result
 
