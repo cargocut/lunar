@@ -14,6 +14,12 @@ let equal = Duration.equal
 let compare = Duration.compare
 let to_duration x = x
 
+let compute_from ~utc ~local =
+  let local = Datetime.to_duration local
+  and global = Datetime.to_duration utc in
+  Duration.sub local global
+;;
+
 let str_to_pair s =
   ( s.[0]
   , String.make 1 s.[1] ^ String.make 1 s.[2]
