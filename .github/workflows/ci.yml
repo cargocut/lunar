@@ -18,6 +18,9 @@ jobs:
           - 5
     runs-on: ${{ matrix.os }}
 
+    env:
+      TZ: Europe/Paris
+
     steps:
       - name: Checkout Tree
         uses: actions/checkout@v4
