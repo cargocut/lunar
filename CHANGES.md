@@ -1,3 +1,7 @@
+### 1.3.0
+
+- Add `lunar.unix` subpackage ([gr-im](https://github.com/gr-im))
+
 ### v1.2.0
 
 - Add an optional timezone `tz` argument to the `Zoned_datetime.from_utc`
